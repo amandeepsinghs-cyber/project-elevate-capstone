@@ -1,0 +1,2092 @@
+{
+  "title": "Project Elevate Capstone — Part 1 Knowledge Check Question Bank by Topic",
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "examSpec": {
+    "Format": "HackerRank Secure Mode (Single-Choice MCQ, Closed-Book)",
+    "totalQuestions": 30,
+    "durationMinutes": 60,
+    "passingScore": 27,
+    "passingPercent": 90,
+    "moduleWeights": {
+      "M3": 0.35,
+      "M2": 0.3,
+      "M1": 0.2,
+      "M0": 0.15
+    }
+  },
+  "totalTopics": 10,
+  "totalQuestions": 100,
+  "criticalQuestionsCount": 60,
+  "topics": [
+    {
+      "id": "model_armor",
+      "title": "Model Armor",
+      "shortTitle": "Model Armor (§1.7)",
+      "icon": "🛡️",
+      "module": "M2",
+      "examWeight": "30% (Module 2)",
+      "priority": "CRITICAL",
+      "rankNote": "#1 Most Heavily Tested Topic",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor & §5 Trigger #12",
+      "slideRef": "M2S2 Slides 38–51",
+      "summary": "Floor settings, HIGH vs LOW_AND_ABOVE confidence, Inspect-only rollout, Basic vs Advanced SDP, 4 MB skip/no-bill limit, CSAM always-on, 40-URL limit, and OCR image screening.",
+      "quizFile": "model_armor_quiz.html"
+    },
+    {
+      "id": "agent_registry",
+      "title": "Agent Registry",
+      "shortTitle": "Agent Registry (§1.4)",
+      "icon": "🗂️",
+      "module": "M2",
+      "examWeight": "30% (Module 2)",
+      "priority": "CRITICAL",
+      "rankNote": "#2 Most Heavily Tested Topic",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry & §5 Triggers #13–#14",
+      "slideRef": "M2S2 Slides 15–20",
+      "summary": "3 core goals, auto-registration vs manual writable Service resource, read-only Agent/McpServer/Endpoint, urn:agent Identifier vs principal:// IAM Principal, A2A vs standalone skills.",
+      "quizFile": "agent_registry_quiz.html"
+    },
+    {
+      "id": "agent_skills",
+      "title": "Agent Skills Standard",
+      "shortTitle": "Agent Skills (§1.1)",
+      "icon": "🧩",
+      "module": "M1",
+      "examWeight": "20% (Module 1)",
+      "priority": "CRITICAL",
+      "rankNote": "#3 Priority — Start Here After Registry",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills & §5 Trigger #8",
+      "slideRef": "M1L1 Slides 7–11",
+      "summary": "Progressive disclosure (name + description only at startup), solving tool bloat, SKILL.md YAML frontmatter (description required, name optional), .agents/skills/ vs ~/.gemini/config/skills/.",
+      "quizFile": "agent_skills_quiz.html"
+    },
+    {
+      "id": "adk_fundamentals",
+      "title": "ADK 2.0 Fundamentals & Graphs",
+      "shortTitle": "ADK Fundamentals (§1.2)",
+      "icon": "⚙️",
+      "module": "M3",
+      "examWeight": "35% (Module 3) / 15% (M0)",
+      "priority": "CRITICAL",
+      "rankNote": "#4 Priority — Core Agent Engineering",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals & §5 Triggers #1–#3, #17",
+      "slideRef": "M0L6 Slides 6–7; M0L7 Slides 10–25; M3L1 Slides 9–19",
+      "summary": "Deterministic workflow agents (Sequential/Parallel/Loop) vs LLM coordinator, function tool schema generation, ADK 2.0 graph nodes & Event.state vs output, SessionService, before_tool_callback.",
+      "quizFile": "adk_fundamentals_quiz.html"
+    },
+    {
+      "id": "adk_exam_scenarios",
+      "title": "ADK Architecture & Runtimes",
+      "shortTitle": "ADK Scenarios & Runtimes",
+      "icon": "🚀",
+      "module": "M0",
+      "examWeight": "15% (Module 0) / 35% (M3)",
+      "priority": "CRITICAL",
+      "rankNote": "High-Frequency Architecture Scenarios",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.2, §5 Triggers #4–#7, #17",
+      "slideRef": "M0L5 Slides 6–8; M0L9 Slides 6–15; M3L1 Slides 10–19",
+      "summary": "State prefixes (user:, app:, temp:), Sequential/Parallel output_key, LoopAgent escalate=True, AgentTool vs sub_agents, output_schema trade-offs, Cloud Run ($0 idle) vs Agent Runtime vs GKE.",
+      "quizFile": "adk_exam_scenarios_quiz.html"
+    },
+    {
+      "id": "agent_identity",
+      "title": "Agent Identity & Agent Gateway",
+      "shortTitle": "Identity & Gateway (§1.5)",
+      "icon": "🔐",
+      "module": "M2",
+      "examWeight": "30% (Module 2)",
+      "priority": "HIGH_VALUE",
+      "rankNote": "Classic Dual-Auth Exam Scenario",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway & §5 Trigger #15",
+      "slideRef": "M2S2 Slides 24–29",
+      "summary": "SPIFFE X.509 certificate identity, GCP IAM (BigQuery) vs user-delegated 3-legged OAuth (3P SaaS via auth manager), Agent Gateway ingress/egress governance + Model Armor with zero code changes.",
+      "quizFile": "agent_identity_quiz.html"
+    },
+    {
+      "id": "protocols_mcp_a2a_otel",
+      "title": "Protocols: MCP, A2A & OpenTelemetry",
+      "shortTitle": "MCP, A2A & OTel (§1.6)",
+      "icon": "🌐",
+      "module": "M3",
+      "examWeight": "35% (Module 3)",
+      "priority": "HIGH_VALUE",
+      "rankNote": "Swapped-Definition & URI Traps",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.6, §6.1 & §5 Triggers #16, #20, #21",
+      "slideRef": "M3L1 Slides 31–32; M3L4 Slide 20; M3L5 Slides 8–10",
+      "summary": "MCP (agent ↔ tools/data) vs A2A (agent ↔ agent), HTTP + JSON-RPC 2.0 + SSE, RFC 8615 /.well-known/agent-card.json, MCP Toolbox for DBs (<10 LoC), OTel gen_ai.* & SPAN < TRACE < SESSION < TASK.",
+      "quizFile": "protocols_mcp_a2a_otel_quiz.html"
+    },
+    {
+      "id": "context_eval_harness",
+      "title": "Context, Grounding, Eval & Harness Eng",
+      "shortTitle": "Context, Eval & Harness (§1.3)",
+      "icon": "📐",
+      "module": "M3",
+      "examWeight": "35% (Module 3) / 20% (M1)",
+      "priority": "HIGH_VALUE",
+      "rankNote": "Failure Diagnosis & Trajectory Eval",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.3, §6.3, §6.5 & §5 Triggers #8, #18, #19",
+      "slideRef": "M1L2 Slides 6, 13; M3L2 Slides 15–25; M3L3 Slides 2–12",
+      "summary": "RAG grounding for company definitions, observation flooding vs context collapse, trajectory vs final-response eval, 7 coding eval dimensions, Agent = Model + Harness (+13.7 pts Terminal Bench 2.0).",
+      "quizFile": "context_eval_harness_quiz.html"
+    },
+    {
+      "id": "codemender_threat_defense",
+      "title": "CodeMender & AI Threat Defense",
+      "shortTitle": "CodeMender & Threats (§1.8)",
+      "icon": "🛠️",
+      "module": "M2",
+      "examWeight": "30% (Module 2)",
+      "priority": "HIGH_VALUE",
+      "rankNote": "SAST Integration & 4-Stage Framework",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.8, §6.4 & §5 Trigger #11",
+      "slideRef": "M2S1 Slides 18, 41–53, 60–62; M2S2 Slide 5",
+      "summary": "4 AI Threat Defense stages (CodeMender in Remediate), importing external SAST findings (cm report import -> cm verify -> cm fix), 7 languages, Gemini Flash (--model), Indirect PI vs Tool Poisoning.",
+      "quizFile": "codemender_threat_defense_quiz.html"
+    },
+    {
+      "id": "gemini_finops_enterprise",
+      "title": "Gemini FinOps, Caching, GE & ObjectRef",
+      "shortTitle": "FinOps, Caching & GE (§1.9–1.10)",
+      "icon": "💎",
+      "module": "M3",
+      "examWeight": "35% (Module 3) / 20% (M1)",
+      "priority": "HIGH_VALUE",
+      "rankNote": "Caching Billing, PT Limits & SharePoint ACLs",
+      "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.9, §1.10, §6.2, §6.6 & §5 Triggers #9, #10, #20, #22",
+      "slideRef": "M1L5 Slides 3, 17–26; M1L6 Slides 6–16; M3L4 Slide 14; M3L5 Slides 14–19",
+      "summary": "Standard input price for cache creation, Explicit TTL storage vs free Implicit storage, 2,048 vs 4,096 min tokens, PT exclusions, Semantic Routing, GE Federated 2nd sign-in, BigQuery ObjectRef, AWS migration.",
+      "quizFile": "gemini_finops_enterprise_quiz.html"
+    }
+  ],
+  "rapidReflexTriggers": [
+    {
+      "num": 1,
+      "module": "M0",
+      "topic": "ADK Function Tools",
+      "trigger": "LLM never calls your Python tool (tools=[my_fn]), or asks how ADK builds the tool schema",
+      "answer": "ADK builds schema from function name, docstring (description), parameters, type hints, and default values (params without defaults = required). Model NEVER sees function body or # comments. No manual JSON schema.",
+      "ref": "Core Guide §1.2; M0L6 Slides 6–7"
+    },
+    {
+      "num": 2,
+      "module": "M0",
+      "topic": "Multi-Agent Routing",
+      "trigger": "Parent Coordinator/Orchestrator agent fails to delegate tasks to a specialist sub-agent",
+      "answer": "Sub-agent is missing a clear, specific name and description in Agent(name=..., description=...). Use workflow patterns when steps are predefined; use coordinator only when model must decide the route.",
+      "ref": "Core Guide §1.2; M0L7 Slides 15–16, 25"
+    },
+    {
+      "num": 3,
+      "module": "M0/M3",
+      "topic": "Workflows & ADK 2.0 Graphs",
+      "trigger": "Need deterministic orchestration without paying an LLM call for routing, or mixing node types in ADK 2.0 graph",
+      "answer": "SequentialAgent / ParallelAgent / LoopAgent orchestrate deterministically with no model call. ADK 2.0 graphs support Functions, human input, Tools, LLM capabilities + Join nodes. Event.state is readable by any downstream node; output reaches ONLY the immediate next node.",
+      "ref": "Core Guide §1.2; M0L7 Slides 10–12; M3L1 Slide 9"
+    },
+    {
+      "num": 4,
+      "module": "M0",
+      "topic": "Runtimes (Cloud Run)",
+      "trigger": "Customer wants $0 compute cost when the agent sits idle overnight / on weekends",
+      "answer": "Deploy on Cloud Run (serverless container that scales to zero). Supply session service via --agent_engine_id (VertexAiSessionService) or DatabaseSessionService.",
+      "ref": "M0L9 Slides 7, 10, 15; M3L1 Slide 13"
+    },
+    {
+      "num": 5,
+      "module": "M0/M3",
+      "topic": "Runtimes & SessionService",
+      "trigger": "Customer wants managed durable sessions & Memory Bank out-of-the-box with zero infra management",
+      "answer": "Deploy on Agent Runtime (adk deploy agent_engine) — auto-creates VertexAiSessionService (loads/saves Session objects & applies state_delta). Real implementations: InMemorySessionService, DatabaseSessionService, VertexAiSessionService (watch out for fake TextEmbeddingService).",
+      "ref": "Core Guide §1.2; M0L9 Slides 7, 10, 13; M3L1 Slide 10"
+    },
+    {
+      "num": 6,
+      "module": "M0",
+      "topic": "Runtimes (GKE)",
+      "trigger": "Workload needs custom networking, self-hosted open-source models not on Vertex AI, or full K8s control",
+      "answer": "Deploy on GKE — full control, custom networking, open models. Cost of control: 'you are the DevOps team'.",
+      "ref": "M0L9 Slides 6–7, 15"
+    },
+    {
+      "num": 7,
+      "module": "M0",
+      "topic": "Compliance (Jetski vs agy)",
+      "trigger": "When to use Jetski (go/jetski) vs Antigravity 2.0 (agy)",
+      "answer": "Jetski = strictly internal productivity (google3, Buganizer, Critique) — NEVER show or screen-share with customers. Antigravity 2.0 (agy, Argolis auth) = safe for customer demos & 3P codebases.",
+      "ref": "M0L5 Slides 6–8"
+    },
+    {
+      "num": 8,
+      "module": "M1",
+      "topic": "Agent Skills & Context",
+      "trigger": "What loads at startup for a skill, where do skills live, and what causes context failures?",
+      "answer": "Only name and description load at startup; full SKILL.md (description required, name optional + scripts/, examples/, resources/) loads when relevant or via /skill-name, solving 'tool bloat'. Project path: <project-root>/.agents/skills/<skill>/; Global: ~/.gemini/config/skills/. Failures: Observation flooding (raw logs) vs Context collapse (summarization drops fact) vs RAG grounding (company defs).",
+      "ref": "Core Guide §§1.1, 1.3; M1L1 Slides 8, 11; M1L2 Slide 13"
+    },
+    {
+      "num": 9,
+      "module": "M1",
+      "topic": "AWS Migration",
+      "trigger": "4 Phases of Google Cloud Migration Framework (in order) & AWS Lambda → Cloud Run advantage",
+      "answer": "1. Assess -> 2. Plan & Build -> 3. Migrate -> 4. Optimize. Cloud Run advantage over Lambda: container-based (any language), up to 60-min timeout vs 15-min, concurrent requests per instance.",
+      "ref": "M1L5 Slides 3, 17–18"
+    },
+    {
+      "num": 10,
+      "module": "M1",
+      "topic": "GE Federated Connectors",
+      "trigger": "Users see a second sign-in prompt when querying Microsoft SharePoint via Gemini Enterprise Federated Connector",
+      "answer": "Not a misconfiguration! Federated connectors query Microsoft live with user-delegated permissions to enforce real-time SharePoint ACLs. Workforce Identity Federation (WIF) does NOT remove it.",
+      "ref": "Core Guide §1.10; M1L6 Slides 6, 10, 16"
+    },
+    {
+      "num": 11,
+      "module": "M2",
+      "topic": "Threat Vectors & CodeMender",
+      "trigger": "Indirect Prompt Injection vs Tool Poisoning, and CodeMender with existing SAST tools",
+      "answer": "Indirect PI = malicious instructions inside content agent reads. Tool Poisoning = compromised MCP server/tool outputs. CodeMender is Stage 3 (Remediate) of Prepare -> Scan & Prioritize -> Remediate -> Monitor, supports 7 languages (C/C++, Go, Java, Python, Ruby, Rust, TypeScript), defaults to Gemini Flash (--model override), imports external SAST via 'cm report import' -> 'cm verify' -> 'cm fix'.",
+      "ref": "Core Guide §1.8; M2S1 Slides 44, 47–53; M2S2 Slide 5"
+    },
+    {
+      "num": 12,
+      "module": "M2",
+      "topic": "Model Armor (#1 Tested)",
+      "trigger": "Floor Settings, Confidence Levels, Rollout Sequence, SDP Basic vs Advanced, and 4 MB Limit",
+      "answer": "Floor settings = org/folder/project minimum. HIGH = fewest false positives; LOW_AND_ABOVE = strictest. Rollout: Inspect only -> tune -> Inspect and block. SDP Basic = predefined US infoTypes, flags only; Advanced = custom inspect template (required) + de-identify template (optional) for redaction/tokenization. >4 MB = skipped, not blocked, not billed. CSAM always on. Runs on any cloud/on-prem via REST API.",
+      "ref": "Core Guide §1.7; M2S2 Slides 38–51"
+    },
+    {
+      "num": 13,
+      "module": "M2",
+      "topic": "Agent Registry Goals & IDs (#2 Tested)",
+      "trigger": "Agent Registry 3 goals, urn:agent:... vs principal://..., A2A vs standalone skills, Registry MCP tools",
+      "answer": "Goals: (1) Accelerate development, (2) Simplify integration, (3) Support governance. Identifier (urn:agent:...) = catalog lookup (never in IAM); Principal (principal://...) = SPIFFE/SA IAM identity. A2A skills = inline in Agent Card; Standalone skills = Skill, SkillRevision, Publisher. MCP tools: list_agents, search_agents, search_mcp_servers.",
+      "ref": "Core Guide §1.4; M2S2 Slides 15–20"
+    },
+    {
+      "num": 14,
+      "module": "M2",
+      "topic": "Agent Registry Registration",
+      "trigger": "How Agent Registry separates Write vs Read operations, and auto vs manual registration",
+      "answer": "Automatic for supported GCP runtimes (Agent Runtime, Workspace/GE, annotated GKE, Google remote MCP servers) once API is enabled. Everything else (e.g., Cloud Run) is registered manually via writable Service resource, then queried via read-only Agent, McpServer, and Endpoint resources.",
+      "ref": "Core Guide §1.4; M2S2 Slides 15–16, 20"
+    },
+    {
+      "num": 15,
+      "module": "M2",
+      "topic": "Agent Identity & Gateway",
+      "trigger": "Agent calls BigQuery (GCP) AND a 3P SaaS API (Jira/ServiceNow) on user's behalf, governed by Agent Gateway",
+      "answer": "Dedicated SPIFFE X.509 identity per agent. BigQuery (GCP) uses agent's own identity (IAM). 3P SaaS uses user-delegated 3-legged OAuth via Agent Identity auth manager (token issued by SaaS OAuth server). Agent Gateway governs BOTH ingress and egress + Model Armor with NO app code changes.",
+      "ref": "Core Guide §1.5; M2S2 Slides 24–29"
+    },
+    {
+      "num": 16,
+      "module": "M3",
+      "topic": "Protocols (MCP & A2A)",
+      "trigger": "Distinguish MCP vs A2A, A2A's 3 core technologies, and Agent Card URI",
+      "answer": "MCP = agent <-> tools/APIs/data. A2A = agent <-> agent peer collaboration, built on HTTP, JSON-RPC 2.0, and Server-Sent Events (SSE). Agent Card URI: https://{server_domain}/.well-known/agent-card.json (RFC 8615; legacy /.well-known/agent.json).",
+      "ref": "Core Guide §1.6; M3L1 Slides 31–32"
+    },
+    {
+      "num": 17,
+      "module": "M3",
+      "topic": "ADK 2.0 Callbacks & State",
+      "trigger": "How before_tool_callback ALLOWS vs BLOCKS a tool call, and how state prefixes work",
+      "answer": "Return None to ALLOW tool execution; return a dict to BLOCK/SHORT-CIRCUIT the tool and return that dict to the LLM. State scopes: unprefixed (session), user: (across sessions for user), app: (global across users), temp: (cleared after invocation).",
+      "ref": "M3L1 Slides 10, 14–19"
+    },
+    {
+      "num": 18,
+      "module": "M3",
+      "topic": "Agent Evaluation",
+      "trigger": "Why passing unit tests / final-response evaluation isn't enough + 7 Coding Agent Eval Dimensions",
+      "answer": "Final-response eval misses 'right answer, wrong process'; Trajectory evaluation grades the reasoning path & tool call sequence. 7 Coding Eval Dimensions: Dim 1 = Intent Satisfaction, Dim 7 = Self-Repair Behaviour. Observability is the prerequisite.",
+      "ref": "Core Guide §1.3; M3L2 Slides 15–16, 19, 23, 25"
+    },
+    {
+      "num": 19,
+      "module": "M3",
+      "topic": "Harness Engineering",
+      "trigger": "Formula, Author, and Terminal Bench 2.0 empirical proof of Harness Engineering",
+      "answer": "Agent = Model + Harness (Vivek Trivedy, LangChain, Mar 2026; term coined by Mitchell Hashimoto, Feb 2026). On Terminal Bench 2.0, changing ONLY the harness jumped the same model from #30 (52.8%) to #5 (66.5%) (+13.7 pts).",
+      "ref": "M3L3 Slides 2–3, 5"
+    },
+    {
+      "num": 20,
+      "module": "M3",
+      "topic": "BigQuery ObjectRef & MCP Toolbox",
+      "trigger": "What is inside a BigQuery ObjectRef, and what does MCP Toolbox for Databases handle?",
+      "answer": "ObjectRef is a STRUCT of uri, version, authorizer (Cloud resource connection), and details (content type, size, hash, updated)—does NOT cache bytes and is NOT a signed URL. MCP Toolbox for Databases handles connection pooling, IAM auth, and OTel observability in <10 lines of code.",
+      "ref": "Core Guide §§1.6, 1.10; M3L4 Slides 14, 20"
+    },
+    {
+      "num": 21,
+      "module": "M3",
+      "topic": "OpenTelemetry (OTel)",
+      "trigger": "What gen_ai.* attributes standardize, and the 4-level OTel hierarchy from SMALLEST to LARGEST",
+      "answer": "gen_ai.* attributes standardize BOTH names and semantic meanings across vendors. Hierarchy: 1. SPAN (atomic call) < 2. TRACE (1 turn) < 3. SESSION (multi-turn conversation) < 4. TASK (multi-agent workflow).",
+      "ref": "Core Guide §1.6 & §6.1; M3L5 Slides 8–10"
+    },
+    {
+      "num": 22,
+      "module": "M3",
+      "topic": "Gemini Cost & Capacity",
+      "trigger": "Cache creation billing, Explicit vs Implicit storage cost, Min tokens, and Provisioned Throughput limits",
+      "answer": "Cache creation billed at standard input price for BOTH implicit and explicit. Explicit charges TTL storage; implicit has NO storage cost (~90% read discount on 2.5+). Min tokens: 2.5 Flash = 2,048; 3.x Flash = 4,096. Provisioned Throughput supports fine-tuned models, but NOT batch prediction and NOT other Agent Platform products (e.g., Agent Search).",
+      "ref": "Core Guide §1.9; M3L5 Slides 14–19"
+    }
+  ],
+  "tenMinuteSelfTest": [
+    {
+      "num": 1,
+      "q": "What does an agent load at the start for each skill, and where do project skills live?",
+      "a": "Only each skill's name and description (from SKILL.md YAML frontmatter); project skills live at <project-root>/.agents/skills/<skill>/ (global: ~/.gemini/config/skills/).",
+      "ref": "§1.1 & §1.11 Q1"
+    },
+    {
+      "num": 2,
+      "q": "What makes a workflow agent different from an LLM agent?",
+      "a": "A workflow agent (SequentialAgent, ParallelAgent, LoopAgent) runs sub-agents using predefined deterministic logic without consulting an AI model to orchestrate (no model call for routing).",
+      "ref": "§1.2 & §1.11 Q2"
+    },
+    {
+      "num": 3,
+      "q": "What are Agent Registry's three goals, and which of its resources are writable versus read-only?",
+      "a": "Goals: (1) Accelerate development, (2) Simplify integration, (3) Support governance. Writable: Service. Read-only: Agent, McpServer, Endpoint (plus Skill, SkillRevision, Publisher for standalone skills).",
+      "ref": "§1.4 & §1.11 Q3"
+    },
+    {
+      "num": 4,
+      "q": "Which identity does an agent use for BigQuery versus a third-party SaaS app?",
+      "a": "BigQuery (GCP resource): the agent's own SPIFFE identity (governed by IAM). Third-party SaaS on user's behalf: user-delegated 3-legged OAuth via Agent Identity auth manager (token issued by SaaS OAuth server).",
+      "ref": "§1.5 & §1.11 Q4"
+    },
+    {
+      "num": 5,
+      "q": "What's the Model Armor rollout sequence, and what happens to a file over 4 MB?",
+      "a": "Start in Inspect only, tune with test data/monitoring/feedback, then switch to Inspect and block. Files/text over 4 MB are skipped, not blocked, and not billed.",
+      "ref": "§1.7 & §1.11 Q5"
+    },
+    {
+      "num": 6,
+      "q": "Which stage of AI Threat Defense does CodeMender's fix belong to?",
+      "a": "Remediate (Stage 3 of Prepare -> Scan and Prioritize -> Remediate -> Monitor).",
+      "ref": "§1.8 & §1.11 Q6"
+    },
+    {
+      "num": 7,
+      "q": "Who pays storage costs, explicit or implicit caching?",
+      "a": "Explicit caching pays TTL storage costs; implicit caching has no storage cost (both pay standard input token price for cache creation).",
+      "ref": "§1.9 & §1.11 Q7"
+    },
+    {
+      "num": 8,
+      "q": "Where is an A2A Agent Card hosted, and what three technologies is A2A built on?",
+      "a": "Hosted at https://{server_domain}/.well-known/agent-card.json (RFC 8615; older versions used /.well-known/agent.json); built on HTTP, JSON-RPC 2.0, and Server-Sent Events (SSE).",
+      "ref": "§1.6 & §1.11 Q8"
+    }
+  ],
+  "questions": [
+    {
+      "id": 0,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 42",
+      "q": "A platform team wants every Model Armor template in the company to at least enable prompt-injection detection, while teams can still add stricter filters. What should they use?",
+      "options": [
+        "Floor settings, which set minimum requirements at the org, folder, or project level that templates can't go below",
+        "One shared 'golden' template that every team must voluntarily reference",
+        "A confidence level of LOW_AND_ABOVE enforced via IAM Conditions",
+        "An IAM deny policy on the Model Armor API"
+      ],
+      "answer": 0,
+      "why": "Floor settings define minimum enforcement requirements at the organization, folder, or project level. Teams can configure stricter filters on their templates, but cannot create a template less strict than the floor."
+    },
+    {
+      "id": 1,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 44",
+      "q": "A customer complains that Model Armor blocks too many legitimate prompts. Which confidence level gives the FEWEST false positives?",
+      "options": [
+        "HIGH (flags only high-likelihood violations, minimizing false positives)",
+        "LOW_AND_ABOVE (strictest setting, flags low, medium, and high)",
+        "MEDIUM_AND_ABOVE",
+        "Confidence level does not affect false-positive rates"
+      ],
+      "answer": 0,
+      "why": "HIGH flags only high-confidence violations, resulting in the fewest false positives. LOW_AND_ABOVE is the strictest threshold and produces the most false positives."
+    },
+    {
+      "id": 2,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Self-Test #5 & Trigger #12 | M2S2 Slide 49",
+      "q": "What is the recommended rollout sequence for a new Model Armor deployment?",
+      "options": [
+        "Start in Inspect only, tune with test data, production monitoring, and user feedback, then switch to Inspect and block",
+        "Deploy straight to Inspect and block from day one, then relax filters if users complain",
+        "Keep Inspect only permanently, because blocking breaks LLM applications",
+        "Use Inspect and block for prompts and Inspect only for responses permanently"
+      ],
+      "answer": 0,
+      "why": "Official best practice: start in Inspect only (logs findings without blocking), tune thresholds using test data, production telemetry, and feedback, and then switch to Inspect and block."
+    },
+    {
+      "id": 3,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 (Swapped-Definition Trap) | M2S2 Slide 46",
+      "q": "A healthcare customer needs credit card numbers REDACTED or tokenized before prompts reach the model. What configuration do they need?",
+      "options": [
+        "Advanced Sensitive Data Protection (SDP) configuration with an inspect template (required) and a de-identify template (optional)",
+        "Basic Sensitive Data Protection configuration (which automatically redacts US infoTypes)",
+        "The prompt-injection and jailbreak filter set to HIGH",
+        "A Responsible AI filter for 'dangerous content'"
+      ],
+      "answer": 0,
+      "why": "Basic SDP uses a fixed set of predefined (mostly US) infoTypes and ONLY flags findings. Redaction or tokenization requires Advanced SDP with your own SDP inspect template (required) and de-identify template."
+    },
+    {
+      "id": 4,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Self-Test #5 & Trigger #12 | M2S2 Slide 48",
+      "q": "A user uploads a 6 MB document for screening. What does Model Armor do?",
+      "options": [
+        "Skips it (it isn't blocked), and the skipped data isn't billed",
+        "Blocks the file immediately because it exceeds the 4 MB limit",
+        "Compresses the file under 4 MB and then screens it",
+        "Splits the document into 4 MB chunks and screens each chunk"
+      ],
+      "answer": 0,
+      "why": "Files and text over 4 MB are skipped (not blocked), and skipped data is not billed. Watch out for distractors claiming oversized files are blocked, compressed, or split."
+    },
+    {
+      "id": 5,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 39",
+      "q": "A customer runs its LLM application on another cloud provider and on-premises. Can it use Model Armor?",
+      "options": [
+        "Yes, Model Armor runs on any cloud or on-prem through its REST API",
+        "No, it only works with Vertex AI and Gemini on Google Cloud",
+        "Only if routed through GKE Enterprise on Google Cloud",
+        "Only for batch prediction workloads stored in BigQuery"
+      ],
+      "answer": 0,
+      "why": "Model Armor is model- and cloud-agnostic: it can protect applications running on any cloud or on-premises via its REST API, as well as integrating natively with Apigee, Agent Gateway, Gemini Enterprise, and MCP servers."
+    },
+    {
+      "id": 6,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 43",
+      "q": "Which Model Armor filter is ALWAYS applied by default and cannot be disabled?",
+      "options": [
+        "CSAM (Child Sexual Abuse Material)",
+        "Hate speech",
+        "Prompt injection and jailbreak",
+        "Malicious URL detection"
+      ],
+      "answer": 0,
+      "why": "CSAM detection is always on by default and cannot be turned off. The other four Responsible AI categories (hate speech, harassment, sexually explicit, dangerous content) have configurable thresholds."
+    },
+    {
+      "id": 7,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | M2S2 Slide 45",
+      "q": "A prompt contains 60 URLs. How many URLs does Model Armor's malicious URL detection scan?",
+      "options": [
+        "The first 40 URLs",
+        "All 60 URLs",
+        "The first 10 URLs",
+        "None; URLs are only scanned in model responses"
+      ],
+      "answer": 0,
+      "why": "Model Armor's malicious URL detection scans up to the first 40 URLs per input."
+    },
+    {
+      "id": 8,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slides 49–50",
+      "q": "A CE is configuring Model Armor for a customer for the first time. Which starting configuration matches Google's recommended phased strategy?",
+      "options": [
+        "Responsible AI filters at HIGH, prompt injection at MEDIUM (or HIGH for Gemini Enterprise), advanced SDP templates, in Inspect only mode",
+        "Responsible AI at LOW_AND_ABOVE, prompt injection at HIGH, basic SDP, in Inspect and block mode",
+        "All filters at LOW_AND_ABOVE with Inspect and block enabled on day one",
+        "Responsible AI disabled, CSAM disabled, and Inspect only mode"
+      ],
+      "answer": 0,
+      "why": "Start in Inspect only with Responsible AI at HIGH (fewest false positives), prompt injection/jailbreak at MEDIUM (or HIGH for Gemini Enterprise), and advanced SDP templates before moving to Inspect and block."
+    },
+    {
+      "id": 9,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | M2S2 Slide 48",
+      "q": "Which statement about Model Armor IMAGE screening (Preview) is accurate?",
+      "options": [
+        "Supports JPEG, PNG, and BMP only, up to 4 MB, one image per request, in US and EU multi-regions (using OCR)",
+        "Supports any image format up to 20 MB across all global regions",
+        "Scans up to 10 images per request for batch throughput",
+        "Only inspects EXIF image metadata, not visual text content"
+      ],
+      "answer": 0,
+      "why": "Model Armor image screening supports JPEG, PNG, and BMP formats only, up to 4 MB, a single image per request, in US and EU multi-regions, extracting text via OCR."
+    },
+    {
+      "id": 100,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 15",
+      "q": "What is Google Cloud Agent Registry?",
+      "options": [
+        "A centralized catalog that lets you store, discover, and govern MCP servers, tools, standalone skills, and AI agents within Google Cloud",
+        "A managed serverless container runtime that replaces Cloud Run for ADK agents",
+        "A foundation model weight repository that replaces Vertex AI Model Registry",
+        "An API gateway that terminates mTLS and bills token usage"
+      ],
+      "answer": 0,
+      "why": "Verbatim doc definition (§1.4): Agent Registry is 'a centralized catalog that lets you store, discover, and govern MCP servers, tools, standalone skills, and AI agents within Google Cloud.' It is not a runtime or model registry."
+    },
+    {
+      "id": 101,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Self-Test #3 & Trigger #13 | M2S2 Slide 15",
+      "q": "What are the three official goals of Google Cloud Agent Registry?",
+      "options": [
+        "Accelerate development, simplify integration, and support governance",
+        "Host containers, fine-tune foundation models, and manage token billing",
+        "Replace Cloud IAM, encrypt VPC traffic, and redact PII",
+        "Auto-scale runtimes, cache prompts, and provision throughput"
+      ],
+      "answer": 0,
+      "why": "Agent Registry's three goals (§1.4) are: (1) Accelerate development (discovery and reuse), (2) Simplify integration (standardized MCP and A2A protocols), and (3) Support governance (enforce security and boundaries across the agentic fleet)."
+    },
+    {
+      "id": 102,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #14 | M2S2 Slide 16",
+      "q": "A team deploys agents across Google Cloud. Which deployment requires MANUAL registration in Agent Registry via a writable Service resource?",
+      "options": [
+        "An ADK A2A agent deployed on Cloud Run",
+        "An agent deployed on Agent Runtime (Gemini Enterprise Agent Platform)",
+        "A GKE deployment configured with Agent Registry annotations",
+        "An official Google Cloud remote MCP server"
+      ],
+      "answer": 0,
+      "why": "Auto-registration covers supported Google Cloud runtimes once the API is enabled (Agent Runtime, Workspace/Gemini Enterprise, annotated GKE, and official Google remote MCP servers). Cloud Run agents are NOT auto-discovered and require manual registration via the writable Service resource."
+    },
+    {
+      "id": 103,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Self-Test #3 & Trigger #14 | M2S2 Slide 20",
+      "q": "When manually registering or updating an item in Agent Registry, which resource is WRITABLE versus READ-ONLY?",
+      "options": [
+        "Service is writable; Agent, McpServer, and Endpoint are read-only",
+        "Agent and McpServer are writable; Service is read-only",
+        "Endpoint is writable; Service and Agent are read-only",
+        "All resources (Service, Agent, McpServer, Endpoint) are directly writable"
+      ],
+      "answer": 0,
+      "why": "Everything registered manually is written through the writable 'Service' resource, and then queried through the read-only 'Agent', 'McpServer', and 'Endpoint' resources."
+    },
+    {
+      "id": 104,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 (Swapped-Definition Trap) | M2S2 Slide 18",
+      "q": "A security engineer wants to grant an agent IAM permission to query BigQuery. Should they use the Agent Identifier or the Agent Principal?",
+      "options": [
+        "Agent Principal (principal://...), because Agent Identifier (urn:agent:...) is only a logical catalog name and is never used in IAM bindings",
+        "Agent Identifier (urn:agent:...), because it is the primary IAM identity for all registered agents",
+        "Either one, because Identifier and Principal are interchangeable in IAM bindings",
+        "Neither, because agents can never hold an IAM identity for Google Cloud resources"
+      ],
+      "answer": 0,
+      "why": "Agent Identifier (urn:agent:...) is a logical catalog ID used for inventory and lookup—never in IAM bindings. Agent Principal (principal://...) is the SPIFFE/service-account IAM identity used for permissions and auditing."
+    },
+    {
+      "id": 105,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 19",
+      "q": "How do A2A skills differ from standalone skills in Agent Registry?",
+      "options": [
+        "A2A skills are declarative metadata inline in an Agent Card; standalone skills are separate resources managed via Skill, SkillRevision, and Publisher",
+        "A2A skills are top-level GCP resources; standalone skills only exist inline inside an Agent Card",
+        "A2A skills are for MCP servers only; standalone skills are for Cloud Run only",
+        "There is no difference; both are stored exclusively inside an Agent Card"
+      ],
+      "answer": 0,
+      "why": "A2A skills are declarative metadata declared inline in an agent's Agent Card. Standalone skills are separate catalog resources managed, versioned, and listed through the Skill, SkillRevision, and Publisher resources."
+    },
+    {
+      "id": 106,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 17",
+      "q": "An orchestrator uses the Agent Registry MCP server to find agents by natural-language keyword. Which tool should it call?",
+      "options": [
+        "search_agents (while list_agents enumerates by project/location, and search_mcp_servers covers MCP servers only)",
+        "search_mcp_servers, which searches both agents and MCP servers",
+        "list_agents, which performs natural-language semantic search across all projects",
+        "find_endpoints, which searches agents, tools, and skills together"
+      ],
+      "answer": 0,
+      "why": "The Registry MCP server provides 'list_agents' for enumerating agents by project and location, 'search_agents' for keyword/prefix/natural-language discovery of agents, and 'search_mcp_servers' for MCP servers only."
+    },
+    {
+      "id": 107,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Tab 2 M2S2 Slide 16",
+      "q": "What is the correct four-stage operating sequence in Agent Registry?",
+      "options": [
+        "Register → Discover → Govern → Orchestrate",
+        "Discover → Register → Orchestrate → Govern",
+        "Govern → Register → Discover → Orchestrate",
+        "Register → Orchestrate → Discover → Govern"
+      ],
+      "answer": 0,
+      "why": "The four-stage lifecycle in Agent Registry is Register → Discover → Govern → Orchestrate."
+    },
+    {
+      "id": 108,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Tab 2 M2S2 Slide 20",
+      "q": "In Agent Registry, what is the difference between a Tool and an Endpoint?",
+      "options": [
+        "Tools are deterministic functions served by MCP servers; Endpoints are target URLs (such as REST APIs) governed in the registry",
+        "Endpoints are deterministic functions on MCP servers; Tools are legacy REST URLs",
+        "Tools and Endpoints are two names for the exact same MCP resource",
+        "Endpoints are only for Gemini Enterprise, while Tools are only for Cloud Run"
+      ],
+      "answer": 0,
+      "why": "Tools represent callable functions exposed by MCP servers, while Endpoints represent target network URLs/APIs registered for discovery and governance."
+    },
+    {
+      "id": 109,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #14 | M2S2 Slide 16",
+      "q": "A developer publishes a Cloud Run agent to a Gemini Enterprise app, but it does not appear in Agent Registry. Why?",
+      "options": [
+        "Gemini Enterprise and Agent Registry are separate catalogs that don't auto-sync for Cloud Run, so the Cloud Run agent must be registered manually via a Service resource",
+        "Agent Registry takes 24 hours to sync asynchronously from Gemini Enterprise",
+        "Cloud Run agents are blocked from being added to Agent Registry under any configuration",
+        "Agent Registry only stores MCP servers, never AI agents"
+      ],
+      "answer": 0,
+      "why": "Cloud Run agents are not automatically discovered by Agent Registry and must be manually registered through the writable Service resource."
+    },
+    {
+      "id": 200,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 8",
+      "q": "What does an agent load into context at startup for each available Agent Skill?",
+      "options": [
+        "Only each skill's name and description; the full SKILL.md is read only when the agent judges the skill relevant",
+        "The entire SKILL.md file for every installed skill",
+        "All files inside scripts/, examples/, and resources/ up front",
+        "Nothing at all until the user explicitly types a slash command"
+      ],
+      "answer": 0,
+      "why": "Agent Skills use progressive disclosure: only each skill's name and description load at startup. The full SKILL.md is read only when the agent judges the skill relevant."
+    },
+    {
+      "id": 201,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 6",
+      "q": "Which core problem are Agent Skills and progressive disclosure designed to solve?",
+      "options": [
+        "Tool bloat, where loading hundreds of tools and rules into context makes the agent slower, costlier, and worse at picking the right one",
+        "Network latency between Cloud Run and BigQuery",
+        "Lack of encryption in third-party OAuth tokens",
+        "Container cold starts on GKE Autopilot"
+      ],
+      "answer": 0,
+      "why": "Skills solve 'tool bloat'—where loading too many tools and instructions up front overwhelms the context window, increasing latency/cost and degrading tool selection accuracy."
+    },
+    {
+      "id": 202,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 11",
+      "q": "Where should a team store a PROJECT-SPECIFIC (workspace) skill so it is version-controlled and shared with the repo?",
+      "options": [
+        "<project-root>/.agents/skills/<skill>/",
+        "~/.gemini/config/skills/<skill>/",
+        "/etc/google/skills/<skill>/",
+        "<project-root>/.well-known/skills/"
+      ],
+      "answer": 0,
+      "why": "Project-specific (workspace) skills live at <project-root>/.agents/skills/<skill>/. Watch out for the trap offering ~/.gemini/config/skills/, which is the global path."
+    },
+    {
+      "id": 203,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 11",
+      "q": "A developer wants a custom skill to be available globally across all projects in Antigravity, the IDE, and the CLI. Where should they place it?",
+      "options": [
+        "~/.gemini/config/skills/",
+        "<project-root>/.agents/skills/",
+        "~/.config/gcloud/skills/",
+        "/usr/local/share/adk/skills/"
+      ],
+      "answer": 0,
+      "why": "Global skills live at ~/.gemini/config/skills/ and work across Antigravity, the IDE, and the CLI."
+    },
+    {
+      "id": 204,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 9",
+      "q": "In a skill's required SKILL.md YAML frontmatter, which field is REQUIRED and which is OPTIONAL?",
+      "options": [
+        "description is required; name is optional",
+        "name is required; description is optional",
+        "Both name and version are required; description is optional",
+        "No YAML frontmatter is used in SKILL.md"
+      ],
+      "answer": 0,
+      "why": "In SKILL.md YAML frontmatter, 'description' is required (since the agent uses it to judge relevance), and 'name' is optional."
+    },
+    {
+      "id": 205,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 9",
+      "q": "Besides the required SKILL.md file, what optional subdirectories can an Agent Skill folder contain?",
+      "options": [
+        "scripts/, examples/, and resources/",
+        "Nothing else; a skill folder can never contain anything but SKILL.md",
+        "Only compiled Docker images",
+        "Only Terraform state files"
+      ],
+      "answer": 0,
+      "why": "A skill folder contains SKILL.md (required) plus optional scripts/, examples/, and resources/ directories."
+    },
+    {
+      "id": 206,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 10",
+      "q": "How can an Agent Skill be activated during a session?",
+      "options": [
+        "Automatically when the prompt's intent matches the skill's description, or explicitly with a slash command (/skill-name)",
+        "Only when the user explicitly types a slash command (/skill-name)",
+        "Only by restarting the agent container with a --skill flag",
+        "Only through a Cloud Scheduler cron job"
+      ],
+      "answer": 0,
+      "why": "Skills activate either automatically (when the prompt's intent matches the skill's description) or explicitly via a slash command (/skill-name)."
+    },
+    {
+      "id": 207,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slides 8–9",
+      "q": "An agent never automatically activates a newly created skill even when the user asks a relevant question. What is the most likely cause?",
+      "options": [
+        "The skill's description in SKILL.md frontmatter is vague or missing the trigger keywords for that task",
+        "The user did not type the /skill-name slash command, which is mandatory for all skills",
+        "The optional scripts/ directory is empty",
+        "The skill was placed in <project-root>/.agents/skills/ instead of /tmp/"
+      ],
+      "answer": 0,
+      "why": "Because the agent only sees each skill's name and description at startup, automatic activation relies on matching the prompt's intent to the YAML frontmatter description."
+    },
+    {
+      "id": 208,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 & §6.6 | M1L1 Slide 7",
+      "q": "Which of the following correctly lists the 5 official Agent Skill design patterns from Module 1?",
+      "options": [
+        "Informational, Tool Wrapper, Generator, Reviewer, and Workflow",
+        "Sequential, Parallel, Loop, Coordinator, and Router",
+        "Prepare, Scan, Remediate, Monitor, and Audit",
+        "Span, Trace, Session, Task, and Metric"
+      ],
+      "answer": 0,
+      "why": "Per §6.6 (M1L1 Slide 7), the 5 Skill Patterns are: Informational (context for an environment/task), Tool Wrapper (how to use an existing tool/CLI), Generator (content of a specific format), Reviewer (criteria to assess work), and Workflow (repeatable multi-step sequence)."
+    },
+    {
+      "id": 209,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 19",
+      "q": "When a standalone skill is registered in Agent Registry, how are updates to its instructions or code versioned?",
+      "options": [
+        "Through an immutable SkillRevision resource under the parent Skill and Publisher resources",
+        "By overwriting the inline Agent Card JSON file on Cloud Run",
+        "By creating a new GCP project for every version",
+        "Standalone skills cannot be versioned once created"
+      ],
+      "answer": 0,
+      "why": "Standalone skills are managed, versioned, and listed through the Skill, SkillRevision, and Publisher resources in Agent Registry."
+    },
+    {
+      "id": 400,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Self-Test #2 & Trigger #3 | M0L7 Slides 10–12",
+      "q": "How do ADK workflow agents (SequentialAgent, ParallelAgent, LoopAgent) orchestrate their sub-agents?",
+      "options": [
+        "Using predefined deterministic logic without consulting an AI model to orchestrate (while sub-agents can still be LLM agents and call tools)",
+        "By calling an LLM router before every step to decide which sub-agent runs next",
+        "By prohibiting sub-agents from using an LLM or calling any tools",
+        "By converting all sub-agents into static SQL queries"
+      ],
+      "answer": 0,
+      "why": "Workflow agents (SequentialAgent, ParallelAgent, LoopAgent) run sub-agents using predefined logic (in order, concurrently, or repeated) without consulting an AI model to orchestrate. Sub-agents can still be LLM agents and call tools."
+    },
+    {
+      "id": 401,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Trigger #2 | M0L7 Slide 25",
+      "q": "A team is building a pipeline where three steps always run in the exact same order and no model is needed to decide the route. Which design pattern should they choose?",
+      "options": [
+        "A deterministic workflow pattern (such as SequentialAgent)",
+        "An LLM coordinator pattern, because every routing decision requires a model call",
+        "A standalone SkillRevision resource without ADK",
+        "An unauthenticated webhook loop"
+      ],
+      "answer": 0,
+      "why": "Google's design guidance (§1.2): if the steps are predefined and no model needs to orchestrate them, use a deterministic workflow pattern. Use agentic patterns (coordinator) only when the model must decide the route."
+    },
+    {
+      "id": 402,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Trigger #1 | M0L6 Slides 6–7",
+      "q": "When you pass a Python function as an ADK tool, how does ADK build the tool schema that the model sees?",
+      "options": [
+        "From the function's name, docstring, parameters, type hints, and default values",
+        "By reading the full Python function body and inline # comments",
+        "From a hand-written JSON schema file that you must author manually for every tool",
+        "From the function's return statement only"
+      ],
+      "answer": 0,
+      "why": "ADK builds the tool schema from the function's name, docstring (becomes description), parameters, type hints, and default values. You never hand-write JSON schemas for function tools."
+    },
+    {
+      "id": 403,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Trigger #1 | M0L6 Slides 6–7",
+      "q": "In an ADK Python function tool, which parameters are treated as REQUIRED, and what does the model NEVER see?",
+      "options": [
+        "Parameters without default values are required, and the model never sees the function body or # comments",
+        "Parameters with default values are required, and the model reads inline # comments for hints",
+        "All parameters are optional, and the model inspects the entire Python function body",
+        "Only string parameters are required, and the model ignores the docstring"
+      ],
+      "answer": 0,
+      "why": "Parameters without default values are marked required in the tool schema; the docstring becomes the tool description; the model never sees the function body or # comments."
+    },
+    {
+      "id": 404,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Trigger #3 | M3L1 Slide 9",
+      "q": "Which node types are supported in an ADK 2.0 graph workflow, and how are parallel branches merged?",
+      "options": [
+        "Functions, human input, Tools, and LLM capabilities (agents), with Join nodes merging parallel branches",
+        "LLM agent nodes only; graphs cannot include plain functions or human input",
+        "Tools and SQL nodes only, merged by a LoopAgent",
+        "Only Model Armor templates and Service resources"
+      ],
+      "answer": 0,
+      "why": "ADK 2.0 graphs support four node types: Functions, human input, Tools, and LLM capabilities (agents), and use Join nodes to merge parallel branches."
+    },
+    {
+      "id": 405,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Trigger #3 | M3L1 Slide 9",
+      "q": "In an ADK 2.0 graph, what is the difference between setting data on an Event's 'state' field versus using 'output'?",
+      "options": [
+        "Setting an Event's 'state' field lets any downstream node read it, whereas 'output' passes data only to the immediate next node",
+        "'output' is readable by all downstream nodes, whereas 'state' only reaches the immediate next node",
+        "Both 'state' and 'output' pass data only to the immediate next node",
+        "Neither 'state' nor 'output' can pass data between graph nodes"
+      ],
+      "answer": 0,
+      "why": "Nodes set shared state through an Event's 'state' field so any downstream node can read it. 'output' passes data only to the immediate next node."
+    },
+    {
+      "id": 406,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Trigger #5 | M3L1 Slide 10",
+      "q": "Which of the following is NOT a real ADK SessionService implementation (a classic exam distractor)?",
+      "options": [
+        "TextEmbeddingService",
+        "InMemorySessionService",
+        "DatabaseSessionService",
+        "VertexAiSessionService"
+      ],
+      "answer": 0,
+      "why": "The three real SessionService implementations are InMemorySessionService, DatabaseSessionService, and VertexAiSessionService. 'TextEmbeddingService' is a classic made-up distractor called out in §1.2."
+    },
+    {
+      "id": 407,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals | Trigger #5 | M3L1 Slide 10",
+      "q": "What does ADK's SessionService do during a conversation?",
+      "options": [
+        "Loads and saves Session objects (one conversation's state and event history) and applies 'state_delta' from each event",
+        "Generates vector embeddings for PDF files stored in Cloud Storage",
+        "Builds the tool schema from Python docstrings and type hints",
+        "Issues 3-legged OAuth tokens for third-party SaaS applications"
+      ],
+      "answer": 0,
+      "why": "SessionService loads and saves Session objects (state and event history) and applies the 'state_delta' from each event."
+    },
+    {
+      "id": 408,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & §5 Trigger #2 | M0L7 Slides 15–16",
+      "q": "A parent Coordinator LLM agent fails to delegate tasks to a specialist sub-agent. What is the most likely fix in ADK?",
+      "options": [
+        "Give the sub-agent a clear, specific 'name' and 'description' in Agent(name=..., description=...)",
+        "Rewrite the sub-agent as a C++ binary",
+        "Remove the docstring from all Python function tools",
+        "Switch from VertexAiSessionService to TextEmbeddingService"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #2, when an LLM coordinator fails to route to a specialist sub-agent, the sub-agent is missing a clear, specific 'name' and 'description' in Agent(name=..., description=...)."
+    },
+    {
+      "id": 409,
+      "topicId": "adk_fundamentals",
+      "topic": "ADK 2.0 Fundamentals & Graphs",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #17 | M3L1 Slides 14–19",
+      "q": "In ADK's before_tool_callback, what happens when the callback returns None versus returning a dict?",
+      "options": [
+        "Returning None allows normal tool execution; returning a dict blocks/short-circuits the tool and returns that dict to the LLM",
+        "Returning None blocks the tool call; returning a dict allows normal execution",
+        "Returning a dict deletes the current session state",
+        "Both None and dict skip the tool call and terminate the agent"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #17: In before_tool_callback, return None to ALLOW normal tool execution; return a dict to BLOCK/SHORT-CIRCUIT the tool and return that dict directly to the LLM."
+    },
+    {
+      "id": 500,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #17 | M3L1 Slide 10",
+      "q": "An ADK developer wants to store a user's preferred language in session state so it persists across multiple conversation sessions for that specific user. Which state prefix should they use?",
+      "options": [
+        "user: (e.g., state['user:preferred_language'])",
+        "temp: (cleared after the current invocation)",
+        "app: (shared globally across all users of the application)",
+        "No prefix (persists only within the single current session)"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #17: ADK has 4 state scopes: unprefixed (current session only), 'user:' (persists across sessions for that specific user), 'app:' (global across all users), and 'temp:' (cleared after the current invocation)."
+    },
+    {
+      "id": 501,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #17 | M3L1 Slide 10",
+      "q": "In ADK state management, what happens to keys written with the 'temp:' prefix (such as state['temp:scratch_data'])?",
+      "options": [
+        "They exist only during the current invocation (turn) and are automatically cleared when the turn finishes",
+        "They persist permanently across all users in VertexAiSessionService",
+        "They are automatically exported to BigQuery after 60 minutes",
+        "They cause the SessionService to reset the user's conversation history"
+      ],
+      "answer": 0,
+      "why": "The 'temp:' prefix is for temporary scratch data needed only within the current invocation; ADK clears 'temp:' keys once the invocation completes."
+    },
+    {
+      "id": 502,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slides 10–12",
+      "q": "In a SequentialAgent pipeline, Agent 1 summarizes a report and Agent 2 needs to read that summary in its system instruction. What is the standard ADK pattern?",
+      "options": [
+        "Set output_key='summary' on Agent 1, and reference '{summary}' in Agent 2's instruction",
+        "Have Agent 1 write to a local file in /tmp and have Agent 2 call a bash tool",
+        "Set include_contents='none' on both agents",
+        "Pass Agent 1 inside Agent 2's generate_content_config"
+      ],
+      "answer": 0,
+      "why": "Setting output_key='summary' saves Agent 1's final response to session.state['summary'], and Agent 2 automatically injects it into its prompt via the '{summary}' placeholder."
+    },
+    {
+      "id": 503,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slide 11",
+      "q": "Two sub-agents inside a ParallelAgent run concurrently and save their outputs to session state. How should you prevent them from overwriting each other?",
+      "options": [
+        "Configure a distinct output_key on each sub-agent (e.g., output_key='data_a' and output_key='data_b')",
+        "Configure the exact same output_key on both sub-agents so ADK merges them",
+        "Disable SessionService when running ParallelAgent",
+        "Set max_iterations=1 on the ParallelAgent"
+      ],
+      "answer": 0,
+      "why": "Sub-agents in a ParallelAgent execute concurrently against the same session.state, so each branch must write to a distinct output_key to avoid race conditions."
+    },
+    {
+      "id": 504,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slide 12",
+      "q": "How does a sub-agent or tool stop an ADK LoopAgent early before it hits max_iterations?",
+      "options": [
+        "Emit an Event with EventActions(escalate=True) (or set tool_context.actions.escalate = True)",
+        "Return None from the LLM prompt",
+        "Raise a Python RuntimeError inside the tool",
+        "Set disallow_transfer_to_parent=True"
+      ],
+      "answer": 0,
+      "why": "LoopAgent repeats its sub-agents until either max_iterations is reached or a sub-agent/tool emits an event with escalate=True."
+    },
+    {
+      "id": 505,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slides 15–18",
+      "q": "What is the difference between wrapping a specialist agent in AgentTool(specialist) versus adding it to sub_agents=[specialist]?",
+      "options": [
+        "With AgentTool, the parent invokes the specialist like a tool and stays in control; with sub_agents, the parent transfers conversation control to the specialist",
+        "With sub_agents, the parent stays in control; with AgentTool, the specialist takes over the conversation permanently",
+        "AgentTool only works on GKE, whereas sub_agents only works on Cloud Run",
+        "There is no difference; both permanently hand off control to the specialist"
+      ],
+      "answer": 0,
+      "why": "AgentTool wraps an agent as a callable tool so its answer returns to the parent agent (which stays in control). Listing it in sub_agents delegates/transfers control of the turn."
+    },
+    {
+      "id": 506,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — Tab 2 M3L1 & Tab 3 M0L6",
+      "q": "What important limitation applies when you configure output_schema (a Pydantic model) on an ADK LlmAgent?",
+      "options": [
+        "Using output_schema disables tool calling and sub-agent delegation for that agent",
+        "Using output_schema disables VertexAiSessionService",
+        "Using output_schema requires hand-writing a toolspec.json file",
+        "output_schema is only supported on third-party models via LiteLLM"
+      ],
+      "answer": 0,
+      "why": "In ADK, setting output_schema on an LlmAgent enforces structured JSON output, which disables tool calling and sub-agent delegation for that specific agent."
+    },
+    {
+      "id": 507,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #17 | M3L1 Slides 14–19",
+      "q": "A developer uses before_model_callback as a guardrail to block disallowed prompts before calling Gemini. What should the callback return?",
+      "options": [
+        "Return an LlmResponse object to skip the model call (or return None to allow the model call to proceed)",
+        "Return None to block the model call, and return True to allow it",
+        "Return a numeric HTTP status code like 403",
+        "before_model_callback can only log prompts and cannot skip the model call"
+      ],
+      "answer": 0,
+      "why": "In before_model_callback, returning None allows the LLM request to proceed normally, whereas returning an LlmResponse object short-circuits the LLM call and returns that response directly."
+    },
+    {
+      "id": 508,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Triggers #4, #5 & #6 | M0L9 Slides 6–15",
+      "q": "A customer wants zero compute cost ($0) when their ADK agent sits idle overnight and on weekends. Which runtime should they choose?",
+      "options": [
+        "Cloud Run, because it scales to zero when idle (while Agent Runtime is best when they want turnkey managed sessions and Memory Bank)",
+        "GKE with always-on dedicated node pools",
+        "BigQuery Provisioned Throughput",
+        "Vertex AI Model Registry"
+      ],
+      "answer": 0,
+      "why": "Per Triggers #4–#6: Choose Cloud Run when the requirement is '$0 compute cost while idle' (scales to zero). Choose Agent Runtime for turnkey managed sessions (VertexAiSessionService) and Memory Bank. Choose GKE for custom networking or self-hosted open models."
+    },
+    {
+      "id": 509,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #7 | M0L5 Slides 6–8",
+      "q": "A Google Cloud CE is preparing a live customer screen-share demo of an agentic workflow on a 3P codebase. Should they use Jetski or Antigravity 2.0 (agy)?",
+      "options": [
+        "Antigravity 2.0 (agy), because Jetski is strictly internal-only (google3/Buganizer/Critique) and must NEVER be shown or screen-shared with customers",
+        "Jetski, because it is Google's external customer-facing IDE",
+        "Either tool, because both are approved for external customer screen-sharing",
+        "Neither; live demos can only be run inside HackerRank Secure Mode"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #7 (M0L5 Slides 6–8): Jetski is exclusively for internal productivity (google3, Buganizer, Critique) and must NEVER be shown to customers. Antigravity 2.0 (agy, authenticated via Argolis) is safe for customer-facing demos and 3P codebases."
+    },
+    {
+      "id": 300,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 24",
+      "q": "What type of cryptographic identity does Google Cloud Agent Identity assign to each agent?",
+      "options": [
+        "A dedicated SPIFFE-based identity with an X.509 certificate that is not shared and cannot be impersonated",
+        "A shared default Compute Engine service account JSON key",
+        "A static API key stored in an environment variable",
+        "A browser session cookie shared across all agents in the project"
+      ],
+      "answer": 0,
+      "why": "Each agent gets its own SPIFFE-based identity with an X.509 certificate assigned by Google Cloud. It is not shared and cannot be impersonated."
+    },
+    {
+      "id": 301,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Self-Test #4 & Trigger #15 | M2S2 Slide 25",
+      "q": "When an agent queries a Google Cloud resource like BigQuery, which identity does it use?",
+      "options": [
+        "The agent's own SPIFFE identity, governed by Google Cloud IAM",
+        "A 3-legged OAuth token issued by an external SaaS server",
+        "Its logical Agent Registry Identifier (urn:agent:...)",
+        "Agents never hold their own credential and must use an anonymous key"
+      ],
+      "answer": 0,
+      "why": "For Google Cloud resources (like BigQuery), the agent uses its own SPIFFE identity governed by IAM. Watch out for the wrong option claiming 'an agent never holds its own credential.'"
+    },
+    {
+      "id": 302,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Self-Test #4 & Trigger #15 | M2S2 Slide 26",
+      "q": "An agent needs to create a Jira ticket in a third-party SaaS app on the user's behalf. How does it authenticate?",
+      "options": [
+        "User-delegated 3-legged OAuth through the Agent Identity auth manager",
+        "The agent's own Google Cloud IAM service account",
+        "Hardcoding the user's credentials in the system prompt",
+        "Using an IAM deny policy on the BigQuery API"
+      ],
+      "answer": 0,
+      "why": "When calling a third-party SaaS app on the user's behalf, the agent uses user-delegated 3-legged OAuth through the Agent Identity auth manager."
+    },
+    {
+      "id": 303,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 26",
+      "q": "When an agent uses 3-legged OAuth via the Agent Identity auth manager to call a third-party SaaS API, who issues the access token?",
+      "options": [
+        "The third-party SaaS OAuth server",
+        "Google Cloud IAM",
+        "Model Armor",
+        "BigQuery"
+      ],
+      "answer": 0,
+      "why": "In user-delegated 3-legged OAuth for a third-party SaaS app, the token is issued by the SaaS OAuth server and managed by the Agent Identity auth manager."
+    },
+    {
+      "id": 304,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Self-Test #4 & Trigger #15 | M2S2 Slides 25–26",
+      "q": "In one workflow, an agent reads data from BigQuery and then updates a ticket in ServiceNow on the user's behalf. Which credentials does it use?",
+      "options": [
+        "Its own SPIFFE identity (IAM) for BigQuery, and user-delegated 3-legged OAuth for ServiceNow",
+        "One combined credential that authenticates to both BigQuery and ServiceNow",
+        "User-delegated 3-legged OAuth for both BigQuery and ServiceNow",
+        "Its SPIFFE identity for ServiceNow, and 3-legged OAuth for BigQuery"
+      ],
+      "answer": 0,
+      "why": "Classic §1.5 scenario: the agent uses its own SPIFFE identity (governed by IAM) for GCP resources like BigQuery, and user-delegated 3-legged OAuth for third-party SaaS apps."
+    },
+    {
+      "id": 305,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 28",
+      "q": "Which traffic directions does Google Cloud Agent Gateway govern?",
+      "options": [
+        "Both ingress (inbound to the agent) and egress (outbound from the agent to tools and other agents)",
+        "Egress traffic only",
+        "Ingress traffic only",
+        "Neither; Agent Gateway only handles token billing"
+      ],
+      "answer": 0,
+      "why": "Agent Gateway governs both ingress and egress traffic and enforces access policies. Watch out for traps saying it 'only handles egress' or 'only billing.'"
+    },
+    {
+      "id": 306,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 28",
+      "q": "A security team configures Agent Gateway with Model Armor to inspect an agent's tool calls and responses. What application code changes are required?",
+      "options": [
+        "No application code changes are needed",
+        "Every tool function must be rewritten to call the Model Armor REST API manually",
+        "The agent must be migrated from Python to Go",
+        "Every prompt must be manually encrypted inside the agent code"
+      ],
+      "answer": 0,
+      "why": "Agent Gateway is a fully managed component that governs ingress/egress traffic, enforces access policies, and integrates with Model Armor to inspect tool calls and responses with no app code changes needed."
+    },
+    {
+      "id": 307,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slides 24–29",
+      "q": "Which statement accurately describes the relationship between Agent Gateway and Agent Identity?",
+      "options": [
+        "Agent Gateway works alongside and requires Agent Identity; it does not replace Agent Identity",
+        "Agent Gateway replaces Agent Identity so agents no longer need SPIFFE certificates",
+        "Agent Gateway and Agent Identity cannot be used together",
+        "Agent Gateway is a container runtime that replaces Cloud Run and GKE"
+      ],
+      "answer": 0,
+      "why": "Watch out for the trap 'Gateway replaces Agent Identity.' Agent Gateway is a managed ingress/egress control point that works alongside Agent Identity."
+    },
+    {
+      "id": 308,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 & Tab 2 M2S2 Slide 25",
+      "q": "When deploying an agent to Agent Runtime, when can Agent Identity (--agent-identity) be enabled?",
+      "options": [
+        "Only when the agent is created",
+        "Only after the agent is deleted",
+        "Automatically whenever a file over 4 MB is uploaded",
+        "Only on third-party on-premises servers"
+      ],
+      "answer": 0,
+      "why": "On Agent Runtime, Agent Identity (--agent-identity) is immutable after creation and can only be enabled when the agent is first created."
+    },
+    {
+      "id": 309,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 & Tab 2 M2S2 Slide 29",
+      "q": "Why must a container image trust AGENT_GATEWAY_ROOT_CERTIFICATES when bound to an egress Agent Gateway?",
+      "options": [
+        "Because an egress Agent Gateway performs TLS decryption and inspection on outbound agent traffic",
+        "Because BigQuery requires client-side TLS certificates for SQL syntax parsing",
+        "Because Agent Registry stores skill files inside X.509 certificates",
+        "Because OAuth tokens are compiled into the Dockerfile at build time"
+      ],
+      "answer": 0,
+      "why": "An egress Agent Gateway performs TLS inspection (with Model Armor) on outbound communications, so the container image must trust the gateway's root CA."
+    },
+    {
+      "id": 600,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols (Swapped-Definition Trap) | Trigger #16 | M3L1 Slide 31",
+      "q": "What is the fundamental architectural difference between Model Context Protocol (MCP) and Agent2Agent (A2A)?",
+      "options": [
+        "MCP connects an agent to its tools, APIs, and data sources; A2A enables independent agents to discover each other and collaborate as peers",
+        "A2A connects an agent to databases and tools; MCP enables peer-to-peer delegation between autonomous agents",
+        "MCP is only for on-premises servers, while A2A is only for BigQuery SQL queries",
+        "MCP and A2A are identical protocols with different marketing names"
+      ],
+      "answer": 0,
+      "why": "Watch out for the classic swapped-definition trap (§1.6): MCP = agent ↔ tools, APIs, and data sources. A2A = agent ↔ agent (peer discovery and collaboration to delegate work)."
+    },
+    {
+      "id": 601,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Self-Test #8 & Trigger #16 | M3L1 Slide 31",
+      "q": "Which three core web technologies is the A2A protocol built on?",
+      "options": [
+        "HTTP, JSON-RPC 2.0, and Server-Sent Events (SSE)",
+        "WebSockets, GraphQL, and WebRTC",
+        "MQTT, Protobuf binary framing, and FTP",
+        "SOAP XML, CORBA, and Raw TCP sockets"
+      ],
+      "answer": 0,
+      "why": "Per Self-Test #8 and §1.6: A2A reuses existing web standards—specifically HTTP, JSON-RPC 2.0, and Server-Sent Events (SSE). Avoid exotic stack distractors like WebSockets/GraphQL/WebRTC or MQTT."
+    },
+    {
+      "id": 602,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Self-Test #8 & Trigger #16 | M3L1 Slide 32",
+      "q": "Where is an A2A Agent Card hosted according to the RFC 8615 well-known URI standard?",
+      "options": [
+        "https://{server_domain}/.well-known/agent-card.json (older versions used /.well-known/agent.json)",
+        "https://{server_domain}/api/v1/skills/SKILL.md",
+        "~/.gemini/config/skills/agent-card.yaml",
+        "urn:agent:google:agent-card"
+      ],
+      "answer": 0,
+      "why": "Per §1.6 & Self-Test #8: An A2A Agent Card is published at https://{server_domain}/.well-known/agent-card.json following RFC 8615 well-known URIs (older versions used /.well-known/agent.json)."
+    },
+    {
+      "id": 603,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Trigger #20 | M3L4 Slide 20",
+      "q": "What does Google's open-source MCP Toolbox for Databases handle for developers out of the box?",
+      "options": [
+        "Connection pooling, authentication (IAM), and OpenTelemetry observability, allowing database tools to be added to an agent in under 10 lines of code",
+        "Training custom foundation models directly inside Cloud SQL stored procedures",
+        "Replacing Agent Registry with a local SQLite catalog",
+        "Converting Python agents into Java servlets"
+      ],
+      "answer": 0,
+      "why": "Per §1.6 & Trigger #20: MCP Toolbox for Databases is Google's open-source MCP server for databases that handles connection pooling, IAM authentication, and observability so you can add DB tools in under 10 lines of code."
+    },
+    {
+      "id": 604,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Tab 3 M1L4",
+      "q": "What enterprise capabilities do Google-managed MCP servers layer on top of standard open-source MCP?",
+      "options": [
+        "MCP discovery (via Agent Registry), IAM and VPC Service Controls governance, spec-compliant auth, Model Armor scanning, and tracing/audit-log observability",
+        "Unlimited free Gemini Pro token usage with no IAM checks",
+        "Automatic removal of all system prompts to save context tokens",
+        "Direct bypass of VPC Service Controls perimeters"
+      ],
+      "answer": 0,
+      "why": "Per §1.6: Google-managed MCP servers add MCP discovery (via Agent Registry), IAM and VPC Service Controls governance, spec-compliant authentication, Model Armor scanning, and tracing/audit-log observability."
+    },
+    {
+      "id": 605,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 & §6.1 OpenTelemetry | Trigger #21 | M3L5 Slide 8",
+      "q": "What is the purpose of OpenTelemetry's 'gen_ai.*' semantic conventions in multi-agent systems?",
+      "options": [
+        "They standardize both attribute names and semantic meanings across libraries, languages, and providers, enabling consistent cross-vendor observability",
+        "They only standardize attribute names while leaving the meaning up to each vendor",
+        "They encrypt model weights stored in Cloud Storage",
+        "They replaceSessionService in ADK 2.0"
+      ],
+      "answer": 0,
+      "why": "Per §1.6 & Trigger #21: OpenTelemetry 'gen_ai.*' attributes make GenAI telemetry mean the same thing (both names and meanings) across libraries, languages, and model providers. Watch out for the trap 'OTel only standardizes names, not meanings.'"
+    },
+    {
+      "id": 606,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.1 OTel 4-Level Hierarchy | Trigger #21 | M3L5 Slides 8–10",
+      "q": "What is the correct 4-level OpenTelemetry GenAI observability hierarchy ordered from SMALLEST to LARGEST?",
+      "options": [
+        "1. SPAN (atomic call) < 2. TRACE (single turn) < 3. SESSION (multi-turn conversation) < 4. TASK (multi-agent workflow)",
+        "1. TRACE < 2. SPAN < 3. TASK < 4. SESSION",
+        "1. SESSION < 2. TRACE < 3. SPAN < 4. TASK",
+        "1. TASK < 2. SESSION < 3. TRACE < 4. SPAN"
+      ],
+      "answer": 0,
+      "why": "Per §6.1 & Trigger #21 (M3L5 Slides 8–10): Smallest to largest is: 1. SPAN (1 atomic LLM/tool/agent call) < 2. TRACE (1 end-to-end user turn) < 3. SESSION (multi-turn conversation) < 4. TASK (background workflow across agents/sessions, proposed)."
+    },
+    {
+      "id": 607,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 & Tab 3 M1L4",
+      "q": "An enterprise wants multiple teams' agents (built in different frameworks) to share standardized access to internal CRM and ERP tools without rewriting tool adapters for every agent. What should they adopt?",
+      "options": [
+        "Model Context Protocol (MCP) servers registered in Agent Registry",
+        "Inline Python FunctionTools copied and pasted into each team's codebase",
+        "Setting output_schema on every agent",
+        "Basic Sensitive Data Protection templates"
+      ],
+      "answer": 0,
+      "why": "MCP provides a universal open protocol connecting agents to shared tools, APIs, and data sources so tools are built once on an MCP server and reused across any MCP-compatible agent."
+    },
+    {
+      "id": 608,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 & Tab 2 M3L1 Slides 31–32",
+      "q": "Why does the A2A protocol include Server-Sent Events (SSE) alongside HTTP and JSON-RPC 2.0?",
+      "options": [
+        "To stream real-time task status updates and partial artifacts during long-running asynchronous agent-to-agent delegations",
+        "Because JSON-RPC 2.0 cannot transmit text strings over HTTP",
+        "To compile Python functions into WebAssembly in the browser",
+        "To bypass Agent Gateway TLS inspection"
+      ],
+      "answer": 0,
+      "why": "Peer agents often perform long-running, multi-step tasks; A2A uses Server-Sent Events (SSE) over HTTP to stream asynchronous progress updates and artifacts back to the calling agent."
+    },
+    {
+      "id": 609,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.1 OpenTelemetry | M3L5 Slide 8",
+      "q": "In OpenTelemetry GenAI semantic conventions, how are a Trace and its Spans structurally related during a single user-to-agent turn?",
+      "options": [
+        "A Trace represents the full end-to-end turn as a tree, where each Span is a node representing an atomic operation (e.g., an LLM call or tool execution)",
+        "A Span contains multiple Traces across different users",
+        "A Trace only logs billing costs, while a Span only logs HTTP errors",
+        "Traces and Spans are unrelated flat log files"
+      ],
+      "answer": 0,
+      "why": "Per §6.1: A Trace captures a single end-to-end user-to-agent turn as a tree structure, and Spans are the individual nodes representing each atomic operation (agent invocation, LLM call, or tool call)."
+    },
+    {
+      "id": 700,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13",
+      "q": "A customer's internal support agent gives a confident, fluent, but generic industry answer instead of using the company's own policy definition. What is the correct fix?",
+      "options": [
+        "Retrieval-Augmented Generation (grounding): retrieve the company's enterprise content at query time and supply it as context",
+        "Lower the model temperature to 0.0 without changing the context",
+        "Fine-tune a new foundation model checkpoint for every individual user question",
+        "Add 50 more unrelated tools to the agent's prompt"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #8: When an agent gives a confident but generic answer about company-specific facts, the fix is grounding (RAG)—fetching enterprise content at query time and providing it in context."
+    },
+    {
+      "id": 701,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13",
+      "q": "During a debugging task, an agent calls a tool that dumps 80,000 tokens of raw log files and stack traces into the conversation history, degrading reasoning quality. What is this failure mode called?",
+      "options": [
+        "Observation flooding (context bloat from massive raw tool outputs)",
+        "Context collapse (aggressive summarization dropping a needed fact)",
+        "Tool poisoning (compromised MCP server returning malicious instructions)",
+        "Semantic routing"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #8: 'Observation flooding' occurs when the context window fills with massive tool outputs (logs, file dumps, stack traces) rather than high-signal reasoning."
+    },
+    {
+      "id": 702,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13",
+      "q": "To save tokens in a long session, a developer adds an aggressive history summarizer. Later in the session, the agent fails because the summarizer deleted a specific port number read 10 turns earlier. What is this called?",
+      "options": [
+        "Context collapse (aggressive compression deleting a specific fact needed later)",
+        "Observation flooding",
+        "Tool bloat",
+        "Indirect prompt injection"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #8: 'Context collapse' happens when aggressive summarization or compression drops a specific detail (like a config value or port number) that the task needs in a later step."
+    },
+    {
+      "id": 703,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 & §6.5 Evaluation | Trigger #18 | M3L2 Slides 15–16, 23",
+      "q": "Why is final-response evaluation (or passing unit tests) insufficient on its own for evaluating an autonomous agent, and what complements it?",
+      "options": [
+        "Final-response evaluation misses 'right answer, wrong process'; Trajectory evaluation complements it by grading the reasoning path and sequence of tool calls (e.g., reading a file before editing it)",
+        "Final-response evaluation is too slow; only human review can check final answers",
+        "Trajectory evaluation only checks spelling, while final-response checks latency",
+        "Passing unit tests is always 100% sufficient proof of agent safety and quality"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #18: Final-response evaluation only checks the end output and misses 'right answer, wrong process.' Trajectory evaluation grades the path (reasoning and sequence of tool calls)."
+    },
+    {
+      "id": 704,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | Trigger #19 | M3L3 Slides 2–5",
+      "q": "What is the core formula of Harness Engineering, and what did LangChain prove on Terminal Bench 2.0 in March 2026?",
+      "options": [
+        "Agent = Model + Harness; by changing ONLY the harness (self-verification loops and context injection) with the exact same model, rank jumped from #30 (52.8%) to #5 (66.5%) (+13.7 points)",
+        "Agent = Prompt + Temperature; fine-tuning the model weights improved accuracy by 50%",
+        "Agent = GPU + Bandwidth; doubling batch size reduced latency by 90%",
+        "Agent = Database + UI; replacing Python with Rust increased score by 2 points"
+      ],
+      "answer": 0,
+      "why": "Per §6.3 & Trigger #19 (M3L3 Slides 2–5): The formula is 'Agent = Model + Harness' (Vivek Trivedy / Mitchell Hashimoto). On Terminal Bench 2.0, changing ONLY the harness jumped the same model from #30 (52.8%) to #5 (66.5%) (+13.7 pts)."
+    },
+    {
+      "id": 705,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.5 Coding Agent Evaluation | Trigger #18 | M3L2 Slide 15",
+      "q": "In the 7 Coding Agent Evaluation Dimensions (M3L2 Slide 15), how are the dimensions grouped, and what are Dimension 1 and Dimension 7?",
+      "options": [
+        "Grouped into User-Facing (Outside: 1–4) and Internal (Inside: 5–7) plus transversal Safety; Dim 1 is Intent Satisfaction and Dim 7 is Self-Repair Behaviour",
+        "Grouped by cloud provider; Dim 1 is Billing Cost and Dim 7 is Network Throughput",
+        "Grouped into SQL and NoSQL; Dim 1 is Schema Mapping and Dim 7 is Cache TTL",
+        "There are only 2 dimensions: Speed and Price"
+      ],
+      "answer": 0,
+      "why": "Per §6.5 & Trigger #18: User-Facing (Outside): 1. Intent Satisfaction, 2. Functional Correctness, 3. Visual/Behavioural, 4. Cost & Efficiency. Internal (Inside): 5. Code Quality & Conventions, 6. Trajectory Quality, 7. Self-Repair Behaviour (+ transversal Safety & RAI)."
+    },
+    {
+      "id": 706,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.6 Context Window Budget | M1L2 Slide 6",
+      "q": "What are the 4 Context Window Budget segments defined in Module 1 (M1L2 Slide 6)?",
+      "options": [
+        "1. System Prompt + 2. Tools & Retrieved Context + 3. Conversation History + 4. Free / Working Budget",
+        "1. CPU Cache + 2. RAM + 3. SSD Swap + 4. Network Buffer",
+        "1. Input Tokens + 2. Output Tokens + 3. Cached Tokens + 4. Billed Tokens",
+        "1. HTML + 2. CSS + 3. JavaScript + 4. Images"
+      ],
+      "answer": 0,
+      "why": "Per §6.6 (M1L2 Slide 6), the 4 Context Window Budget segments are: 1. System Prompt, 2. Tools & Retrieved Context, 3. Conversation History, and 4. Free / Working Budget."
+    },
+    {
+      "id": 707,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.5 Evaluation Prerequisite | M3L2 Slide 25",
+      "q": "According to Module 3 (M3L2 Slide 25), what is the mandatory foundational prerequisite before you can perform effective agent evaluation (such as trajectory inspection or online eval)?",
+      "options": [
+        "Observability (structured tracing and logging of turns, tool calls, and reasoning steps)",
+        "Deploying the agent on bare-metal servers",
+        "Disabling all third-party MCP tools",
+        "Purchasing Provisioned Throughput"
+      ],
+      "answer": 0,
+      "why": "Per §6.5 (M3L2 Slide 25): Observability is the prerequisite for all agent evaluation—you cannot grade trajectories or diagnose failures without capturing structured traces and spans."
+    },
+    {
+      "id": 708,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | M3L3 Slides 3, 5",
+      "q": "Google Antigravity is described in M3L3 as 'One harness, four surfaces.' What are the four surfaces?",
+      "options": [
+        "1. IDE, 2. CLI (agy), 3. SDK, and 4. Agent Manager",
+        "1. Chrome, 2. Android, 3. iOS, and 4. WearOS",
+        "1. BigQuery, 2. Spanner, 3. Cloud SQL, and 4. Firestore",
+        "1. Compute Engine, 2. GKE, 3. Cloud Run, and 4. App Engine"
+      ],
+      "answer": 0,
+      "why": "Per §6.3 (M3L3 Slides 3, 5): Google Antigravity provides 'One harness, four surfaces': 1. IDE, 2. CLI (agy), 3. SDK, and 4. Agent Manager."
+    },
+    {
+      "id": 709,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | M3L3 Slides 3, 12",
+      "q": "In the Google ADK Kotlin Port case study (M3L3 Slides 3 & 12), what did 4 engineers accomplish in 2 months using harness engineering, and what share of the codebase was tests?",
+      "options": [
+        "Generated 57,000+ lines of code (125,000+ lines changed) in 2 months, with ~35% of the codebase consisting of tests",
+        "Wrote 500 lines of code manually with 0% automated tests",
+        "Ported the codebase in 5 years using 200 contractors",
+        "Deleted all unit tests to speed up CI/CD builds"
+      ],
+      "answer": 0,
+      "why": "Per §6.3 (M3L3 Slides 3, 12): 4 engineers (3 EPE + 1 Cloud) generated 57,000+ LoC in 2 months with ~35% test coverage / ~35% of the codebase as tests."
+    },
+    {
+      "id": 800,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Self-Test #6 & Trigger #11 | M2S1 Slide 44",
+      "q": "What are the four stages of the Google AI Threat Defense framework (in order), and which stage does CodeMender's 'fix' capability belong to?",
+      "options": [
+        "Prepare → Scan and Prioritize → Remediate → Monitor; CodeMender's fix work belongs to Remediate (Stage 3)",
+        "Discover → Assess → Migrate → Optimize; CodeMender belongs to Assess",
+        "Register → Discover → Govern → Orchestrate; CodeMender belongs to Govern",
+        "Span → Trace → Session → Task; CodeMender belongs to Span"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Self-Test #6 (M2S1 Slide 44): The four AI Threat Defense stages are Prepare → Scan and Prioritize → Remediate → Monitor. CodeMender's patch generation, testing, and fixing happen in Stage 3: Remediate."
+    },
+    {
+      "id": 801,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slides 47–53",
+      "q": "A security team already uses an existing third-party SAST scanner and does not want to rip and replace it. How can they adopt CodeMender?",
+      "options": [
+        "CodeMender can import external SAST findings (via 'cm report import') and go straight to verify and fix, leaving the existing scanner in place",
+        "They must uninstall their existing SAST tool because CodeMender can only act on its own scan findings",
+        "They must first route all findings through Security Command Center Enterprise and wait 30 days",
+        "CodeMender cannot verify or patch vulnerabilities found by external tools"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender can import external findings ('cm report import') and proceed directly to 'cm verify' and 'cm fix', leaving the customer's existing scanner in place."
+    },
+    {
+      "id": 802,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slide 50",
+      "q": "Which set of CLI commands is provided by CodeMender?",
+      "options": [
+        "cm find, cm verify, cm fix, cm report (and cm report import for external findings)",
+        "cm build, cm deploy, cm scale, cm billing",
+        "adk scan, adk patch, adk push, adk rollback",
+        "gcloud armor scan, gcloud armor fix"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender's CLI commands are 'cm find', 'cm verify', 'cm fix', 'cm report', and 'cm report import'."
+    },
+    {
+      "id": 803,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slide 49",
+      "q": "Which 7 programming languages are officially supported by CodeMender?",
+      "options": [
+        "C/C++, Go, Java, Python, Ruby, Rust, and TypeScript",
+        "COBOL, Fortran, Pascal, Assembly, Perl, PHP, and Swift",
+        "Python and JavaScript only",
+        "SQL, HTML, CSS, YAML, JSON, Markdown, and Bash"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender supports 7 languages: C/C++, Go, Java, Python, Ruby, Rust, and TypeScript."
+    },
+    {
+      "id": 804,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slide 51",
+      "q": "Which model does CodeMender use by default, and how can a developer override it?",
+      "options": [
+        "Defaults to a Gemini Flash model; override it using the --model flag with a supported model identifier",
+        "Defaults to Gemini Ultra; can only be changed by filing a Google Cloud support ticket",
+        "Defaults to a local CPU regex engine; cannot use Gemini models",
+        "Defaults to PaLM 2; override by editing /etc/hosts"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender defaults to a Gemini Flash model, and users can override it with the '--model' CLI flag and a supported model identifier. Watch out for the trap 'Model can only be changed via a support ticket.'"
+    },
+    {
+      "id": 805,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #11 (Swapped-Definition Trap) | M2S2 Slide 5",
+      "q": "In agentic security threat modeling, what is the difference between Indirect Prompt Injection and Tool Poisoning?",
+      "options": [
+        "Indirect Prompt Injection hides malicious instructions inside external data/documents the agent reads; Tool Poisoning occurs when a compromised MCP server or tool returns malicious outputs or metadata",
+        "Tool Poisoning is when a user types a jailbreak directly into chat; Indirect Prompt Injection is when an MCP server binary is infected",
+        "Both terms refer exclusively to DDoS attacks on Cloud Load Balancing",
+        "Indirect Prompt Injection only affects images, while Tool Poisoning only affects audio"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #11 (M2S2 Slide 5): Indirect Prompt Injection = malicious instructions embedded inside external content/documents the agent reads. Tool Poisoning = compromised MCP servers or tools returning malicious outputs/instructions."
+    },
+    {
+      "id": 806,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 & §6.4 | M2S1 Slides 47–52",
+      "q": "Why does CodeMender include a dedicated verification step ('cm verify') between finding/importing a vulnerability and generating a patch ('cm fix')?",
+      "options": [
+        "To confirm whether the vulnerability is actually exploitable in the codebase and filter out SAST false positives before engineering a fix",
+        "To bill the customer double for input tokens",
+        "To upload the source code to a public GitHub repository",
+        "To convert all unit tests into Markdown files"
+      ],
+      "answer": 0,
+      "why": "Traditional SAST tools generate high false-positive noise; CodeMender verifies that findings are genuinely exploitable in context before generating and testing remediation patches."
+    },
+    {
+      "id": 807,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.4 Offensive AI Metrics | M2S1 Slides 18, 41–43",
+      "q": "According to the Module 2 Threat Intelligence slides (M2S1 Slides 18, 41–43), how has offensive AI impacted vulnerability exploitation speed and CVE coverage?",
+      "options": [
+        "Average Time-to-Exploit dropped to 1.6 days (down from 1.3 years in 2020), with 10x faster recon and 85% CVE coverage for generating working PoC exploits",
+        "Time-to-Exploit increased to 5 years because AI models refuse security prompts",
+        "Offensive AI only affects 1% of CVEs and requires 6 months of manual tuning per exploit",
+        "Annual CVEs dropped by 80% since 2020"
+      ],
+      "answer": 0,
+      "why": "Per §6.4 (M2S1 Slides 18, 41–43): Offensive AI achieves 10x faster recon, 85% CVE coverage (working PoCs from CVE descriptions), <30s autonomous stage handoffs, and 1.6 days average Time-to-Exploit (down from 1.3 years in 2020) vs 20–70 day human patching timelines."
+    },
+    {
+      "id": 808,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.4 Secure Agentic TDD Lab | M2S1 Slides 60–62",
+      "q": "In the Module 2 Secure Agentic TDD Lab (M2S1 Slides 60–62), what is the 4-step defense-in-depth loop when an coding agent accidentally introduces a hardcoded credential?",
+      "options": [
+        "1. CONTEXT.md workspace rules → 2. Custom Semgrep rule → 3. Git pre-commit hook blocks the commit → 4. Antigravity agent reads the error and self-corrects the code",
+        "1. Deploy to prod → 2. Wait for user bug report → 3. Roll back VM → 4. Delete repo",
+        "1. Disable Git → 2. Email security team → 3. Run Basic SDP → 4. Reboot Cloudtop",
+        "1. Floor settings → 2. Agent Registry → 3. BigQuery ObjectRef → 4. Provisioned Throughput"
+      ],
+      "answer": 0,
+      "why": "Per §6.4 (M2S1 Slides 60–62): The Secure Agentic TDD loop combines preventative rules (CONTEXT.md) with deterministic enforcement (Semgrep + Git pre-commit hook blocking the mock credential), triggering the Antigravity agent to analyze the hook error and self-correct."
+    },
+    {
+      "id": 809,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | M2S1 Slide 48",
+      "q": "How does CodeMender handle patch safety and developer governance during the Remediate stage?",
+      "options": [
+        "It generates candidate patches, validates them against tests to ensure no regressions, and presents them for human developer review and approval before committing",
+        "It force-pushes unreviewed binary patches directly to the production main branch without running tests",
+        "It deletes vulnerable files from production without creating a replacement patch",
+        "It only outputs a PDF report and cannot generate code diffs"
+      ],
+      "answer": 0,
+      "why": "Per §1.8: CodeMender generates patches, runs tests to verify the fix doesn't break functionality, and keeps a human developer in the loop to review and approve the patch before committing."
+    },
+    {
+      "id": 900,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 Gemini Cost & Capacity | Trigger #22 | M3L5 Slide 16",
+      "q": "How are tokens used to CREATE a context cache billed in Gemini for implicit versus explicit caching?",
+      "options": [
+        "Billed at the standard input token price for BOTH implicit and explicit caching (neither free nor double price)",
+        "Cache creation is completely free for both implicit and explicit caching",
+        "Cache creation is billed at 2x the standard input price for explicit caching only",
+        "Cache creation is billed at the output token price"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & Trigger #22: Tokens used to create a cache are billed at the standard input price for BOTH implicit and explicit caching. Watch out for traps saying 'Cache creation is free' or 'double price.'"
+    },
+    {
+      "id": 901,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 Gemini Cost & Capacity | Self-Test #7 & Trigger #22 | M3L5 Slides 16–17",
+      "q": "What is the billing difference between Explicit Caching and Implicit Caching for cache STORAGE, and what discount do cached reads receive on Gemini 2.5+ models?",
+      "options": [
+        "Explicit caching charges storage based on TTL; implicit caching has NO storage cost; cached reads receive ~90% discount on Gemini 2.5+ models",
+        "Implicit caching charges TTL storage; explicit caching has no storage cost; cached reads receive a 10% discount",
+        "Both explicit and implicit caching charge hourly TTL storage fees",
+        "Neither explicit nor implicit caching offers a discount on cached read tokens"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & Self-Test #7: Explicit caching charges storage based on TTL (how long the cache is kept), whereas implicit caching has NO storage cost. Cached reads get ~90% discount on Gemini 2.5+ models."
+    },
+    {
+      "id": 902,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 & §6.2 | Trigger #22 | M3L5 Slide 17",
+      "q": "What are the minimum token thresholds for context caching on Gemini 2.5 Flash versus Gemini 3.x Flash?",
+      "options": [
+        "Gemini 2.5 Flash = 2,048 tokens; Gemini 3.x Flash = 4,096 tokens",
+        "Both models require a minimum of 100,000 tokens",
+        "Gemini 2.5 Flash = 32,768 tokens; Gemini 3.x Flash = 128 tokens",
+        "There is no minimum token threshold for any Gemini model"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & §6.2 (Trigger #22): Minimum tokens for caching vary by model—Gemini 2.5 Flash is 2,048 tokens, and Gemini 3.x Flash is 4,096 tokens."
+    },
+    {
+      "id": 903,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 Gemini Cost & Capacity | Trigger #22 | M3L5 Slides 15, 18",
+      "q": "Which statement accurately describes what Vertex AI Provisioned Throughput (PT) supports and does NOT support?",
+      "options": [
+        "PT supports fine-tuned models, but does NOT support batch prediction and does NOT cover calls made by other Agent Platform products (e.g., Agent Search) even when using the same model",
+        "PT covers batch prediction jobs and all Agent Search queries automatically, but does not support fine-tuned models",
+        "PT only works for batch prediction and cannot be used for real-time online traffic",
+        "PT is only available for third-party open-source models on GKE"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & Trigger #22: Provisioned Throughput supports fine-tuned models, but does NOT support batch prediction and does NOT cover calls made by other Agent Platform products (such as Agent Search) even with the same model."
+    },
+    {
+      "id": 904,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 & §6.2 Semantic Routing | M3L5 Slide 19",
+      "q": "How does Semantic Routing reduce total Gemini inference spend without sacrificing quality on hard tasks, and what are the 5 Gemini Consumption Tiers?",
+      "options": [
+        "Routes simple queries to Flash-Lite and complex queries to Pro (~3x cost gap); the 5 tiers are Provisioned Throughput, Standard PayGo, Priority PayGo, Flex PayGo, and Batch Inference (50% discount)",
+        "Routes all queries to Gemini Ultra; the 5 tiers are Bronze, Silver, Gold, Platinum, and Diamond",
+        "Truncates every user prompt to 10 tokens; the 5 tiers are Dev, Test, Stage, Prod, and Archive",
+        "Disables system prompts on weekends"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & §6.2 (M3L5 Slides 15, 19): Semantic routing sends simple queries to Flash-Lite and complex ones to Pro. The 5 consumption tiers are: 1. Provisioned Throughput, 2. Standard PayGo, 3. Priority PayGo, 4. Flex PayGo, and 5. Batch Inference (50% discount)."
+    },
+    {
+      "id": 905,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.10 GE Connectors | Trigger #10 | M1L6 Slides 6, 10, 16",
+      "q": "Users complain that when they query Microsoft SharePoint through a Gemini Enterprise Federated Connector, they are prompted for a second Microsoft sign-in. Why does this happen?",
+      "options": [
+        "It is expected behavior (not a misconfiguration): Federated connectors query Microsoft live with the user's delegated permissions so SharePoint enforces that user's current ACLs; Workforce Identity Federation does NOT remove it",
+        "Workforce Identity Federation (WIF) is misconfigured; enabling WIF eliminates the second sign-in prompt",
+        "The SharePoint data store is corrupted and needs to be re-indexed into BigQuery",
+        "Model Armor is blocking the OAuth redirect URL"
+      ],
+      "answer": 0,
+      "why": "Per §1.10 & Trigger #10: The second sign-in is NOT a misconfiguration. Federated connectors query Microsoft live using the user's delegated OAuth token so SharePoint enforces real-time ACLs (no stale index). Deploying WIF does NOT remove the second sign-in."
+    },
+    {
+      "id": 906,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.10 BigQuery ObjectRef | Trigger #20 | M3L4 Slide 14",
+      "q": "What is a BigQuery 'ObjectRef' column used for in multimodal agent architectures, and what are its four STRUCT fields?",
+      "options": [
+        "A STRUCT of 'uri', 'version', 'authorizer' (Cloud resource connection), and 'details' (managed metadata: content type, size, hash, updated)—it does NOT cache object bytes and is NOT a signed URL",
+        "A BLOB column that caches the raw MP4/PDF file bytes directly inside BigQuery storage",
+        "A temporary pre-signed HTTP URL that expires after 15 minutes",
+        "A foreign key that points only to Cloud Spanner tables"
+      ],
+      "answer": 0,
+      "why": "Per §1.10 & Trigger #20 (M3L4 Slide 14): ObjectRef is a STRUCT of 'uri', 'version', 'authorizer' (the Cloud resource connection BigQuery uses to reach the object), and 'details' (content type, size, hash, updated). Watch out for traps saying it caches bytes or is a signed URL."
+    },
+    {
+      "id": 907,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.6 & §5 Trigger #9 | M1L5 Slides 3, 17–18, 22",
+      "q": "What are the 4 phases of the Google Cloud Migration Framework (in exact order), and what advantages does Cloud Run offer when migrating from AWS Lambda?",
+      "options": [
+        "1. Assess → 2. Plan & Build → 3. Migrate → 4. Optimize; Cloud Run is container-based (any language), supports up to 60-min timeout (vs Lambda's 15-min limit), and handles concurrent requests per instance",
+        "1. Estimate → 2. Discover → 3. Assess → 4. Plan → 5. Migrate; Cloud Run has a 5-min timeout limit",
+        "1. Prepare → 2. Scan → 3. Remediate → 4. Monitor; Cloud Run requires rewriting all code in Go",
+        "1. Spec → 2. Scaffold → 3. Build → 4. Deploy; Cloud Run charges 24/7 even when idle"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #9 & §6.6 (M1L5 Slides 3, 17–18): The 4-Phase Migration Framework is 1. Assess → 2. Plan & Build → 3. Migrate → 4. Optimize (don't confuse with the 5-step Migration Center journey). Cloud Run beats Lambda with container portability, up to 60-min timeout vs 15-min, and multi-request concurrency."
+    },
+    {
+      "id": 908,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.6 google-agents-cli | M0L3 Slide 63",
+      "q": "What is the correct 8-stage agent development lifecycle supported by 'google-agents-cli' (M0L3 Slide 63)?",
+      "options": [
+        "Spec → Scaffold → Build → Orchestrate → Evaluate → Deploy → Publish → Observe",
+        "Plan → Code → Zip → Upload → Bill → Delete → Archive → Repeat",
+        "Register → Discover → Govern → Orchestrate → Prepare → Scan → Remediate → Monitor",
+        "Assess → Plan & Build → Migrate → Optimize → Span → Trace → Session → Task"
+      ],
+      "answer": 0,
+      "why": "Per §6.6 (M0L3 Slide 63): The 8 stages of google-agents-cli are Spec → Scaffold → Build → Orchestrate → Evaluate → Deploy → Publish → Observe."
+    },
+    {
+      "id": 909,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — Tab 3 M0L2 Slide 8",
+      "q": "When scoping an enterprise agentic AI business case with a customer (Module 0), what is the recommended 4-step value-framing sequence?",
+      "options": [
+        "1. Define Business KPI → 2. Define Cost Per Task (not cost per token) → 3. Calculate Expected Savings → 4. Frame Value vs. Spend",
+        "1. Quote cost per 1M tokens → 2. Pick the largest model → 3. Buy GPUs → 4. Define KPIs next year",
+        "1. Deploy to GKE → 2. Enable Basic SDP → 3. Run CodeMender → 4. Measure token count",
+        "1. Migrate from AWS → 2. Enable SharePoint connector → 3. Create ObjectRef → 4. Close deal"
+      ],
+      "answer": 0,
+      "why": "Per Tab 3 (Module 0 Scoping): Frame business value around Cost Per Task (not raw cost per token): 1. Define Business KPI → 2. Define Cost Per Task → 3. Calculate Expected Savings → 4. Frame Value vs. Spend."
+    }
+  ]
+}

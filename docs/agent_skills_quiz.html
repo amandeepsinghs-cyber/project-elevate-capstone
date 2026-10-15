@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Skills Standard Quiz (10 Questions) — Project Elevate Capstone</title>
+<style>
+  body { font-family: 'Inter', Arial, sans-serif; background:#f8fafc; margin:0; padding:24px; color:#0f172a; }
+  .card { max-width:840px; margin:auto; background:#fff; border-radius:12px; padding:28px; box-shadow:0 2px 10px rgba(15,23,42,.08); border:1px solid #e2e8f0; }
+  .topic-nav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; padding-bottom:12px; border-bottom:2px solid #e2e8f0; align-items:center; }
+  .topic-link { text-decoration:none; font-size:12px; font-weight:600; padding:5px 10px; border-radius:14px; background:#f1f5f9; color:#475569; border:1px solid transparent; transition:all .15s; }
+  .topic-link:hover { background:#e8f0fe; color:#1a73e8; }
+  .topic-link.active { background:#1a73e8; color:#fff; }
+  .topic-link.hub { background:#0f172a; color:#fff; }
+  .header-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px; }
+  h1 { font-size:20px; color:#0f172a; margin:0; }
+  .badge { font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:6px; display:inline-block; }
+  .badge-critical { background:#fef2f2; color:#dc2626; border:1px solid #fecaca; }
+  .badge-high { background:#fffbeb; color:#d97706; border:1px solid #fde68a; }
+  .badge-mod { background:#f1f5f9; color:#475569; border:1px solid #e2e8f0; }
+  .doc-ref { background:#f1f5f9; border-radius:8px; padding:8px 12px; font-size:12px; color:#475569; margin-bottom:14px; font-family:monospace; }
+  .bar { height:6px; background:#e2e8f0; border-radius:3px; margin:14px 0 18px; overflow:hidden; }
+  .fill { height:6px; background:#1a73e8; border-radius:3px; width:0; transition:width .3s; }
+  .q { font-size:17px; margin-bottom:16px; line-height:1.45; font-weight:600; }
+  .opt { display:block; width:100%; text-align:left; padding:12px 14px; margin:8px 0; border:1.5px solid #cbd5e1; border-radius:8px; background:#fff; font-size:15px; cursor:pointer; transition:all .15s; }
+  .opt:hover:not(:disabled) { background:#e8f0fe; border-color:#1a73e8; }
+  .opt.correct { background:#dcfce7; border-color:#22c55e; color:#14532d; font-weight:bold; }
+  .opt.wrong { background:#fef2f2; border-color:#ef4444; color:#7f1d1d; }
+  .explain { margin-top:16px; padding:12px 14px; background:#f8fafc; border-left:4px solid #1a73e8; font-size:14px; display:none; line-height:1.5; border-radius:0 6px 6px 0; }
+  .btn { margin-top:14px; padding:9px 16px; background:#1a73e8; color:#fff; border:none; border-radius:6px; font-size:13.5px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-block; }
+  .btn.secondary { background:#fff; color:#1a73e8; border:1px solid #1a73e8; }
+  .btn.critical { background:#dc2626; color:#fff; }
+</style>
+</head>
+<body>
+<div class="card" id="app"></div>
+<script>
+const TOPIC_META = {"id": "agent_skills", "title": "Agent Skills Standard", "shortTitle": "Agent Skills (§1.1)", "icon": "🧩", "module": "M1", "examWeight": "20% (Module 1)", "priority": "CRITICAL", "rankNote": "#3 Priority — Start Here After Registry", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills & §5 Trigger #8", "slideRef": "M1L1 Slides 7–11", "summary": "Progressive disclosure (name + description only at startup), solving tool bloat, SKILL.md YAML frontmatter (description required, name optional), .agents/skills/ vs ~/.gemini/config/skills/.", "quizFile": "agent_skills_quiz.html"};
+const ALL_TOPICS = [{"id": "model_armor", "title": "Model Armor", "shortTitle": "Model Armor (§1.7)", "icon": "🛡️", "module": "M2", "examWeight": "30% (Module 2)", "priority": "CRITICAL", "rankNote": "#1 Most Heavily Tested Topic", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor & §5 Trigger #12", "slideRef": "M2S2 Slides 38–51", "summary": "Floor settings, HIGH vs LOW_AND_ABOVE confidence, Inspect-only rollout, Basic vs Advanced SDP, 4 MB skip/no-bill limit, CSAM always-on, 40-URL limit, and OCR image screening.", "quizFile": "model_armor_quiz.html"}, {"id": "agent_registry", "title": "Agent Registry", "shortTitle": "Agent Registry (§1.4)", "icon": "🗂️", "module": "M2", "examWeight": "30% (Module 2)", "priority": "CRITICAL", "rankNote": "#2 Most Heavily Tested Topic", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry & §5 Triggers #13–#14", "slideRef": "M2S2 Slides 15–20", "summary": "3 core goals, auto-registration vs manual writable Service resource, read-only Agent/McpServer/Endpoint, urn:agent Identifier vs principal:// IAM Principal, A2A vs standalone skills.", "quizFile": "agent_registry_quiz.html"}, {"id": "agent_skills", "title": "Agent Skills Standard", "shortTitle": "Agent Skills (§1.1)", "icon": "🧩", "module": "M1", "examWeight": "20% (Module 1)", "priority": "CRITICAL", "rankNote": "#3 Priority — Start Here After Registry", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills & §5 Trigger #8", "slideRef": "M1L1 Slides 7–11", "summary": "Progressive disclosure (name + description only at startup), solving tool bloat, SKILL.md YAML frontmatter (description required, name optional), .agents/skills/ vs ~/.gemini/config/skills/.", "quizFile": "agent_skills_quiz.html"}, {"id": "adk_fundamentals", "title": "ADK 2.0 Fundamentals & Graphs", "shortTitle": "ADK Fundamentals (§1.2)", "icon": "⚙️", "module": "M3", "examWeight": "35% (Module 3) / 15% (M0)", "priority": "CRITICAL", "rankNote": "#4 Priority — Core Agent Engineering", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals & §5 Triggers #1–#3, #17", "slideRef": "M0L6 Slides 6–7; M0L7 Slides 10–25; M3L1 Slides 9–19", "summary": "Deterministic workflow agents (Sequential/Parallel/Loop) vs LLM coordinator, function tool schema generation, ADK 2.0 graph nodes & Event.state vs output, SessionService, before_tool_callback.", "quizFile": "adk_fundamentals_quiz.html"}, {"id": "adk_exam_scenarios", "title": "ADK Architecture & Runtimes", "shortTitle": "ADK Scenarios & Runtimes", "icon": "🚀", "module": "M0", "examWeight": "15% (Module 0) / 35% (M3)", "priority": "CRITICAL", "rankNote": "High-Frequency Architecture Scenarios", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.2, §5 Triggers #4–#7, #17", "slideRef": "M0L5 Slides 6–8; M0L9 Slides 6–15; M3L1 Slides 10–19", "summary": "State prefixes (user:, app:, temp:), Sequential/Parallel output_key, LoopAgent escalate=True, AgentTool vs sub_agents, output_schema trade-offs, Cloud Run ($0 idle) vs Agent Runtime vs GKE.", "quizFile": "adk_exam_scenarios_quiz.html"}, {"id": "agent_identity", "title": "Agent Identity & Agent Gateway", "shortTitle": "Identity & Gateway (§1.5)", "icon": "🔐", "module": "M2", "examWeight": "30% (Module 2)", "priority": "HIGH_VALUE", "rankNote": "Classic Dual-Auth Exam Scenario", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway & §5 Trigger #15", "slideRef": "M2S2 Slides 24–29", "summary": "SPIFFE X.509 certificate identity, GCP IAM (BigQuery) vs user-delegated 3-legged OAuth (3P SaaS via auth manager), Agent Gateway ingress/egress governance + Model Armor with zero code changes.", "quizFile": "agent_identity_quiz.html"}, {"id": "protocols_mcp_a2a_otel", "title": "Protocols: MCP, A2A & OpenTelemetry", "shortTitle": "MCP, A2A & OTel (§1.6)", "icon": "🌐", "module": "M3", "examWeight": "35% (Module 3)", "priority": "HIGH_VALUE", "rankNote": "Swapped-Definition & URI Traps", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.6, §6.1 & §5 Triggers #16, #20, #21", "slideRef": "M3L1 Slides 31–32; M3L4 Slide 20; M3L5 Slides 8–10", "summary": "MCP (agent ↔ tools/data) vs A2A (agent ↔ agent), HTTP + JSON-RPC 2.0 + SSE, RFC 8615 /.well-known/agent-card.json, MCP Toolbox for DBs (<10 LoC), OTel gen_ai.* & SPAN < TRACE < SESSION < TASK.", "quizFile": "protocols_mcp_a2a_otel_quiz.html"}, {"id": "context_eval_harness", "title": "Context, Grounding, Eval & Harness Eng", "shortTitle": "Context, Eval & Harness (§1.3)", "icon": "📐", "module": "M3", "examWeight": "35% (Module 3) / 20% (M1)", "priority": "HIGH_VALUE", "rankNote": "Failure Diagnosis & Trajectory Eval", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.3, §6.3, §6.5 & §5 Triggers #8, #18, #19", "slideRef": "M1L2 Slides 6, 13; M3L2 Slides 15–25; M3L3 Slides 2–12", "summary": "RAG grounding for company definitions, observation flooding vs context collapse, trajectory vs final-response eval, 7 coding eval dimensions, Agent = Model + Harness (+13.7 pts Terminal Bench 2.0).", "quizFile": "context_eval_harness_quiz.html"}, {"id": "codemender_threat_defense", "title": "CodeMender & AI Threat Defense", "shortTitle": "CodeMender & Threats (§1.8)", "icon": "🛠️", "module": "M2", "examWeight": "30% (Module 2)", "priority": "HIGH_VALUE", "rankNote": "SAST Integration & 4-Stage Framework", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.8, §6.4 & §5 Trigger #11", "slideRef": "M2S1 Slides 18, 41–53, 60–62; M2S2 Slide 5", "summary": "4 AI Threat Defense stages (CodeMender in Remediate), importing external SAST findings (cm report import -> cm verify -> cm fix), 7 languages, Gemini Flash (--model), Indirect PI vs Tool Poisoning.", "quizFile": "codemender_threat_defense_quiz.html"}, {"id": "gemini_finops_enterprise", "title": "Gemini FinOps, Caching, GE & ObjectRef", "shortTitle": "FinOps, Caching & GE (§1.9–1.10)", "icon": "💎", "module": "M3", "examWeight": "35% (Module 3) / 20% (M1)", "priority": "HIGH_VALUE", "rankNote": "Caching Billing, PT Limits & SharePoint ACLs", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.9, §1.10, §6.2, §6.6 & §5 Triggers #9, #10, #20, #22", "slideRef": "M1L5 Slides 3, 17–26; M1L6 Slides 6–16; M3L4 Slide 14; M3L5 Slides 14–19", "summary": "Standard input price for cache creation, Explicit TTL storage vs free Implicit storage, 2,048 vs 4,096 min tokens, PT exclusions, Semantic Routing, GE Federated 2nd sign-in, BigQuery ObjectRef, AWS migration.", "quizFile": "gemini_finops_enterprise_quiz.html"}];
+const questions = [{"id": 200, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 8", "q": "What does an agent load into context at startup for each available Agent Skill?", "options": ["Only each skill's name and description; the full SKILL.md is read only when the agent judges the skill relevant", "The entire SKILL.md file for every installed skill", "All files inside scripts/, examples/, and resources/ up front", "Nothing at all until the user explicitly types a slash command"], "answer": 0, "why": "Agent Skills use progressive disclosure: only each skill's name and description load at startup. The full SKILL.md is read only when the agent judges the skill relevant."}, {"id": 201, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 6", "q": "Which core problem are Agent Skills and progressive disclosure designed to solve?", "options": ["Tool bloat, where loading hundreds of tools and rules into context makes the agent slower, costlier, and worse at picking the right one", "Network latency between Cloud Run and BigQuery", "Lack of encryption in third-party OAuth tokens", "Container cold starts on GKE Autopilot"], "answer": 0, "why": "Skills solve 'tool bloat'—where loading too many tools and instructions up front overwhelms the context window, increasing latency/cost and degrading tool selection accuracy."}, {"id": 202, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 11", "q": "Where should a team store a PROJECT-SPECIFIC (workspace) skill so it is version-controlled and shared with the repo?", "options": ["<project-root>/.agents/skills/<skill>/", "~/.gemini/config/skills/<skill>/", "/etc/google/skills/<skill>/", "<project-root>/.well-known/skills/"], "answer": 0, "why": "Project-specific (workspace) skills live at <project-root>/.agents/skills/<skill>/. Watch out for the trap offering ~/.gemini/config/skills/, which is the global path."}, {"id": 203, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 11", "q": "A developer wants a custom skill to be available globally across all projects in Antigravity, the IDE, and the CLI. Where should they place it?", "options": ["~/.gemini/config/skills/", "<project-root>/.agents/skills/", "~/.config/gcloud/skills/", "/usr/local/share/adk/skills/"], "answer": 0, "why": "Global skills live at ~/.gemini/config/skills/ and work across Antigravity, the IDE, and the CLI."}, {"id": 204, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 9", "q": "In a skill's required SKILL.md YAML frontmatter, which field is REQUIRED and which is OPTIONAL?", "options": ["description is required; name is optional", "name is required; description is optional", "Both name and version are required; description is optional", "No YAML frontmatter is used in SKILL.md"], "answer": 0, "why": "In SKILL.md YAML frontmatter, 'description' is required (since the agent uses it to judge relevance), and 'name' is optional."}, {"id": 205, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 9", "q": "Besides the required SKILL.md file, what optional subdirectories can an Agent Skill folder contain?", "options": ["scripts/, examples/, and resources/", "Nothing else; a skill folder can never contain anything but SKILL.md", "Only compiled Docker images", "Only Terraform state files"], "answer": 0, "why": "A skill folder contains SKILL.md (required) plus optional scripts/, examples/, and resources/ directories."}, {"id": 206, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 10", "q": "How can an Agent Skill be activated during a session?", "options": ["Automatically when the prompt's intent matches the skill's description, or explicitly with a slash command (/skill-name)", "Only when the user explicitly types a slash command (/skill-name)", "Only by restarting the agent container with a --skill flag", "Only through a Cloud Scheduler cron job"], "answer": 0, "why": "Skills activate either automatically (when the prompt's intent matches the skill's description) or explicitly via a slash command (/skill-name)."}, {"id": 207, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slides 8–9", "q": "An agent never automatically activates a newly created skill even when the user asks a relevant question. What is the most likely cause?", "options": ["The skill's description in SKILL.md frontmatter is vague or missing the trigger keywords for that task", "The user did not type the /skill-name slash command, which is mandatory for all skills", "The optional scripts/ directory is empty", "The skill was placed in <project-root>/.agents/skills/ instead of /tmp/"], "answer": 0, "why": "Because the agent only sees each skill's name and description at startup, automatic activation relies on matching the prompt's intent to the YAML frontmatter description."}, {"id": 208, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 & §6.6 | M1L1 Slide 7", "q": "Which of the following correctly lists the 5 official Agent Skill design patterns from Module 1?", "options": ["Informational, Tool Wrapper, Generator, Reviewer, and Workflow", "Sequential, Parallel, Loop, Coordinator, and Router", "Prepare, Scan, Remediate, Monitor, and Audit", "Span, Trace, Session, Task, and Metric"], "answer": 0, "why": "Per §6.6 (M1L1 Slide 7), the 5 Skill Patterns are: Informational (context for an environment/task), Tool Wrapper (how to use an existing tool/CLI), Generator (content of a specific format), Reviewer (criteria to assess work), and Workflow (repeatable multi-step sequence)."}, {"id": 209, "topicId": "agent_skills", "topic": "Agent Skills Standard", "module": "M1", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 19", "q": "When a standalone skill is registered in Agent Registry, how are updates to its instructions or code versioned?", "options": ["Through an immutable SkillRevision resource under the parent Skill and Publisher resources", "By overwriting the inline Agent Card JSON file on Cloud Run", "By creating a new GCP project for every version", "Standalone skills cannot be versioned once created"], "answer": 0, "why": "Standalone skills are managed, versioned, and listed through the Skill, SkillRevision, and Publisher resources in Agent Registry."}];
+const STORAGE_KEY = "project_elevate_unified_mistakes_v1";
+const LOCAL_API_URL = "http://127.0.0.1:8765/api/mistakes";
+
+let activePool = [];
+let current = 0;
+let score = 0;
+let criticalFirst = true;
+let sessionMistakes = [];
+let mistakesMap = {};
+
+function loadMistakes() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) mistakesMap = JSON.parse(raw);
+  } catch (e) {}
+}
+function saveMistakes(item, wrongChoice) {
+  loadMistakes();
+  const ex = mistakesMap[item.id];
+  mistakesMap[item.id] = {
+    ...item,
+    yours: wrongChoice,
+    correct: item.options[item.answer],
+    missCount: ex ? (ex.missCount || 1) + 1 : 1,
+    lastMissed: new Date().toLocaleDateString()
+  };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(mistakesMap)); } catch (e) {}
+  fetch(LOCAL_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ updatedAt: new Date().toISOString(), questions: Object.values(mistakesMap) })
+  }).catch(() => {});
+}
+function shuffle(a) {
+  const c = [...a];
+  for (let i = c.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [c[i], c[j]] = [c[j], c[i]];
+  }
+  return c;
+}
+function renderNav() {
+  return `<div class="topic-nav">
+    <a class="topic-link hub" href="index.html">🏠 Hub & Mock Exams</a>
+    ${ALL_TOPICS.map(t => `<a class="topic-link ${t.id === TOPIC_META.id ? 'active' : ''}" href="${t.quizFile}">${t.icon} ${t.shortTitle}</a>`).join("")}
+  </div>`;
+}
+function start(orderCrit = true) {
+  criticalFirst = orderCrit;
+  const crit = shuffle(questions.filter(q => q.priority === "CRITICAL"));
+  const high = shuffle(questions.filter(q => q.priority !== "CRITICAL"));
+  activePool = criticalFirst ? [...crit, ...high] : shuffle(questions);
+  current = 0; score = 0; sessionMistakes = [];
+  show();
+}
+function show() {
+  const item = activePool[current];
+  const opts = shuffle(item.options.map((t, i) => ({ t, right: i === item.answer })));
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    ${renderNav()}
+    <div class="header-row">
+      <h1>${TOPIC_META.icon} ${TOPIC_META.title} (10 Questions)</h1>
+      <div>
+        ${TOPIC_META.priority === 'CRITICAL' ? '<span class="badge badge-critical">🔥 CRITICAL TOPIC</span>' : '<span class="badge badge-high">⚡ HIGH VALUE TOPIC</span>'}
+        <span class="badge badge-mod">${TOPIC_META.examWeight}</span>
+      </div>
+    </div>
+    <div class="doc-ref">📖 <b>Doc Reference:</b> ${item.docRef}</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:#475569;">
+      <span>Question <b>${current + 1} of ${activePool.length}</b> &nbsp;|&nbsp; Score: <b>${score}</b></span>
+      <div>
+        ${item.priority === 'CRITICAL' ? '<span class="badge badge-critical">🔥 CRITICAL — Practice First</span>' : '<span class="badge badge-high">⚡ HIGH VALUE</span>'}
+        <button class="btn secondary" style="margin:0 0 0 8px;padding:4px 10px;font-size:12px;" onclick="start(${!criticalFirst})">
+          ${criticalFirst ? "🔀 Shuffle All" : "🔥 Order Critical First"}
+        </button>
+      </div>
+    </div>
+    <div class="bar"><div class="fill" style="width:${((current + 1) / activePool.length) * 100}%"></div></div>
+    <div class="q">${item.q}</div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div id="next"></div>
+  `;
+  const box = document.getElementById("opts");
+  opts.forEach(o => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.textContent = o.t;
+    b.onclick = () => pick(b, o, opts, item);
+    box.appendChild(b);
+  });
+}
+function pick(btn, chosen, opts, item) {
+  document.querySelectorAll(".opt").forEach((b, i) => {
+    b.disabled = true;
+    if (opts[i].right) b.classList.add("correct");
+  });
+  if (chosen.right) {
+    score++;
+  } else {
+    btn.classList.add("wrong");
+    sessionMistakes.push({ item, yours: chosen.t, correct: item.options[item.answer] });
+    saveMistakes(item, chosen.t);
+  }
+  const ex = document.getElementById("explain");
+  ex.style.display = "block";
+  ex.innerHTML = (chosen.right ? "<b>✅ Correct!</b> " : "<b>❌ Incorrect (Saved to Wrong Answers Bank).</b> ") + item.why + `<br><small style="color:#64748b;font-family:monospace;">📌 ${item.docRef}</small>`;
+  const last = current === activePool.length - 1;
+  document.getElementById("next").innerHTML = `<button class="btn" onclick="${last ? 'finish()' : 'nextQ()'}">${last ? 'See Results' : 'Next Question →'}</button>`;
+}
+function nextQ() { current++; show(); }
+function finish() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    ${renderNav()}
+    <h1>${TOPIC_META.icon} ${TOPIC_META.title} — Results: ${score} / ${activePool.length}</h1>
+    <p>${score >= 9 ? "✅ Passed (≥90%)! Ready for the next topic." : "⚠️ Below 9/10 pass bar. Review the missed questions below and retake."}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+      <button class="btn" onclick="start(true)">🔄 Retake (Critical First)</button>
+      <a class="btn secondary" href="index.html">🏠 Back to Full Hub & Mock Exams</a>
+    </div>
+    ${sessionMistakes.map(m => `
+      <div class="explain" style="display:block;border-left-color:#dc2626;margin-bottom:10px;">
+        <b>${m.item.q}</b><br>
+        <span style="color:#dc2626;">Your answer:</span> ${m.yours}<br>
+        <span style="color:#15803d;">Correct:</span> ${m.correct}<br>
+        ${m.item.why}<br>
+        <small style="font-family:monospace;color:#64748b;">📖 ${m.item.docRef}</small>
+      </div>
+    `).join("")}
+  `;
+}
+loadMistakes();
+start(true);
+</script>
+</body>
+</html>

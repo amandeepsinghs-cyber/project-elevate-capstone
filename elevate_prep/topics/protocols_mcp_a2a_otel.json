@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "protocols_mcp_a2a_otel",
+    "title": "Protocols: MCP, A2A & OpenTelemetry",
+    "shortTitle": "MCP, A2A & OTel (§1.6)",
+    "icon": "🌐",
+    "module": "M3",
+    "examWeight": "35% (Module 3)",
+    "priority": "HIGH_VALUE",
+    "rankNote": "Swapped-Definition & URI Traps",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.6, §6.1 & §5 Triggers #16, #20, #21",
+    "slideRef": "M3L1 Slides 31–32; M3L4 Slide 20; M3L5 Slides 8–10",
+    "summary": "MCP (agent ↔ tools/data) vs A2A (agent ↔ agent), HTTP + JSON-RPC 2.0 + SSE, RFC 8615 /.well-known/agent-card.json, MCP Toolbox for DBs (<10 LoC), OTel gen_ai.* & SPAN < TRACE < SESSION < TASK.",
+    "quizFile": "protocols_mcp_a2a_otel_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 6,
+  "questions": [
+    {
+      "id": 600,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols (Swapped-Definition Trap) | Trigger #16 | M3L1 Slide 31",
+      "q": "What is the fundamental architectural difference between Model Context Protocol (MCP) and Agent2Agent (A2A)?",
+      "options": [
+        "MCP connects an agent to its tools, APIs, and data sources; A2A enables independent agents to discover each other and collaborate as peers",
+        "A2A connects an agent to databases and tools; MCP enables peer-to-peer delegation between autonomous agents",
+        "MCP is only for on-premises servers, while A2A is only for BigQuery SQL queries",
+        "MCP and A2A are identical protocols with different marketing names"
+      ],
+      "answer": 0,
+      "why": "Watch out for the classic swapped-definition trap (§1.6): MCP = agent ↔ tools, APIs, and data sources. A2A = agent ↔ agent (peer discovery and collaboration to delegate work)."
+    },
+    {
+      "id": 601,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Self-Test #8 & Trigger #16 | M3L1 Slide 31",
+      "q": "Which three core web technologies is the A2A protocol built on?",
+      "options": [
+        "HTTP, JSON-RPC 2.0, and Server-Sent Events (SSE)",
+        "WebSockets, GraphQL, and WebRTC",
+        "MQTT, Protobuf binary framing, and FTP",
+        "SOAP XML, CORBA, and Raw TCP sockets"
+      ],
+      "answer": 0,
+      "why": "Per Self-Test #8 and §1.6: A2A reuses existing web standards—specifically HTTP, JSON-RPC 2.0, and Server-Sent Events (SSE). Avoid exotic stack distractors like WebSockets/GraphQL/WebRTC or MQTT."
+    },
+    {
+      "id": 602,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Self-Test #8 & Trigger #16 | M3L1 Slide 32",
+      "q": "Where is an A2A Agent Card hosted according to the RFC 8615 well-known URI standard?",
+      "options": [
+        "https://{server_domain}/.well-known/agent-card.json (older versions used /.well-known/agent.json)",
+        "https://{server_domain}/api/v1/skills/SKILL.md",
+        "~/.gemini/config/skills/agent-card.yaml",
+        "urn:agent:google:agent-card"
+      ],
+      "answer": 0,
+      "why": "Per §1.6 & Self-Test #8: An A2A Agent Card is published at https://{server_domain}/.well-known/agent-card.json following RFC 8615 well-known URIs (older versions used /.well-known/agent.json)."
+    },
+    {
+      "id": 603,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Trigger #20 | M3L4 Slide 20",
+      "q": "What does Google's open-source MCP Toolbox for Databases handle for developers out of the box?",
+      "options": [
+        "Connection pooling, authentication (IAM), and OpenTelemetry observability, allowing database tools to be added to an agent in under 10 lines of code",
+        "Training custom foundation models directly inside Cloud SQL stored procedures",
+        "Replacing Agent Registry with a local SQLite catalog",
+        "Converting Python agents into Java servlets"
+      ],
+      "answer": 0,
+      "why": "Per §1.6 & Trigger #20: MCP Toolbox for Databases is Google's open-source MCP server for databases that handles connection pooling, IAM authentication, and observability so you can add DB tools in under 10 lines of code."
+    },
+    {
+      "id": 604,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 Protocols | Tab 3 M1L4",
+      "q": "What enterprise capabilities do Google-managed MCP servers layer on top of standard open-source MCP?",
+      "options": [
+        "MCP discovery (via Agent Registry), IAM and VPC Service Controls governance, spec-compliant auth, Model Armor scanning, and tracing/audit-log observability",
+        "Unlimited free Gemini Pro token usage with no IAM checks",
+        "Automatic removal of all system prompts to save context tokens",
+        "Direct bypass of VPC Service Controls perimeters"
+      ],
+      "answer": 0,
+      "why": "Per §1.6: Google-managed MCP servers add MCP discovery (via Agent Registry), IAM and VPC Service Controls governance, spec-compliant authentication, Model Armor scanning, and tracing/audit-log observability."
+    },
+    {
+      "id": 605,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 & §6.1 OpenTelemetry | Trigger #21 | M3L5 Slide 8",
+      "q": "What is the purpose of OpenTelemetry's 'gen_ai.*' semantic conventions in multi-agent systems?",
+      "options": [
+        "They standardize both attribute names and semantic meanings across libraries, languages, and providers, enabling consistent cross-vendor observability",
+        "They only standardize attribute names while leaving the meaning up to each vendor",
+        "They encrypt model weights stored in Cloud Storage",
+        "They replaceSessionService in ADK 2.0"
+      ],
+      "answer": 0,
+      "why": "Per §1.6 & Trigger #21: OpenTelemetry 'gen_ai.*' attributes make GenAI telemetry mean the same thing (both names and meanings) across libraries, languages, and model providers. Watch out for the trap 'OTel only standardizes names, not meanings.'"
+    },
+    {
+      "id": 606,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.1 OTel 4-Level Hierarchy | Trigger #21 | M3L5 Slides 8–10",
+      "q": "What is the correct 4-level OpenTelemetry GenAI observability hierarchy ordered from SMALLEST to LARGEST?",
+      "options": [
+        "1. SPAN (atomic call) < 2. TRACE (single turn) < 3. SESSION (multi-turn conversation) < 4. TASK (multi-agent workflow)",
+        "1. TRACE < 2. SPAN < 3. TASK < 4. SESSION",
+        "1. SESSION < 2. TRACE < 3. SPAN < 4. TASK",
+        "1. TASK < 2. SESSION < 3. TRACE < 4. SPAN"
+      ],
+      "answer": 0,
+      "why": "Per §6.1 & Trigger #21 (M3L5 Slides 8–10): Smallest to largest is: 1. SPAN (1 atomic LLM/tool/agent call) < 2. TRACE (1 end-to-end user turn) < 3. SESSION (multi-turn conversation) < 4. TASK (background workflow across agents/sessions, proposed)."
+    },
+    {
+      "id": 607,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 & Tab 3 M1L4",
+      "q": "An enterprise wants multiple teams' agents (built in different frameworks) to share standardized access to internal CRM and ERP tools without rewriting tool adapters for every agent. What should they adopt?",
+      "options": [
+        "Model Context Protocol (MCP) servers registered in Agent Registry",
+        "Inline Python FunctionTools copied and pasted into each team's codebase",
+        "Setting output_schema on every agent",
+        "Basic Sensitive Data Protection templates"
+      ],
+      "answer": 0,
+      "why": "MCP provides a universal open protocol connecting agents to shared tools, APIs, and data sources so tools are built once on an MCP server and reused across any MCP-compatible agent."
+    },
+    {
+      "id": 608,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.6 & Tab 2 M3L1 Slides 31–32",
+      "q": "Why does the A2A protocol include Server-Sent Events (SSE) alongside HTTP and JSON-RPC 2.0?",
+      "options": [
+        "To stream real-time task status updates and partial artifacts during long-running asynchronous agent-to-agent delegations",
+        "Because JSON-RPC 2.0 cannot transmit text strings over HTTP",
+        "To compile Python functions into WebAssembly in the browser",
+        "To bypass Agent Gateway TLS inspection"
+      ],
+      "answer": 0,
+      "why": "Peer agents often perform long-running, multi-step tasks; A2A uses Server-Sent Events (SSE) over HTTP to stream asynchronous progress updates and artifacts back to the calling agent."
+    },
+    {
+      "id": 609,
+      "topicId": "protocols_mcp_a2a_otel",
+      "topic": "Protocols: MCP, A2A & OpenTelemetry",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.1 OpenTelemetry | M3L5 Slide 8",
+      "q": "In OpenTelemetry GenAI semantic conventions, how are a Trace and its Spans structurally related during a single user-to-agent turn?",
+      "options": [
+        "A Trace represents the full end-to-end turn as a tree, where each Span is a node representing an atomic operation (e.g., an LLM call or tool execution)",
+        "A Span contains multiple Traces across different users",
+        "A Trace only logs billing costs, while a Span only logs HTTP errors",
+        "Traces and Spans are unrelated flat log files"
+      ],
+      "answer": 0,
+      "why": "Per §6.1: A Trace captures a single end-to-end user-to-agent turn as a tree structure, and Spans are the individual nodes representing each atomic operation (agent invocation, LLM call, or tool call)."
+    }
+  ]
+}

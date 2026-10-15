@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "context_eval_harness",
+    "title": "Context, Grounding, Eval & Harness Eng",
+    "shortTitle": "Context, Eval & Harness (§1.3)",
+    "icon": "📐",
+    "module": "M3",
+    "examWeight": "35% (Module 3) / 20% (M1)",
+    "priority": "HIGH_VALUE",
+    "rankNote": "Failure Diagnosis & Trajectory Eval",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.3, §6.3, §6.5 & §5 Triggers #8, #18, #19",
+    "slideRef": "M1L2 Slides 6, 13; M3L2 Slides 15–25; M3L3 Slides 2–12",
+    "summary": "RAG grounding for company definitions, observation flooding vs context collapse, trajectory vs final-response eval, 7 coding eval dimensions, Agent = Model + Harness (+13.7 pts Terminal Bench 2.0).",
+    "quizFile": "context_eval_harness_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 5,
+  "questions": [
+    {
+      "id": 700,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13",
+      "q": "A customer's internal support agent gives a confident, fluent, but generic industry answer instead of using the company's own policy definition. What is the correct fix?",
+      "options": [
+        "Retrieval-Augmented Generation (grounding): retrieve the company's enterprise content at query time and supply it as context",
+        "Lower the model temperature to 0.0 without changing the context",
+        "Fine-tune a new foundation model checkpoint for every individual user question",
+        "Add 50 more unrelated tools to the agent's prompt"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #8: When an agent gives a confident but generic answer about company-specific facts, the fix is grounding (RAG)—fetching enterprise content at query time and providing it in context."
+    },
+    {
+      "id": 701,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13",
+      "q": "During a debugging task, an agent calls a tool that dumps 80,000 tokens of raw log files and stack traces into the conversation history, degrading reasoning quality. What is this failure mode called?",
+      "options": [
+        "Observation flooding (context bloat from massive raw tool outputs)",
+        "Context collapse (aggressive summarization dropping a needed fact)",
+        "Tool poisoning (compromised MCP server returning malicious instructions)",
+        "Semantic routing"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #8: 'Observation flooding' occurs when the context window fills with massive tool outputs (logs, file dumps, stack traces) rather than high-signal reasoning."
+    },
+    {
+      "id": 702,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13",
+      "q": "To save tokens in a long session, a developer adds an aggressive history summarizer. Later in the session, the agent fails because the summarizer deleted a specific port number read 10 turns earlier. What is this called?",
+      "options": [
+        "Context collapse (aggressive compression deleting a specific fact needed later)",
+        "Observation flooding",
+        "Tool bloat",
+        "Indirect prompt injection"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #8: 'Context collapse' happens when aggressive summarization or compression drops a specific detail (like a config value or port number) that the task needs in a later step."
+    },
+    {
+      "id": 703,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 & §6.5 Evaluation | Trigger #18 | M3L2 Slides 15–16, 23",
+      "q": "Why is final-response evaluation (or passing unit tests) insufficient on its own for evaluating an autonomous agent, and what complements it?",
+      "options": [
+        "Final-response evaluation misses 'right answer, wrong process'; Trajectory evaluation complements it by grading the reasoning path and sequence of tool calls (e.g., reading a file before editing it)",
+        "Final-response evaluation is too slow; only human review can check final answers",
+        "Trajectory evaluation only checks spelling, while final-response checks latency",
+        "Passing unit tests is always 100% sufficient proof of agent safety and quality"
+      ],
+      "answer": 0,
+      "why": "Per §1.3 & Trigger #18: Final-response evaluation only checks the end output and misses 'right answer, wrong process.' Trajectory evaluation grades the path (reasoning and sequence of tool calls)."
+    },
+    {
+      "id": 704,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | Trigger #19 | M3L3 Slides 2–5",
+      "q": "What is the core formula of Harness Engineering, and what did LangChain prove on Terminal Bench 2.0 in March 2026?",
+      "options": [
+        "Agent = Model + Harness; by changing ONLY the harness (self-verification loops and context injection) with the exact same model, rank jumped from #30 (52.8%) to #5 (66.5%) (+13.7 points)",
+        "Agent = Prompt + Temperature; fine-tuning the model weights improved accuracy by 50%",
+        "Agent = GPU + Bandwidth; doubling batch size reduced latency by 90%",
+        "Agent = Database + UI; replacing Python with Rust increased score by 2 points"
+      ],
+      "answer": 0,
+      "why": "Per §6.3 & Trigger #19 (M3L3 Slides 2–5): The formula is 'Agent = Model + Harness' (Vivek Trivedy / Mitchell Hashimoto). On Terminal Bench 2.0, changing ONLY the harness jumped the same model from #30 (52.8%) to #5 (66.5%) (+13.7 pts)."
+    },
+    {
+      "id": 705,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.5 Coding Agent Evaluation | Trigger #18 | M3L2 Slide 15",
+      "q": "In the 7 Coding Agent Evaluation Dimensions (M3L2 Slide 15), how are the dimensions grouped, and what are Dimension 1 and Dimension 7?",
+      "options": [
+        "Grouped into User-Facing (Outside: 1–4) and Internal (Inside: 5–7) plus transversal Safety; Dim 1 is Intent Satisfaction and Dim 7 is Self-Repair Behaviour",
+        "Grouped by cloud provider; Dim 1 is Billing Cost and Dim 7 is Network Throughput",
+        "Grouped into SQL and NoSQL; Dim 1 is Schema Mapping and Dim 7 is Cache TTL",
+        "There are only 2 dimensions: Speed and Price"
+      ],
+      "answer": 0,
+      "why": "Per §6.5 & Trigger #18: User-Facing (Outside): 1. Intent Satisfaction, 2. Functional Correctness, 3. Visual/Behavioural, 4. Cost & Efficiency. Internal (Inside): 5. Code Quality & Conventions, 6. Trajectory Quality, 7. Self-Repair Behaviour (+ transversal Safety & RAI)."
+    },
+    {
+      "id": 706,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.6 Context Window Budget | M1L2 Slide 6",
+      "q": "What are the 4 Context Window Budget segments defined in Module 1 (M1L2 Slide 6)?",
+      "options": [
+        "1. System Prompt + 2. Tools & Retrieved Context + 3. Conversation History + 4. Free / Working Budget",
+        "1. CPU Cache + 2. RAM + 3. SSD Swap + 4. Network Buffer",
+        "1. Input Tokens + 2. Output Tokens + 3. Cached Tokens + 4. Billed Tokens",
+        "1. HTML + 2. CSS + 3. JavaScript + 4. Images"
+      ],
+      "answer": 0,
+      "why": "Per §6.6 (M1L2 Slide 6), the 4 Context Window Budget segments are: 1. System Prompt, 2. Tools & Retrieved Context, 3. Conversation History, and 4. Free / Working Budget."
+    },
+    {
+      "id": 707,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.5 Evaluation Prerequisite | M3L2 Slide 25",
+      "q": "According to Module 3 (M3L2 Slide 25), what is the mandatory foundational prerequisite before you can perform effective agent evaluation (such as trajectory inspection or online eval)?",
+      "options": [
+        "Observability (structured tracing and logging of turns, tool calls, and reasoning steps)",
+        "Deploying the agent on bare-metal servers",
+        "Disabling all third-party MCP tools",
+        "Purchasing Provisioned Throughput"
+      ],
+      "answer": 0,
+      "why": "Per §6.5 (M3L2 Slide 25): Observability is the prerequisite for all agent evaluation—you cannot grade trajectories or diagnose failures without capturing structured traces and spans."
+    },
+    {
+      "id": 708,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | M3L3 Slides 3, 5",
+      "q": "Google Antigravity is described in M3L3 as 'One harness, four surfaces.' What are the four surfaces?",
+      "options": [
+        "1. IDE, 2. CLI (agy), 3. SDK, and 4. Agent Manager",
+        "1. Chrome, 2. Android, 3. iOS, and 4. WearOS",
+        "1. BigQuery, 2. Spanner, 3. Cloud SQL, and 4. Firestore",
+        "1. Compute Engine, 2. GKE, 3. Cloud Run, and 4. App Engine"
+      ],
+      "answer": 0,
+      "why": "Per §6.3 (M3L3 Slides 3, 5): Google Antigravity provides 'One harness, four surfaces': 1. IDE, 2. CLI (agy), 3. SDK, and 4. Agent Manager."
+    },
+    {
+      "id": 709,
+      "topicId": "context_eval_harness",
+      "topic": "Context, Grounding, Eval & Harness Eng",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | M3L3 Slides 3, 12",
+      "q": "In the Google ADK Kotlin Port case study (M3L3 Slides 3 & 12), what did 4 engineers accomplish in 2 months using harness engineering, and what share of the codebase was tests?",
+      "options": [
+        "Generated 57,000+ lines of code (125,000+ lines changed) in 2 months, with ~35% of the codebase consisting of tests",
+        "Wrote 500 lines of code manually with 0% automated tests",
+        "Ported the codebase in 5 years using 200 contractors",
+        "Deleted all unit tests to speed up CI/CD builds"
+      ],
+      "answer": 0,
+      "why": "Per §6.3 (M3L3 Slides 3, 12): 4 engineers (3 EPE + 1 Cloud) generated 57,000+ LoC in 2 months with ~35% test coverage / ~35% of the codebase as tests."
+    }
+  ]
+}

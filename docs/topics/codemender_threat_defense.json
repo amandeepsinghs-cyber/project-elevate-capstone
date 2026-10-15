@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "codemender_threat_defense",
+    "title": "CodeMender & AI Threat Defense",
+    "shortTitle": "CodeMender & Threats (§1.8)",
+    "icon": "🛠️",
+    "module": "M2",
+    "examWeight": "30% (Module 2)",
+    "priority": "HIGH_VALUE",
+    "rankNote": "SAST Integration & 4-Stage Framework",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.8, §6.4 & §5 Trigger #11",
+    "slideRef": "M2S1 Slides 18, 41–53, 60–62; M2S2 Slide 5",
+    "summary": "4 AI Threat Defense stages (CodeMender in Remediate), importing external SAST findings (cm report import -> cm verify -> cm fix), 7 languages, Gemini Flash (--model), Indirect PI vs Tool Poisoning.",
+    "quizFile": "codemender_threat_defense_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 5,
+  "questions": [
+    {
+      "id": 800,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Self-Test #6 & Trigger #11 | M2S1 Slide 44",
+      "q": "What are the four stages of the Google AI Threat Defense framework (in order), and which stage does CodeMender's 'fix' capability belong to?",
+      "options": [
+        "Prepare → Scan and Prioritize → Remediate → Monitor; CodeMender's fix work belongs to Remediate (Stage 3)",
+        "Discover → Assess → Migrate → Optimize; CodeMender belongs to Assess",
+        "Register → Discover → Govern → Orchestrate; CodeMender belongs to Govern",
+        "Span → Trace → Session → Task; CodeMender belongs to Span"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Self-Test #6 (M2S1 Slide 44): The four AI Threat Defense stages are Prepare → Scan and Prioritize → Remediate → Monitor. CodeMender's patch generation, testing, and fixing happen in Stage 3: Remediate."
+    },
+    {
+      "id": 801,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slides 47–53",
+      "q": "A security team already uses an existing third-party SAST scanner and does not want to rip and replace it. How can they adopt CodeMender?",
+      "options": [
+        "CodeMender can import external SAST findings (via 'cm report import') and go straight to verify and fix, leaving the existing scanner in place",
+        "They must uninstall their existing SAST tool because CodeMender can only act on its own scan findings",
+        "They must first route all findings through Security Command Center Enterprise and wait 30 days",
+        "CodeMender cannot verify or patch vulnerabilities found by external tools"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender can import external findings ('cm report import') and proceed directly to 'cm verify' and 'cm fix', leaving the customer's existing scanner in place."
+    },
+    {
+      "id": 802,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slide 50",
+      "q": "Which set of CLI commands is provided by CodeMender?",
+      "options": [
+        "cm find, cm verify, cm fix, cm report (and cm report import for external findings)",
+        "cm build, cm deploy, cm scale, cm billing",
+        "adk scan, adk patch, adk push, adk rollback",
+        "gcloud armor scan, gcloud armor fix"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender's CLI commands are 'cm find', 'cm verify', 'cm fix', 'cm report', and 'cm report import'."
+    },
+    {
+      "id": 803,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slide 49",
+      "q": "Which 7 programming languages are officially supported by CodeMender?",
+      "options": [
+        "C/C++, Go, Java, Python, Ruby, Rust, and TypeScript",
+        "COBOL, Fortran, Pascal, Assembly, Perl, PHP, and Swift",
+        "Python and JavaScript only",
+        "SQL, HTML, CSS, YAML, JSON, Markdown, and Bash"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender supports 7 languages: C/C++, Go, Java, Python, Ruby, Rust, and TypeScript."
+    },
+    {
+      "id": 804,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | Trigger #11 | M2S1 Slide 51",
+      "q": "Which model does CodeMender use by default, and how can a developer override it?",
+      "options": [
+        "Defaults to a Gemini Flash model; override it using the --model flag with a supported model identifier",
+        "Defaults to Gemini Ultra; can only be changed by filing a Google Cloud support ticket",
+        "Defaults to a local CPU regex engine; cannot use Gemini models",
+        "Defaults to PaLM 2; override by editing /etc/hosts"
+      ],
+      "answer": 0,
+      "why": "Per §1.8 & Trigger #11: CodeMender defaults to a Gemini Flash model, and users can override it with the '--model' CLI flag and a supported model identifier. Watch out for the trap 'Model can only be changed via a support ticket.'"
+    },
+    {
+      "id": 805,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #11 (Swapped-Definition Trap) | M2S2 Slide 5",
+      "q": "In agentic security threat modeling, what is the difference between Indirect Prompt Injection and Tool Poisoning?",
+      "options": [
+        "Indirect Prompt Injection hides malicious instructions inside external data/documents the agent reads; Tool Poisoning occurs when a compromised MCP server or tool returns malicious outputs or metadata",
+        "Tool Poisoning is when a user types a jailbreak directly into chat; Indirect Prompt Injection is when an MCP server binary is infected",
+        "Both terms refer exclusively to DDoS attacks on Cloud Load Balancing",
+        "Indirect Prompt Injection only affects images, while Tool Poisoning only affects audio"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #11 (M2S2 Slide 5): Indirect Prompt Injection = malicious instructions embedded inside external content/documents the agent reads. Tool Poisoning = compromised MCP servers or tools returning malicious outputs/instructions."
+    },
+    {
+      "id": 806,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 & §6.4 | M2S1 Slides 47–52",
+      "q": "Why does CodeMender include a dedicated verification step ('cm verify') between finding/importing a vulnerability and generating a patch ('cm fix')?",
+      "options": [
+        "To confirm whether the vulnerability is actually exploitable in the codebase and filter out SAST false positives before engineering a fix",
+        "To bill the customer double for input tokens",
+        "To upload the source code to a public GitHub repository",
+        "To convert all unit tests into Markdown files"
+      ],
+      "answer": 0,
+      "why": "Traditional SAST tools generate high false-positive noise; CodeMender verifies that findings are genuinely exploitable in context before generating and testing remediation patches."
+    },
+    {
+      "id": 807,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.4 Offensive AI Metrics | M2S1 Slides 18, 41–43",
+      "q": "According to the Module 2 Threat Intelligence slides (M2S1 Slides 18, 41–43), how has offensive AI impacted vulnerability exploitation speed and CVE coverage?",
+      "options": [
+        "Average Time-to-Exploit dropped to 1.6 days (down from 1.3 years in 2020), with 10x faster recon and 85% CVE coverage for generating working PoC exploits",
+        "Time-to-Exploit increased to 5 years because AI models refuse security prompts",
+        "Offensive AI only affects 1% of CVEs and requires 6 months of manual tuning per exploit",
+        "Annual CVEs dropped by 80% since 2020"
+      ],
+      "answer": 0,
+      "why": "Per §6.4 (M2S1 Slides 18, 41–43): Offensive AI achieves 10x faster recon, 85% CVE coverage (working PoCs from CVE descriptions), <30s autonomous stage handoffs, and 1.6 days average Time-to-Exploit (down from 1.3 years in 2020) vs 20–70 day human patching timelines."
+    },
+    {
+      "id": 808,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.4 Secure Agentic TDD Lab | M2S1 Slides 60–62",
+      "q": "In the Module 2 Secure Agentic TDD Lab (M2S1 Slides 60–62), what is the 4-step defense-in-depth loop when an coding agent accidentally introduces a hardcoded credential?",
+      "options": [
+        "1. CONTEXT.md workspace rules → 2. Custom Semgrep rule → 3. Git pre-commit hook blocks the commit → 4. Antigravity agent reads the error and self-corrects the code",
+        "1. Deploy to prod → 2. Wait for user bug report → 3. Roll back VM → 4. Delete repo",
+        "1. Disable Git → 2. Email security team → 3. Run Basic SDP → 4. Reboot Cloudtop",
+        "1. Floor settings → 2. Agent Registry → 3. BigQuery ObjectRef → 4. Provisioned Throughput"
+      ],
+      "answer": 0,
+      "why": "Per §6.4 (M2S1 Slides 60–62): The Secure Agentic TDD loop combines preventative rules (CONTEXT.md) with deterministic enforcement (Semgrep + Git pre-commit hook blocking the mock credential), triggering the Antigravity agent to analyze the hook error and self-correct."
+    },
+    {
+      "id": 809,
+      "topicId": "codemender_threat_defense",
+      "topic": "CodeMender & AI Threat Defense",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.8 CodeMender | M2S1 Slide 48",
+      "q": "How does CodeMender handle patch safety and developer governance during the Remediate stage?",
+      "options": [
+        "It generates candidate patches, validates them against tests to ensure no regressions, and presents them for human developer review and approval before committing",
+        "It force-pushes unreviewed binary patches directly to the production main branch without running tests",
+        "It deletes vulnerable files from production without creating a replacement patch",
+        "It only outputs a PDF report and cannot generate code diffs"
+      ],
+      "answer": 0,
+      "why": "Per §1.8: CodeMender generates patches, runs tests to verify the fix doesn't break functionality, and keeps a human developer in the loop to review and approve the patch before committing."
+    }
+  ]
+}

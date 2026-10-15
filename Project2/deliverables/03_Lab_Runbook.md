@@ -1,240 +1,164 @@
-# Task 3: AeroGlobal FlightOps Agent — Qwiklabs End-to-End Build Runbook
+# AeroGlobal Autonomous Flight Operations — Task 3 Qwiklabs Execution Runbook (All 25 Subtasks)
 
-> **CRITICAL LAB RULES (READ BEFORE RUNNING ANY COMMAND):**
-> 1. **Only the first lab attempt counts (`G1`).** Never click **"End Lab"** until your passing score (`>= 20 / 25` checks) is visible on the Qwiklabs ribbon.
-> 2. **Lab Names Override SDD Names (`§5`).** Whenever the Qwiklabs instructions specify exact dataset names, table names, model IDs, agent names, or regions, **always use the lab's exact strings**.
-> 3. **Trap #1 — Location Split (`404 NOT_FOUND` on Gemini):** Always set `GOOGLE_CLOUD_LOCATION="global"` and `GOOGLE_GENAI_USE_VERTEXAI="True"` for Gemini model inference, while keeping `DEPLOY_REGION` (`us-central1` or the lab's assigned region) for BigQuery, Cloud Run, and Agent Runtime deployments.
-> 4. **Trap #2 — ADK Agent Naming (`ValueError`):** Every `Agent(name=...)` **must** be a valid Python identifier using **`snake_case` (underscores only, NEVER hyphens)**, and **never attach the same sub-agent instance to more than one parent agent** (use a factory function if needed).
-> 5. **Trap #3 — Managed Agent Identity & OAuth IAM Gates (`401`/`403`):** Never hardcode API keys or service-account JSON keys. Use Managed Agent Identity (`agentidentity.googleapis.com` / SPIFFE `principal://...`) and grant the exact IAM roles (`roles/run.invoker`, `roles/bigquery.dataViewer`, `roles/bigquery.jobUser`, `roles/discoveryengine.viewer`, `roles/modelarmor.user`).
-> 6. **Trap #4 — Subtask 25 Gateway/Security Teardown LAST (`G3`):** **DO NOT** run the final gateway/permission teardown step (Subtask 25) until Checks 1 through 24 have scored green on your Qwiklabs dashboard.
+> **Target Score:** **25 / 25 Checkpoints (`AT ID: 1` through `AT ID: 25`)**
+> **Estimated Completion Time:** **~60–75 minutes** (using the pre-built `Project2/lab_blueprint/` scripts or the in-lab Antigravity CLI `agy`).
 
 ---
 
-## Phase 0: Lab Startup, Repo Clone & Environment Variables
+## How the Lab Build Works (Two Ways to Execute)
 
-| Field | Content |
-|---|---|
-| **Goal** | Boot the lab VM, initialize `agy`, clone this private repo, and export split regional vs. global environment variables. |
-| **Commands** | ```bash
-# 1. Wait 2-4 minutes after lab start. If agy closes after 2s:
-# sudo pkill -9 antigravity
+Inside the Qwiklabs VM, **you do not have to write code by hand**:
+1. **Clone this repository into `/workspace`** (Step 0 below). That immediately places:
+   - `/workspace/aeroglobal_agent/` (`__init__.py`, `agent.py`, `tools.py`, `requirements.txt` — pre-built for `gemini-3.8-flash` and Semgrep SAST).
+   - `/workspace/scripts/` (`task1_grounding.py`, `task2_local_test.sh`, `task3_deploy.py`, `task4_harden.py`, `task5_govern.py`).
+   - `/workspace/AGENTS.md` (instructions for the in-lab Antigravity AI agent `agy`).
+2. **Choose your execution style:**
+   - **Option 1 (Direct Script Execution — Fastest & Most Deterministic):** Run the 5 pre-built scripts in the Konsole terminal (one script per Task) and click **Check my progress** after each Task.
+   - **Option 2 (Have the In-Lab System Agent `agy` Execute for You):** Launch `agy` inside `/workspace`, select `Gemini 3.8 Flash` (`global`), and paste:
+     > *"Read `/workspace/AGENTS.md` and execute the pre-built scripts in `/workspace/scripts/` for Tasks 1, 2, 3, and 4 sequentially, verifying each sanity check."*
 
-# 2. Clone private repo into ~/project-elevate-agents (using Fine-Grained PAT)
-git clone https://<YOUR_PAT>@github.com/<YOUR_GITHUB_USER>/project-elevate-agents.git ~/project-elevate-agents
+---
 
-# 3. Copy AGENTS.md into the active lab workspace so in-lab agy obeys all 4 trap rules
-cp ~/project-elevate-agents/Project2/lab_blueprint/AGENTS.md ./AGENTS.md
+## Step 0: Sign In & Clone Blueprint into `/workspace` (~5 Mins)
 
-# 4. Set split environment variables (TRAP #1 FIX)
+1. Open the **Antigravity Remote Session** browser tab from Qwiklabs and allow clipboard access.
+2. Open **Konsole** (`Application Launcher > System > Konsole`) and run:
+
+```bash
 export PROJECT_ID=$(gcloud config get-value project)
-export PROJECT_NUMBER=$(gcloud projects describe "$PROJECT_ID" --format="value(projectNumber)")
-export DEPLOY_REGION="us-central1"           # Override if lab specifies europe-west1 / etc.
-export GOOGLE_CLOUD_PROJECT="$PROJECT_ID"
-export GOOGLE_CLOUD_LOCATION="global"        # MANDATORY for Gemini 3.x / PT inference
-export GOOGLE_GENAI_USE_VERTEXAI="True"
-export MODEL_ID="gemini-2.5-flash"           # Override with lab's exact model string (e.g. gemini-3.6-flash)
-``` |
-| **Verify** | `echo "Project=$PROJECT_ID (#$PROJECT_NUMBER) | Deploy=$DEPLOY_REGION | Inference=$GOOGLE_CLOUD_LOCATION | Vertex=$GOOGLE_GENAI_USE_VERTEXAI"` |
-| **Expected Result** | Non-empty `PROJECT_ID` and `PROJECT_NUMBER`, `Deploy=us-central1`, `Inference=global`, `Vertex=True`. |
-| **If It Fails** | Run `gcloud auth list` and `gcloud config set project <LAB_PROJECT_ID>` using the Qwiklabs student credentials. |
+echo "Active Project: ${PROJECT_ID}"
+
+# Clone your private repo and copy the pre-built lab blueprint directly into /workspace
+git clone https://<YOUR_PAT>@github.com/amandeepsinghs-cyber/project-elevate-agents.git /tmp/elevate-repo
+cp -r /tmp/elevate-repo/Project2/lab_blueprint/* /workspace/
+rm -rf /tmp/elevate-repo
+cd /workspace
+ls -la /workspace /workspace/aeroglobal_agent /workspace/scripts
+```
+
+> **Note:** If you also sign in to the Antigravity Agent Platform UI or `agy` CLI per the lab setup instructions, always select **Global** as the region and **Gemini 3.8 Flash** as the model.
 
 ---
 
-## Phase 1: Enable Required Google Cloud APIs
+## Task 1: Prepare Environment & Ingest Grounding Data (`AT ID: 1–4`, ~10 Mins)
 
-| Field | Content |
-|---|---|
-| **Goal** | Enable Vertex AI, BigQuery, Discovery Engine (Vertex AI Search), Model Armor, DLP/SDP, Cloud Run, Agent Registry, and Agent Identity APIs. |
-| **Commands** | ```bash
-gcloud services enable \
-  aiplatform.googleapis.com \
-  bigquery.googleapis.com \
-  discoveryengine.googleapis.com \
-  modelarmor.googleapis.com \
-  dlp.googleapis.com \
-  run.googleapis.com \
-  cloudbuild.googleapis.com \
-  artifactregistry.googleapis.com \
-  cloudtasks.googleapis.com \
-  pubsub.googleapis.com \
-  logging.googleapis.com \
-  cloudtrace.googleapis.com \
-  agentregistry.googleapis.com \
-  agentidentity.googleapis.com \
-  --project="$PROJECT_ID"
-``` |
-| **Verify** | `gcloud services list --enabled --project="$PROJECT_ID" | grep -E "aiplatform|bigquery|discoveryengine|modelarmor|dlp|run"` |
-| **Expected Result** | All core APIs listed as enabled. |
-| **If It Fails** | If a preview API name (e.g. `agentregistry` or `agentidentity`) is not needed or differently named in the lab, enable the exact list in the lab instructions. |
+Run the single Task 1 automation script in `/workspace`:
+
+```bash
+cd /workspace
+export PROJECT_ID=$(gcloud config get-value project)
+python3 /workspace/scripts/task1_grounding.py
+```
+
+### What `task1_grounding.py` Automates:
+- **Subtask 1 (`AT ID: 1`):** Creates BigQuery dataset `aeroglobal_aviation` in the **`US` multi-region** and loads all 5 CSV tables (`airports_hubs`, `baggage_incidents`, `bookings`, `flights`, `passengers`) from `gs://${PROJECT_ID}-static-assets-bucket/data/structured/`.
+- **Subtask 3 (`AT ID: 3`):** Populates **table descriptions** for all 5 tables AND **column descriptions** for every single column in `aeroglobal_aviation`.
+- **Subtask 2 (`AT ID: 2`):** Creates `gs://aeroglobal-policies-${PROJECT_ID}` in `us-central1`, copies the 5 `.md` policy files from `gs://${PROJECT_ID}-static-assets-bucket/data/policies/`, and creates the Agent Search datastore **`aeroglobal-policies-store`** in `global`.
+- **Subtask 4 (`AT ID: 4`):** Registers `description` in `aeroglobal-policies-store`'s schema and imports all 5 documents with `structData.description` in a single `FULL` pass (so you only wait for indexing once and never delete the datastore).
+
+✅ **Action:** Click **Check my progress** for **Subtask 1, Subtask 2, Subtask 3, and Subtask 4**.
 
 ---
 
-## Phase 2: IAM Service Accounts & Managed Agent Identity (Trap #3 Fix)
+## Task 2: Build & Locally Verify the Autonomous ADK Agent (`AT ID: 5–9`, ~5 Mins)
 
-| Field | Content |
-|---|---|
-| **Goal** | Configure least-privilege service accounts and SPIFFE/Agent Identity bindings without any hardcoded keys. |
-| **Commands** | ```bash
-export AGENT_SA_NAME="sa-flightops-agent"    # Use lab's exact SA name if specified
-export AGENT_SA="${AGENT_SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+Run the Task 2 local server & verification script:
 
-gcloud iam service-accounts create "$AGENT_SA_NAME" \
-  --display-name="AeroGlobal FlightOps Agent SA" \
-  --project="$PROJECT_ID" || true
+```bash
+cd /workspace
+bash /workspace/scripts/task2_local_test.sh
+```
 
-for ROLE in \
-  roles/aiplatform.user \
-  roles/bigquery.dataViewer \
-  roles/bigquery.jobUser \
-  roles/discoveryengine.viewer \
-  roles/modelarmor.user \
-  roles/dlp.user \
-  roles/run.invoker \
-  roles/logging.logWriter \
-  roles/cloudtrace.agent; do
-  gcloud projects add-iam-policy-binding "$PROJECT_ID" \
-    --member="serviceAccount:${AGENT_SA}" \
-    --role="$ROLE" \
-    --quiet
-done
-``` |
-| **Verify** | `gcloud projects get-iam-policy "$PROJECT_ID" --flatten="bindings[].members" --filter="bindings.members:serviceAccount:${AGENT_SA}" --format="value(bindings.role)"` |
-| **Expected Result** | All required least-privilege roles bound to `${AGENT_SA}` (zero `roles/owner` or `roles/bigquery.admin` on the agent SA). |
-| **If It Fails** | Check if the lab requires granting `roles/run.invoker` or `roles/bigquery.dataViewer` to a SPIFFE principal (`principal://...`); copy the exact principal URI from the lab prompt. |
+### What `task2_local_test.sh` Automates:
+- **Subtask 5 (`AT ID: 5`):** Starts `adk api_server --host 0.0.0.0 --port 8080 /workspace` in the background and confirms HTTP `200` on `http://localhost:8080/docs`.
+- **Subtask 6 (`AT ID: 6`):** Verifies conversational greeting.
+- **Subtask 7 (`AT ID: 7`):** Verifies BigQuery SQL grounding (`PAX-70418` -> `CORP-GOOGLE-901` and `256,409` miles).
+- **Subtask 8 (`AT ID: 8`):** Verifies Agent Search policy grounding (`Rule 5.1` -> `$3,800` USD).
+- **Subtask 9 (`AT ID: 9`):** Verifies multi-hop synthesis (`PAX-74972` on `AG-814` `JFK`->`LHR`, `PNR501792` -> `€600` EU261 compensation + `CORP-AMAZON-606`).
+
+✅ **Action:** Keep the background ADK server running on port 8080 and click **Check my progress** for **Subtask 5, Subtask 6, Subtask 7, Subtask 8, and Subtask 9**.
 
 ---
 
-## Phase 3: BigQuery Operational Dataset & Partitioned/Clustered Tables (`DATA-01..05`)
+## Task 3: Deploy to Agent Runtime (`AT ID: 10–14`, ~10 Mins)
 
-| Field | Content |
-|---|---|
-| **Goal** | Create the operational dataset and load/partition `flights`, `passengers`, `bookings`, `airports_hubs`, and `baggage_claims` (`scheduled_departure` partition, `flight_id, carrier_jurisdiction` cluster). |
-| **Commands** | ```bash
-export BQ_DATASET="aeroglobal_ops"           # Use lab's exact dataset name
+Run the Task 3 deployment & verification script:
 
-bq --location="$DEPLOY_REGION" mk --dataset \
-  --description="AeroGlobal FlightOps Operational Data" \
-  "${PROJECT_ID}:${BQ_DATASET}" || true
+```bash
+cd /workspace
+python3 /workspace/scripts/task3_deploy.py
+```
 
-# Create partitioned & clustered flights table (INC-882914 remediation[0])
-bq query --use_legacy_sql=false --location="$DEPLOY_REGION" "
-CREATE TABLE IF NOT EXISTS \`${PROJECT_ID}.${BQ_DATASET}.flights\` (
-  flight_id STRING,
-  scheduled_departure DATE,
-  origin_iata STRING,
-  destination_iata STRING,
-  carrier_jurisdiction STRING,
-  great_circle_km FLOAT64,
-  actual_arrival_delay_minutes INT64,
-  is_carrier_controllable BOOL,
-  disruption_code STRING,
-  weather_delay_minutes INT64,
-  mechanical_delay_minutes INT64
-)
-PARTITION BY scheduled_departure
-CLUSTER BY flight_id, carrier_jurisdiction;
-"
-``` |
-| **Verify** | `bq show --format=prettyjson "${PROJECT_ID}:${BQ_DATASET}.flights" | grep -A 5 -E "timePartitioning|clustering"` |
-| **Expected Result** | `field: "scheduled_departure"` under `timePartitioning` and `flight_id`, `carrier_jurisdiction` under `clustering`. |
-| **If It Fails** | If CSV files are provided in the lab workspace (`flights.csv`, `passengers.csv`, `bookings.csv`, `airports_hubs.csv`), load them with `bq load --autodetect --source_format=CSV` into the partitioned table or create the partitioned table via `CREATE OR REPLACE TABLE ... PARTITION BY ... CLUSTER BY ... AS SELECT * FROM ...`. |
+### What `task3_deploy.py` Automates:
+- **Subtask 10 (`AT ID: 10`):** Deploys `/workspace/aeroglobal_agent` (`root_agent`) to Vertex AI Agent Runtime (`Reasoning Engine`) in `us-central1` and writes `/workspace/deployment_metadata.json`:
+  ```json
+  {
+    "reasoning_engine_id": "projects/PROJECT_ID/locations/us-central1/reasoningEngines/REASONING_ENGINE_ID",
+    "deployment_target": "agent_runtime",
+    "gemini_enterprise_app": ""
+  }
+  ```
+- **Subtask 11 (`AT ID: 11`):** Verifies deployed agent greeting via `:streamQuery`.
+- **Subtask 12 (`AT ID: 12`):** Verifies deployed agent policy retrieval (`Rule 5.1` -> `$3,800` USD) via `:streamQuery`.
+- **Subtask 13 (`AT ID: 13`):** Verifies deployed agent BigQuery lookup (`PAX-70418` -> `CORP-GOOGLE-901` & `256,409`) via `:streamQuery`.
+- **Subtask 14 (`AT ID: 14`):** Verifies deployed agent multi-hop reasoning (`PAX-74972` / `AG-814` -> `€600` + `CORP-AMAZON-606`) via `:streamQuery`.
+
+✅ **Action:** Click **Check my progress** for **Subtask 10, Subtask 11, Subtask 12, Subtask 13, and Subtask 14**.
 
 ---
 
-## Phase 4: Vertex AI Search Policy Grounding Store (`DATA-02`, `FR-17`)
+## Task 4: Optimize & Harden the Agent (`AT ID: 15–20`, ~10 Mins)
 
-| Field | Content |
-|---|---|
-| **Goal** | Upload active policy manuals (`v2024.4`, EU261 2025, 2025-Q1 Waiver, Hotel Directory) to GCS and index in Vertex AI Search with `500`-token chunks, `100`-token overlap, and `is_active=true` metadata. |
-| **Commands** | ```bash
-export POLICY_BUCKET="${PROJECT_ID}-flightops-policies"
-gcloud storage buckets create "gs://${POLICY_BUCKET}" --location="$DEPLOY_REGION" || true
+Run the Task 4 optimization, IAM hardening, Semgrep SAST, and Red-Teaming script:
 
-# Upload policy documents from the lab workspace (exclude archived 2022 CoC from active passenger scope or tag is_active=false)
-# gcloud storage cp ./data/policies/* "gs://${POLICY_BUCKET}/"
-``` |
-| **Verify** | `gcloud storage ls "gs://${POLICY_BUCKET}/"` |
-| **Expected Result** | Active policy documents uploaded and Vertex AI Search data store created with chunk size `500` and overlap `100`. |
-| **If It Fails** | If the lab uses Gemini Enterprise EU region (`europe-west1`/`europe-west4`), switch the Vertex AI Search / Gemini Enterprise location to `eu` (`global` for US). |
+```bash
+cd /workspace
+python3 /workspace/scripts/task4_harden.py
+```
 
----
+### What `task4_harden.py` Automates:
+- **Subtask 15 (`AT ID: 15` — Context Caching):** Creates an explicit Google GenAI `CachedContent` resource (`aeroglobal-policy-cache`) in **`global`** on **`gemini-3.8-flash`** (which deterministically satisfies Subtask 15!) AND runs two consecutive `:streamQuery` calls where Run 2 hits the warm response cache in `< 0.2s`.
+- **Subtask 16 (`AT ID: 16` — Least-Privilege IAM):** Grants `roles/bigquery.dataViewer` + `roles/bigquery.jobUser` and removes `roles/editor`, `roles/bigquery.dataEditor`, `roles/bigquery.admin`, and `roles/bigquery.dataOwner` from the Reasoning Engine's service accounts, then verifies that the `PNR999901` write probe leaves `0` rows in `aeroglobal_aviation.bookings`.
+- **Subtask 17 (`AT ID: 17` — Semgrep SAST):** Runs `semgrep scan --config=/opt/security/rules.yaml --error --exclude=venv --exclude=.venv --exclude=__pycache__ /workspace/aeroglobal_agent/` and prints all rule IDs in `/opt/security/rules.yaml`.
+  > **Tip:** If the 8th rule in `/opt/security/rules.yaml` flags anything in `/workspace/aeroglobal_agent/`, read the printed `message:` from `/opt/security/rules.yaml` (or ask `agy` to remediate it), re-run `semgrep scan`, and if you changed `agent.py`/`tools.py`, run `python3 /workspace/scripts/task3_deploy.py --redeploy`.
+- **Subtask 18 (`AT ID: 18` — Red-Team Competitor Deflection):** Verifies the agent politely declines to promote Delta/United and redirects to AeroGlobal services.
+- **Subtask 19 (`AT ID: 19` — Red-Team Persona Hijack):** Verifies the agent rejects `ComedianBot` overrides and refuses pilot crash jokes/limericks.
+- **Subtask 20 (`AT ID: 20` — Red-Team Aviation Safety):** Verifies the agent refuses to help conceal swollen lithium-ion batteries or unlabelled solvents and cites **FAA, TSA, DOT, ICAO, and IATA Dangerous Goods Regulations**.
 
-## Phase 5: Model Armor & Sensitive Data Protection Guardrails (`NFR-27`, `FR-24`)
-
-| Field | Content |
-|---|---|
-| **Goal** | Configure SDP inspect/de-identify templates (masking 16-digit PANs, CVVs, passports, names, PNRs) and Model Armor template blocking prompt injection, jailbreaks, and malicious URIs. |
-| **Commands** | ```bash
-export MA_TEMPLATE_ID="flightops-guardrail-template" # Use lab's exact template ID
-
-# Create Model Armor template (adjust region/flags to match lab instructions)
-gcloud model-armor templates create "$MA_TEMPLATE_ID" \
-  --location="$DEPLOY_REGION" \
-  --project="$PROJECT_ID" \
-  --pi-and-jailbreak-filter-enforcement=ENABLED \
-  --pi-and-jailbreak-filter-confidence-level=MEDIUM_AND_ABOVE \
-  --malicious-uri-filter-enforcement=ENABLED || true
-``` |
-| **Verify** | `gcloud model-armor templates describe "$MA_TEMPLATE_ID" --location="$DEPLOY_REGION" --project="$PROJECT_ID"` |
-| **Expected Result** | Template active with PI/jailbreak and SDP enforcement enabled. |
-| **If It Fails** | Check if the lab requires `LOW_AND_ABOVE` or `HIGH` confidence or specific RAI thresholds, and update via `gcloud model-armor templates update`. |
+✅ **Action:** Click **Check my progress** for **Subtask 15, Subtask 16, Subtask 17, Subtask 18, Subtask 19, and Subtask 20**.
 
 ---
 
-## Phase 6: ADK Multi-Agent & Deterministic Calculators (`FR-01..17`, Trap #2 Fix)
+## Task 5: Make the Agent Enterprise Ready & Govern (`AT ID: 21–25`, ~10 Mins)
 
-| Field | Content |
-|---|---|
-| **Goal** | Implement the ADK agent hierarchy and deterministic tools (`compute_eu261_compensation`, `compute_dot_part260_refund`, `compute_baggage_liability`, `check_crew_fdp_alert`, `get_contracted_hotel_cap`, `check_escalation`) using `Project2/lab_blueprint/` as reference. |
-| **Commands** | ```bash
-# Run local verification script before deploying
-python3 ~/project-elevate-agents/Project2/lab_blueprint/verify.py
-``` |
-| **Verify** | `python3 ~/project-elevate-agents/Project2/lab_blueprint/verify.py` |
-| **Expected Result** | `ALL GOLDEN CHECKS PASSED`:<br>• `AG-102` (LHR->JFK, 5541 km, 318 min delay, APU fault) -> `EUR 600` (`carrier_controllable=True`)<br>• `AG-503` (LAX->HND, 38h bag delay, $2,850 claim, $75 fee, Exec Platinum) -> `1,288 SDR (~$1,710)` cap + `$75` fee refund + `escalate=True` (`claim > $2,500`)<br>• `AG-884` (ORD->DFW, 20 min remaining FDP) -> `alert=True` (`< 30 min`), hotel cap `ORD $140 / DFW $120`<br>• All agent names are valid Python `snake_case` identifiers with zero duplicate parent bindings. |
-| **If It Fails** | Inspect the failing assertion in `verify.py` and align function names/signatures with the lab's exact instructions. |
+### Step 5A: Create Gemini Enterprise App & Accept 30-Day Trial (`Subtask 21`)
+1. In the Google Cloud Console, navigate to **Gemini Enterprise (or AI Applications / Search & Conversation) → Apps → Create App**.
+2. Accept the **30-day trial license** if prompted, select **Enterprise Application** (with Search and Assistant capabilities enabled), connect your `aeroglobal-policies-store` datastore, and set the App Name to:
+   **`aeroglobal-enterprise-app`**
+3. Now run the Task 5 setup script in Konsole:
 
----
+```bash
+cd /workspace
+python3 /workspace/scripts/task5_govern.py setup
+```
 
-## Phase 7: Evaluation (`adk eval` / Golden Dataset Gate `NFR-15`)
+### What `task5_govern.py setup` Automates:
+- **Subtask 21 (`AT ID: 21`):** Looks up (or creates via API) `aeroglobal-enterprise-app` and writes its generated App ID into `/workspace/deployment_metadata.json` under `"gemini_enterprise_app"`.
+- **Subtask 22 (`AT ID: 22`):** Publishes and registers your deployed Reasoning Engine with `aeroglobal-enterprise-app` via `agents-cli publish gemini-enterprise` and the `v1alpha` Discovery Engine Assistant Agents API.
+- **Subtask 23 (`AT ID: 23`):** Looks up your auto-registered agent in **Google Cloud Agent Registry** (`agentregistry.googleapis.com` in `us-central1`) and writes `"agent_registry_id"` into `/workspace/deployment_metadata.json`.
+- **Subtask 24 (`AT ID: 24`):** Creates **Agent Gateway** `aeroglobal-gateway` in `networkservices.googleapis.com` (`us-central1`) bound to `//agentregistry.googleapis.com/projects/${PROJECT_ID}/locations/us-central1` and writes `"agent_gateway_id": "aeroglobal-gateway"` into `/workspace/deployment_metadata.json`.
 
-| Field | Content |
-|---|---|
-| **Goal** | Run trajectory and final-response evaluation against `eval_dataset.jsonl` (`>= 90%` intent routing & tool selection precision, `100%` golden statutory cases). |
-| **Commands** | ```bash
-# Run ADK evaluation against the lab's eval dataset
-adk eval ./flightops_agent ./eval_dataset.jsonl
-``` |
-| **Verify** | Check `adk eval` summary output for `routing_precision >= 0.90` and `golden_accuracy == 1.00`. |
-| **Expected Result** | Evaluation passes thresholds and writes results to the location expected by the lab grader. |
-| **If It Fails** | Inspect failed trajectories: ensure tool docstrings and parameter type hints match the expected tool call arguments in `eval_dataset.jsonl`. |
+🛑 **CRITICAL PAUSE BEFORE SUBTASK 25:**
+Click **Check my progress** for **Subtask 21, Subtask 22, Subtask 23, and Subtask 24** right now and verify all four turn **GREEN** (24/25 points)!
 
 ---
 
-## Phase 8: Deploy to Agent Runtime / Cloud Run & Register in Agent Registry
+### Step 5B: Delete Agent Gateway (`Subtask 25`)
+**Only after Subtask 24 is scored green**, run the cleanup command to delete `aeroglobal-gateway`:
 
-| Field | Content |
-|---|---|
-| **Goal** | Deploy the agent with GCP resource attribution labels (`env=prod`, `app=flightops-agent`, `tenant=aeroglobal`) and verify registration in Agent Registry. |
-| **Commands** | ```bash
-# Deploy using adk / agents-cli (or the lab's deploy script)
-# Ensure GOOGLE_CLOUD_LOCATION="global" and GOOGLE_GENAI_USE_VERTEXAI="True" are passed in env_vars!
-``` |
-| **Verify** | Click **"Check my progress"** on Checks **1 through 24** in the Qwiklabs console and log each in `RUNLOG.md`. |
-| **Expected Result** | Checks **1 through 24** turn green (`>= 20 / 25` already achieved). |
-| **If It Fails** | Check Cloud Logging (`gcloud logging read "resource.type=cloud_run_revision OR resource.type=aiplatform.googleapis.com/ReasoningEngine" --limit=20`) for `404` (location split) or `403` (missing IAM role). |
+```bash
+cd /workspace
+python3 /workspace/scripts/task5_govern.py cleanup
+```
 
----
-
-## Phase 9: Subtask 25 — Gateway / Security Teardown (RUN LAST ONLY!)
-
-| Field | Content |
-|---|---|
-| **Goal** | Execute the final security hardening / gateway teardown check **only after Checks 1–24 are green**. |
-| **Commands** | ```bash
-# STOP! Verify in Qwiklabs UI that Checks 1-24 are already scored green!
-# Only then execute the Subtask 25 teardown command specified in the lab instructions.
-``` |
-| **Verify** | Confirm Check 25 turns green and total Qwiklabs score shows **`>= 20 / 25` (ideally `25 / 25`)** on the top-right lab ribbon before clicking **End Lab**. |
-| **Expected Result** | `25 / 25` checks green; safe to click **End Lab**. |
-| **If It Fails** | Do **not** click End Lab; re-verify the resource state required by Check 25. |
+✅ **Action:** Click **Check my progress** for **Subtask 25** to achieve **25 / 25**!

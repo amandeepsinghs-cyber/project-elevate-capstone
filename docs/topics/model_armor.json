@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "model_armor",
+    "title": "Model Armor",
+    "shortTitle": "Model Armor (§1.7)",
+    "icon": "🛡️",
+    "module": "M2",
+    "examWeight": "30% (Module 2)",
+    "priority": "CRITICAL",
+    "rankNote": "#1 Most Heavily Tested Topic",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor & §5 Trigger #12",
+    "slideRef": "M2S2 Slides 38–51",
+    "summary": "Floor settings, HIGH vs LOW_AND_ABOVE confidence, Inspect-only rollout, Basic vs Advanced SDP, 4 MB skip/no-bill limit, CSAM always-on, 40-URL limit, and OCR image screening.",
+    "quizFile": "model_armor_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 7,
+  "questions": [
+    {
+      "id": 0,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 42",
+      "q": "A platform team wants every Model Armor template in the company to at least enable prompt-injection detection, while teams can still add stricter filters. What should they use?",
+      "options": [
+        "Floor settings, which set minimum requirements at the org, folder, or project level that templates can't go below",
+        "One shared 'golden' template that every team must voluntarily reference",
+        "A confidence level of LOW_AND_ABOVE enforced via IAM Conditions",
+        "An IAM deny policy on the Model Armor API"
+      ],
+      "answer": 0,
+      "why": "Floor settings define minimum enforcement requirements at the organization, folder, or project level. Teams can configure stricter filters on their templates, but cannot create a template less strict than the floor."
+    },
+    {
+      "id": 1,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 44",
+      "q": "A customer complains that Model Armor blocks too many legitimate prompts. Which confidence level gives the FEWEST false positives?",
+      "options": [
+        "HIGH (flags only high-likelihood violations, minimizing false positives)",
+        "LOW_AND_ABOVE (strictest setting, flags low, medium, and high)",
+        "MEDIUM_AND_ABOVE",
+        "Confidence level does not affect false-positive rates"
+      ],
+      "answer": 0,
+      "why": "HIGH flags only high-confidence violations, resulting in the fewest false positives. LOW_AND_ABOVE is the strictest threshold and produces the most false positives."
+    },
+    {
+      "id": 2,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Self-Test #5 & Trigger #12 | M2S2 Slide 49",
+      "q": "What is the recommended rollout sequence for a new Model Armor deployment?",
+      "options": [
+        "Start in Inspect only, tune with test data, production monitoring, and user feedback, then switch to Inspect and block",
+        "Deploy straight to Inspect and block from day one, then relax filters if users complain",
+        "Keep Inspect only permanently, because blocking breaks LLM applications",
+        "Use Inspect and block for prompts and Inspect only for responses permanently"
+      ],
+      "answer": 0,
+      "why": "Official best practice: start in Inspect only (logs findings without blocking), tune thresholds using test data, production telemetry, and feedback, and then switch to Inspect and block."
+    },
+    {
+      "id": 3,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 (Swapped-Definition Trap) | M2S2 Slide 46",
+      "q": "A healthcare customer needs credit card numbers REDACTED or tokenized before prompts reach the model. What configuration do they need?",
+      "options": [
+        "Advanced Sensitive Data Protection (SDP) configuration with an inspect template (required) and a de-identify template (optional)",
+        "Basic Sensitive Data Protection configuration (which automatically redacts US infoTypes)",
+        "The prompt-injection and jailbreak filter set to HIGH",
+        "A Responsible AI filter for 'dangerous content'"
+      ],
+      "answer": 0,
+      "why": "Basic SDP uses a fixed set of predefined (mostly US) infoTypes and ONLY flags findings. Redaction or tokenization requires Advanced SDP with your own SDP inspect template (required) and de-identify template."
+    },
+    {
+      "id": 4,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Self-Test #5 & Trigger #12 | M2S2 Slide 48",
+      "q": "A user uploads a 6 MB document for screening. What does Model Armor do?",
+      "options": [
+        "Skips it (it isn't blocked), and the skipped data isn't billed",
+        "Blocks the file immediately because it exceeds the 4 MB limit",
+        "Compresses the file under 4 MB and then screens it",
+        "Splits the document into 4 MB chunks and screens each chunk"
+      ],
+      "answer": 0,
+      "why": "Files and text over 4 MB are skipped (not blocked), and skipped data is not billed. Watch out for distractors claiming oversized files are blocked, compressed, or split."
+    },
+    {
+      "id": 5,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 39",
+      "q": "A customer runs its LLM application on another cloud provider and on-premises. Can it use Model Armor?",
+      "options": [
+        "Yes, Model Armor runs on any cloud or on-prem through its REST API",
+        "No, it only works with Vertex AI and Gemini on Google Cloud",
+        "Only if routed through GKE Enterprise on Google Cloud",
+        "Only for batch prediction workloads stored in BigQuery"
+      ],
+      "answer": 0,
+      "why": "Model Armor is model- and cloud-agnostic: it can protect applications running on any cloud or on-premises via its REST API, as well as integrating natively with Apigee, Agent Gateway, Gemini Enterprise, and MCP servers."
+    },
+    {
+      "id": 6,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slide 43",
+      "q": "Which Model Armor filter is ALWAYS applied by default and cannot be disabled?",
+      "options": [
+        "CSAM (Child Sexual Abuse Material)",
+        "Hate speech",
+        "Prompt injection and jailbreak",
+        "Malicious URL detection"
+      ],
+      "answer": 0,
+      "why": "CSAM detection is always on by default and cannot be turned off. The other four Responsible AI categories (hate speech, harassment, sexually explicit, dangerous content) have configurable thresholds."
+    },
+    {
+      "id": 7,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | M2S2 Slide 45",
+      "q": "A prompt contains 60 URLs. How many URLs does Model Armor's malicious URL detection scan?",
+      "options": [
+        "The first 40 URLs",
+        "All 60 URLs",
+        "The first 10 URLs",
+        "None; URLs are only scanned in model responses"
+      ],
+      "answer": 0,
+      "why": "Model Armor's malicious URL detection scans up to the first 40 URLs per input."
+    },
+    {
+      "id": 8,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | Trigger #12 | M2S2 Slides 49–50",
+      "q": "A CE is configuring Model Armor for a customer for the first time. Which starting configuration matches Google's recommended phased strategy?",
+      "options": [
+        "Responsible AI filters at HIGH, prompt injection at MEDIUM (or HIGH for Gemini Enterprise), advanced SDP templates, in Inspect only mode",
+        "Responsible AI at LOW_AND_ABOVE, prompt injection at HIGH, basic SDP, in Inspect and block mode",
+        "All filters at LOW_AND_ABOVE with Inspect and block enabled on day one",
+        "Responsible AI disabled, CSAM disabled, and Inspect only mode"
+      ],
+      "answer": 0,
+      "why": "Start in Inspect only with Responsible AI at HIGH (fewest false positives), prompt injection/jailbreak at MEDIUM (or HIGH for Gemini Enterprise), and advanced SDP templates before moving to Inspect and block."
+    },
+    {
+      "id": 9,
+      "topicId": "model_armor",
+      "topic": "Model Armor",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor | M2S2 Slide 48",
+      "q": "Which statement about Model Armor IMAGE screening (Preview) is accurate?",
+      "options": [
+        "Supports JPEG, PNG, and BMP only, up to 4 MB, one image per request, in US and EU multi-regions (using OCR)",
+        "Supports any image format up to 20 MB across all global regions",
+        "Scans up to 10 images per request for batch throughput",
+        "Only inspects EXIF image metadata, not visual text content"
+      ],
+      "answer": 0,
+      "why": "Model Armor image screening supports JPEG, PNG, and BMP formats only, up to 4 MB, a single image per request, in US and EU multi-regions, extracting text via OCR."
+    }
+  ]
+}

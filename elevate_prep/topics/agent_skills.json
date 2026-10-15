@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "agent_skills",
+    "title": "Agent Skills Standard",
+    "shortTitle": "Agent Skills (§1.1)",
+    "icon": "🧩",
+    "module": "M1",
+    "examWeight": "20% (Module 1)",
+    "priority": "CRITICAL",
+    "rankNote": "#3 Priority — Start Here After Registry",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills & §5 Trigger #8",
+    "slideRef": "M1L1 Slides 7–11",
+    "summary": "Progressive disclosure (name + description only at startup), solving tool bloat, SKILL.md YAML frontmatter (description required, name optional), .agents/skills/ vs ~/.gemini/config/skills/.",
+    "quizFile": "agent_skills_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 5,
+  "questions": [
+    {
+      "id": 200,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 8",
+      "q": "What does an agent load into context at startup for each available Agent Skill?",
+      "options": [
+        "Only each skill's name and description; the full SKILL.md is read only when the agent judges the skill relevant",
+        "The entire SKILL.md file for every installed skill",
+        "All files inside scripts/, examples/, and resources/ up front",
+        "Nothing at all until the user explicitly types a slash command"
+      ],
+      "answer": 0,
+      "why": "Agent Skills use progressive disclosure: only each skill's name and description load at startup. The full SKILL.md is read only when the agent judges the skill relevant."
+    },
+    {
+      "id": 201,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 6",
+      "q": "Which core problem are Agent Skills and progressive disclosure designed to solve?",
+      "options": [
+        "Tool bloat, where loading hundreds of tools and rules into context makes the agent slower, costlier, and worse at picking the right one",
+        "Network latency between Cloud Run and BigQuery",
+        "Lack of encryption in third-party OAuth tokens",
+        "Container cold starts on GKE Autopilot"
+      ],
+      "answer": 0,
+      "why": "Skills solve 'tool bloat'—where loading too many tools and instructions up front overwhelms the context window, increasing latency/cost and degrading tool selection accuracy."
+    },
+    {
+      "id": 202,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 11",
+      "q": "Where should a team store a PROJECT-SPECIFIC (workspace) skill so it is version-controlled and shared with the repo?",
+      "options": [
+        "<project-root>/.agents/skills/<skill>/",
+        "~/.gemini/config/skills/<skill>/",
+        "/etc/google/skills/<skill>/",
+        "<project-root>/.well-known/skills/"
+      ],
+      "answer": 0,
+      "why": "Project-specific (workspace) skills live at <project-root>/.agents/skills/<skill>/. Watch out for the trap offering ~/.gemini/config/skills/, which is the global path."
+    },
+    {
+      "id": 203,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Self-Test #1 & Trigger #8 | M1L1 Slide 11",
+      "q": "A developer wants a custom skill to be available globally across all projects in Antigravity, the IDE, and the CLI. Where should they place it?",
+      "options": [
+        "~/.gemini/config/skills/",
+        "<project-root>/.agents/skills/",
+        "~/.config/gcloud/skills/",
+        "/usr/local/share/adk/skills/"
+      ],
+      "answer": 0,
+      "why": "Global skills live at ~/.gemini/config/skills/ and work across Antigravity, the IDE, and the CLI."
+    },
+    {
+      "id": 204,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 9",
+      "q": "In a skill's required SKILL.md YAML frontmatter, which field is REQUIRED and which is OPTIONAL?",
+      "options": [
+        "description is required; name is optional",
+        "name is required; description is optional",
+        "Both name and version are required; description is optional",
+        "No YAML frontmatter is used in SKILL.md"
+      ],
+      "answer": 0,
+      "why": "In SKILL.md YAML frontmatter, 'description' is required (since the agent uses it to judge relevance), and 'name' is optional."
+    },
+    {
+      "id": 205,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 9",
+      "q": "Besides the required SKILL.md file, what optional subdirectories can an Agent Skill folder contain?",
+      "options": [
+        "scripts/, examples/, and resources/",
+        "Nothing else; a skill folder can never contain anything but SKILL.md",
+        "Only compiled Docker images",
+        "Only Terraform state files"
+      ],
+      "answer": 0,
+      "why": "A skill folder contains SKILL.md (required) plus optional scripts/, examples/, and resources/ directories."
+    },
+    {
+      "id": 206,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slide 10",
+      "q": "How can an Agent Skill be activated during a session?",
+      "options": [
+        "Automatically when the prompt's intent matches the skill's description, or explicitly with a slash command (/skill-name)",
+        "Only when the user explicitly types a slash command (/skill-name)",
+        "Only by restarting the agent container with a --skill flag",
+        "Only through a Cloud Scheduler cron job"
+      ],
+      "answer": 0,
+      "why": "Skills activate either automatically (when the prompt's intent matches the skill's description) or explicitly via a slash command (/skill-name)."
+    },
+    {
+      "id": 207,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills | Trigger #8 | M1L1 Slides 8–9",
+      "q": "An agent never automatically activates a newly created skill even when the user asks a relevant question. What is the most likely cause?",
+      "options": [
+        "The skill's description in SKILL.md frontmatter is vague or missing the trigger keywords for that task",
+        "The user did not type the /skill-name slash command, which is mandatory for all skills",
+        "The optional scripts/ directory is empty",
+        "The skill was placed in <project-root>/.agents/skills/ instead of /tmp/"
+      ],
+      "answer": 0,
+      "why": "Because the agent only sees each skill's name and description at startup, automatic activation relies on matching the prompt's intent to the YAML frontmatter description."
+    },
+    {
+      "id": 208,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.1 & §6.6 | M1L1 Slide 7",
+      "q": "Which of the following correctly lists the 5 official Agent Skill design patterns from Module 1?",
+      "options": [
+        "Informational, Tool Wrapper, Generator, Reviewer, and Workflow",
+        "Sequential, Parallel, Loop, Coordinator, and Router",
+        "Prepare, Scan, Remediate, Monitor, and Audit",
+        "Span, Trace, Session, Task, and Metric"
+      ],
+      "answer": 0,
+      "why": "Per §6.6 (M1L1 Slide 7), the 5 Skill Patterns are: Informational (context for an environment/task), Tool Wrapper (how to use an existing tool/CLI), Generator (content of a specific format), Reviewer (criteria to assess work), and Workflow (repeatable multi-step sequence)."
+    },
+    {
+      "id": 209,
+      "topicId": "agent_skills",
+      "topic": "Agent Skills Standard",
+      "module": "M1",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 19",
+      "q": "When a standalone skill is registered in Agent Registry, how are updates to its instructions or code versioned?",
+      "options": [
+        "Through an immutable SkillRevision resource under the parent Skill and Publisher resources",
+        "By overwriting the inline Agent Card JSON file on Cloud Run",
+        "By creating a new GCP project for every version",
+        "Standalone skills cannot be versioned once created"
+      ],
+      "answer": 0,
+      "why": "Standalone skills are managed, versioned, and listed through the Skill, SkillRevision, and Publisher resources in Agent Registry."
+    }
+  ]
+}

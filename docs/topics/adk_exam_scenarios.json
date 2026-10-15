@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "adk_exam_scenarios",
+    "title": "ADK Architecture & Runtimes",
+    "shortTitle": "ADK Scenarios & Runtimes",
+    "icon": "🚀",
+    "module": "M0",
+    "examWeight": "15% (Module 0) / 35% (M3)",
+    "priority": "CRITICAL",
+    "rankNote": "High-Frequency Architecture Scenarios",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.2, §5 Triggers #4–#7, #17",
+    "slideRef": "M0L5 Slides 6–8; M0L9 Slides 6–15; M3L1 Slides 10–19",
+    "summary": "State prefixes (user:, app:, temp:), Sequential/Parallel output_key, LoopAgent escalate=True, AgentTool vs sub_agents, output_schema trade-offs, Cloud Run ($0 idle) vs Agent Runtime vs GKE.",
+    "quizFile": "adk_exam_scenarios_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 5,
+  "questions": [
+    {
+      "id": 500,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #17 | M3L1 Slide 10",
+      "q": "An ADK developer wants to store a user's preferred language in session state so it persists across multiple conversation sessions for that specific user. Which state prefix should they use?",
+      "options": [
+        "user: (e.g., state['user:preferred_language'])",
+        "temp: (cleared after the current invocation)",
+        "app: (shared globally across all users of the application)",
+        "No prefix (persists only within the single current session)"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #17: ADK has 4 state scopes: unprefixed (current session only), 'user:' (persists across sessions for that specific user), 'app:' (global across all users), and 'temp:' (cleared after the current invocation)."
+    },
+    {
+      "id": 501,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #17 | M3L1 Slide 10",
+      "q": "In ADK state management, what happens to keys written with the 'temp:' prefix (such as state['temp:scratch_data'])?",
+      "options": [
+        "They exist only during the current invocation (turn) and are automatically cleared when the turn finishes",
+        "They persist permanently across all users in VertexAiSessionService",
+        "They are automatically exported to BigQuery after 60 minutes",
+        "They cause the SessionService to reset the user's conversation history"
+      ],
+      "answer": 0,
+      "why": "The 'temp:' prefix is for temporary scratch data needed only within the current invocation; ADK clears 'temp:' keys once the invocation completes."
+    },
+    {
+      "id": 502,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slides 10–12",
+      "q": "In a SequentialAgent pipeline, Agent 1 summarizes a report and Agent 2 needs to read that summary in its system instruction. What is the standard ADK pattern?",
+      "options": [
+        "Set output_key='summary' on Agent 1, and reference '{summary}' in Agent 2's instruction",
+        "Have Agent 1 write to a local file in /tmp and have Agent 2 call a bash tool",
+        "Set include_contents='none' on both agents",
+        "Pass Agent 1 inside Agent 2's generate_content_config"
+      ],
+      "answer": 0,
+      "why": "Setting output_key='summary' saves Agent 1's final response to session.state['summary'], and Agent 2 automatically injects it into its prompt via the '{summary}' placeholder."
+    },
+    {
+      "id": 503,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slide 11",
+      "q": "Two sub-agents inside a ParallelAgent run concurrently and save their outputs to session state. How should you prevent them from overwriting each other?",
+      "options": [
+        "Configure a distinct output_key on each sub-agent (e.g., output_key='data_a' and output_key='data_b')",
+        "Configure the exact same output_key on both sub-agents so ADK merges them",
+        "Disable SessionService when running ParallelAgent",
+        "Set max_iterations=1 on the ParallelAgent"
+      ],
+      "answer": 0,
+      "why": "Sub-agents in a ParallelAgent execute concurrently against the same session.state, so each branch must write to a distinct output_key to avoid race conditions."
+    },
+    {
+      "id": 504,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slide 12",
+      "q": "How does a sub-agent or tool stop an ADK LoopAgent early before it hits max_iterations?",
+      "options": [
+        "Emit an Event with EventActions(escalate=True) (or set tool_context.actions.escalate = True)",
+        "Return None from the LLM prompt",
+        "Raise a Python RuntimeError inside the tool",
+        "Set disallow_transfer_to_parent=True"
+      ],
+      "answer": 0,
+      "why": "LoopAgent repeats its sub-agents until either max_iterations is reached or a sub-agent/tool emits an event with escalate=True."
+    },
+    {
+      "id": 505,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.2 & Tab 3 M0L7 Slides 15–18",
+      "q": "What is the difference between wrapping a specialist agent in AgentTool(specialist) versus adding it to sub_agents=[specialist]?",
+      "options": [
+        "With AgentTool, the parent invokes the specialist like a tool and stays in control; with sub_agents, the parent transfers conversation control to the specialist",
+        "With sub_agents, the parent stays in control; with AgentTool, the specialist takes over the conversation permanently",
+        "AgentTool only works on GKE, whereas sub_agents only works on Cloud Run",
+        "There is no difference; both permanently hand off control to the specialist"
+      ],
+      "answer": 0,
+      "why": "AgentTool wraps an agent as a callable tool so its answer returns to the parent agent (which stays in control). Listing it in sub_agents delegates/transfers control of the turn."
+    },
+    {
+      "id": 506,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — Tab 2 M3L1 & Tab 3 M0L6",
+      "q": "What important limitation applies when you configure output_schema (a Pydantic model) on an ADK LlmAgent?",
+      "options": [
+        "Using output_schema disables tool calling and sub-agent delegation for that agent",
+        "Using output_schema disables VertexAiSessionService",
+        "Using output_schema requires hand-writing a toolspec.json file",
+        "output_schema is only supported on third-party models via LiteLLM"
+      ],
+      "answer": 0,
+      "why": "In ADK, setting output_schema on an LlmAgent enforces structured JSON output, which disables tool calling and sub-agent delegation for that specific agent."
+    },
+    {
+      "id": 507,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #17 | M3L1 Slides 14–19",
+      "q": "A developer uses before_model_callback as a guardrail to block disallowed prompts before calling Gemini. What should the callback return?",
+      "options": [
+        "Return an LlmResponse object to skip the model call (or return None to allow the model call to proceed)",
+        "Return None to block the model call, and return True to allow it",
+        "Return a numeric HTTP status code like 403",
+        "before_model_callback can only log prompts and cannot skip the model call"
+      ],
+      "answer": 0,
+      "why": "In before_model_callback, returning None allows the LLM request to proceed normally, whereas returning an LlmResponse object short-circuits the LLM call and returns that response directly."
+    },
+    {
+      "id": 508,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Triggers #4, #5 & #6 | M0L9 Slides 6–15",
+      "q": "A customer wants zero compute cost ($0) when their ADK agent sits idle overnight and on weekends. Which runtime should they choose?",
+      "options": [
+        "Cloud Run, because it scales to zero when idle (while Agent Runtime is best when they want turnkey managed sessions and Memory Bank)",
+        "GKE with always-on dedicated node pools",
+        "BigQuery Provisioned Throughput",
+        "Vertex AI Model Registry"
+      ],
+      "answer": 0,
+      "why": "Per Triggers #4–#6: Choose Cloud Run when the requirement is '$0 compute cost while idle' (scales to zero). Choose Agent Runtime for turnkey managed sessions (VertexAiSessionService) and Memory Bank. Choose GKE for custom networking or self-hosted open models."
+    },
+    {
+      "id": 509,
+      "topicId": "adk_exam_scenarios",
+      "topic": "ADK Architecture & Runtimes",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §5 Trigger #7 | M0L5 Slides 6–8",
+      "q": "A Google Cloud CE is preparing a live customer screen-share demo of an agentic workflow on a 3P codebase. Should they use Jetski or Antigravity 2.0 (agy)?",
+      "options": [
+        "Antigravity 2.0 (agy), because Jetski is strictly internal-only (google3/Buganizer/Critique) and must NEVER be shown or screen-shared with customers",
+        "Jetski, because it is Google's external customer-facing IDE",
+        "Either tool, because both are approved for external customer screen-sharing",
+        "Neither; live demos can only be run inside HackerRank Secure Mode"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #7 (M0L5 Slides 6–8): Jetski is exclusively for internal productivity (google3, Buganizer, Critique) and must NEVER be shown to customers. Antigravity 2.0 (agy, authenticated via Argolis) is safe for customer-facing demos and 3P codebases."
+    }
+  ]
+}

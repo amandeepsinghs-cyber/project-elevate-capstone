@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "gemini_finops_enterprise",
+    "title": "Gemini FinOps, Caching, GE & ObjectRef",
+    "shortTitle": "FinOps, Caching & GE (§1.9–1.10)",
+    "icon": "💎",
+    "module": "M3",
+    "examWeight": "35% (Module 3) / 20% (M1)",
+    "priority": "HIGH_VALUE",
+    "rankNote": "Caching Billing, PT Limits & SharePoint ACLs",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.9, §1.10, §6.2, §6.6 & §5 Triggers #9, #10, #20, #22",
+    "slideRef": "M1L5 Slides 3, 17–26; M1L6 Slides 6–16; M3L4 Slide 14; M3L5 Slides 14–19",
+    "summary": "Standard input price for cache creation, Explicit TTL storage vs free Implicit storage, 2,048 vs 4,096 min tokens, PT exclusions, Semantic Routing, GE Federated 2nd sign-in, BigQuery ObjectRef, AWS migration.",
+    "quizFile": "gemini_finops_enterprise_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 7,
+  "questions": [
+    {
+      "id": 900,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 Gemini Cost & Capacity | Trigger #22 | M3L5 Slide 16",
+      "q": "How are tokens used to CREATE a context cache billed in Gemini for implicit versus explicit caching?",
+      "options": [
+        "Billed at the standard input token price for BOTH implicit and explicit caching (neither free nor double price)",
+        "Cache creation is completely free for both implicit and explicit caching",
+        "Cache creation is billed at 2x the standard input price for explicit caching only",
+        "Cache creation is billed at the output token price"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & Trigger #22: Tokens used to create a cache are billed at the standard input price for BOTH implicit and explicit caching. Watch out for traps saying 'Cache creation is free' or 'double price.'"
+    },
+    {
+      "id": 901,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 Gemini Cost & Capacity | Self-Test #7 & Trigger #22 | M3L5 Slides 16–17",
+      "q": "What is the billing difference between Explicit Caching and Implicit Caching for cache STORAGE, and what discount do cached reads receive on Gemini 2.5+ models?",
+      "options": [
+        "Explicit caching charges storage based on TTL; implicit caching has NO storage cost; cached reads receive ~90% discount on Gemini 2.5+ models",
+        "Implicit caching charges TTL storage; explicit caching has no storage cost; cached reads receive a 10% discount",
+        "Both explicit and implicit caching charge hourly TTL storage fees",
+        "Neither explicit nor implicit caching offers a discount on cached read tokens"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & Self-Test #7: Explicit caching charges storage based on TTL (how long the cache is kept), whereas implicit caching has NO storage cost. Cached reads get ~90% discount on Gemini 2.5+ models."
+    },
+    {
+      "id": 902,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 & §6.2 | Trigger #22 | M3L5 Slide 17",
+      "q": "What are the minimum token thresholds for context caching on Gemini 2.5 Flash versus Gemini 3.x Flash?",
+      "options": [
+        "Gemini 2.5 Flash = 2,048 tokens; Gemini 3.x Flash = 4,096 tokens",
+        "Both models require a minimum of 100,000 tokens",
+        "Gemini 2.5 Flash = 32,768 tokens; Gemini 3.x Flash = 128 tokens",
+        "There is no minimum token threshold for any Gemini model"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & §6.2 (Trigger #22): Minimum tokens for caching vary by model—Gemini 2.5 Flash is 2,048 tokens, and Gemini 3.x Flash is 4,096 tokens."
+    },
+    {
+      "id": 903,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 Gemini Cost & Capacity | Trigger #22 | M3L5 Slides 15, 18",
+      "q": "Which statement accurately describes what Vertex AI Provisioned Throughput (PT) supports and does NOT support?",
+      "options": [
+        "PT supports fine-tuned models, but does NOT support batch prediction and does NOT cover calls made by other Agent Platform products (e.g., Agent Search) even when using the same model",
+        "PT covers batch prediction jobs and all Agent Search queries automatically, but does not support fine-tuned models",
+        "PT only works for batch prediction and cannot be used for real-time online traffic",
+        "PT is only available for third-party open-source models on GKE"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & Trigger #22: Provisioned Throughput supports fine-tuned models, but does NOT support batch prediction and does NOT cover calls made by other Agent Platform products (such as Agent Search) even with the same model."
+    },
+    {
+      "id": 904,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.9 & §6.2 Semantic Routing | M3L5 Slide 19",
+      "q": "How does Semantic Routing reduce total Gemini inference spend without sacrificing quality on hard tasks, and what are the 5 Gemini Consumption Tiers?",
+      "options": [
+        "Routes simple queries to Flash-Lite and complex queries to Pro (~3x cost gap); the 5 tiers are Provisioned Throughput, Standard PayGo, Priority PayGo, Flex PayGo, and Batch Inference (50% discount)",
+        "Routes all queries to Gemini Ultra; the 5 tiers are Bronze, Silver, Gold, Platinum, and Diamond",
+        "Truncates every user prompt to 10 tokens; the 5 tiers are Dev, Test, Stage, Prod, and Archive",
+        "Disables system prompts on weekends"
+      ],
+      "answer": 0,
+      "why": "Per §1.9 & §6.2 (M3L5 Slides 15, 19): Semantic routing sends simple queries to Flash-Lite and complex ones to Pro. The 5 consumption tiers are: 1. Provisioned Throughput, 2. Standard PayGo, 3. Priority PayGo, 4. Flex PayGo, and 5. Batch Inference (50% discount)."
+    },
+    {
+      "id": 905,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.10 GE Connectors | Trigger #10 | M1L6 Slides 6, 10, 16",
+      "q": "Users complain that when they query Microsoft SharePoint through a Gemini Enterprise Federated Connector, they are prompted for a second Microsoft sign-in. Why does this happen?",
+      "options": [
+        "It is expected behavior (not a misconfiguration): Federated connectors query Microsoft live with the user's delegated permissions so SharePoint enforces that user's current ACLs; Workforce Identity Federation does NOT remove it",
+        "Workforce Identity Federation (WIF) is misconfigured; enabling WIF eliminates the second sign-in prompt",
+        "The SharePoint data store is corrupted and needs to be re-indexed into BigQuery",
+        "Model Armor is blocking the OAuth redirect URL"
+      ],
+      "answer": 0,
+      "why": "Per §1.10 & Trigger #10: The second sign-in is NOT a misconfiguration. Federated connectors query Microsoft live using the user's delegated OAuth token so SharePoint enforces real-time ACLs (no stale index). Deploying WIF does NOT remove the second sign-in."
+    },
+    {
+      "id": 906,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M3",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.10 BigQuery ObjectRef | Trigger #20 | M3L4 Slide 14",
+      "q": "What is a BigQuery 'ObjectRef' column used for in multimodal agent architectures, and what are its four STRUCT fields?",
+      "options": [
+        "A STRUCT of 'uri', 'version', 'authorizer' (Cloud resource connection), and 'details' (managed metadata: content type, size, hash, updated)—it does NOT cache object bytes and is NOT a signed URL",
+        "A BLOB column that caches the raw MP4/PDF file bytes directly inside BigQuery storage",
+        "A temporary pre-signed HTTP URL that expires after 15 minutes",
+        "A foreign key that points only to Cloud Spanner tables"
+      ],
+      "answer": 0,
+      "why": "Per §1.10 & Trigger #20 (M3L4 Slide 14): ObjectRef is a STRUCT of 'uri', 'version', 'authorizer' (the Cloud resource connection BigQuery uses to reach the object), and 'details' (content type, size, hash, updated). Watch out for traps saying it caches bytes or is a signed URL."
+    },
+    {
+      "id": 907,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M1",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.6 & §5 Trigger #9 | M1L5 Slides 3, 17–18, 22",
+      "q": "What are the 4 phases of the Google Cloud Migration Framework (in exact order), and what advantages does Cloud Run offer when migrating from AWS Lambda?",
+      "options": [
+        "1. Assess → 2. Plan & Build → 3. Migrate → 4. Optimize; Cloud Run is container-based (any language), supports up to 60-min timeout (vs Lambda's 15-min limit), and handles concurrent requests per instance",
+        "1. Estimate → 2. Discover → 3. Assess → 4. Plan → 5. Migrate; Cloud Run has a 5-min timeout limit",
+        "1. Prepare → 2. Scan → 3. Remediate → 4. Monitor; Cloud Run requires rewriting all code in Go",
+        "1. Spec → 2. Scaffold → 3. Build → 4. Deploy; Cloud Run charges 24/7 even when idle"
+      ],
+      "answer": 0,
+      "why": "Per Trigger #9 & §6.6 (M1L5 Slides 3, 17–18): The 4-Phase Migration Framework is 1. Assess → 2. Plan & Build → 3. Migrate → 4. Optimize (don't confuse with the 5-step Migration Center journey). Cloud Run beats Lambda with container portability, up to 60-min timeout vs 15-min, and multi-request concurrency."
+    },
+    {
+      "id": 908,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.6 google-agents-cli | M0L3 Slide 63",
+      "q": "What is the correct 8-stage agent development lifecycle supported by 'google-agents-cli' (M0L3 Slide 63)?",
+      "options": [
+        "Spec → Scaffold → Build → Orchestrate → Evaluate → Deploy → Publish → Observe",
+        "Plan → Code → Zip → Upload → Bill → Delete → Archive → Repeat",
+        "Register → Discover → Govern → Orchestrate → Prepare → Scan → Remediate → Monitor",
+        "Assess → Plan & Build → Migrate → Optimize → Span → Trace → Session → Task"
+      ],
+      "answer": 0,
+      "why": "Per §6.6 (M0L3 Slide 63): The 8 stages of google-agents-cli are Spec → Scaffold → Build → Orchestrate → Evaluate → Deploy → Publish → Observe."
+    },
+    {
+      "id": 909,
+      "topicId": "gemini_finops_enterprise",
+      "topic": "Gemini FinOps, Caching, GE & ObjectRef",
+      "module": "M0",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — Tab 3 M0L2 Slide 8",
+      "q": "When scoping an enterprise agentic AI business case with a customer (Module 0), what is the recommended 4-step value-framing sequence?",
+      "options": [
+        "1. Define Business KPI → 2. Define Cost Per Task (not cost per token) → 3. Calculate Expected Savings → 4. Frame Value vs. Spend",
+        "1. Quote cost per 1M tokens → 2. Pick the largest model → 3. Buy GPUs → 4. Define KPIs next year",
+        "1. Deploy to GKE → 2. Enable Basic SDP → 3. Run CodeMender → 4. Measure token count",
+        "1. Migrate from AWS → 2. Enable SharePoint connector → 3. Create ObjectRef → 4. Close deal"
+      ],
+      "answer": 0,
+      "why": "Per Tab 3 (Module 0 Scoping): Frame business value around Cost Per Task (not raw cost per token): 1. Define Business KPI → 2. Define Cost Per Task → 3. Calculate Expected Savings → 4. Frame Value vs. Spend."
+    }
+  ]
+}

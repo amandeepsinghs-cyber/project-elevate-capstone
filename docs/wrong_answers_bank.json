@@ -1,0 +1,241 @@
+{
+  "updatedAt": "2026-10-14T05:12:47",
+  "questions": [
+    {
+      "id": 400,
+      "topic": "ADK Fundamentals",
+      "q": "How do ADK workflow agents (SequentialAgent, ParallelAgent, LoopAgent) orchestrate their sub-agents?",
+      "options": [
+        "Using predefined deterministic logic without consulting an AI model to orchestrate (while sub-agents can still be LLM agents and call tools)",
+        "By calling an LLM router before every step to decide which sub-agent runs next",
+        "By prohibiting sub-agents from using an LLM or calling any tools",
+        "By converting all sub-agents into static SQL queries"
+      ],
+      "answer": 0,
+      "yours": "By calling an LLM router before every step to decide which sub-agent runs next",
+      "correct": "Using predefined deterministic logic without consulting an AI model to orchestrate (while sub-agents can still be LLM agents and call tools)",
+      "why": "Workflow agents (SequentialAgent, ParallelAgent, LoopAgent) run sub-agents using fixed, predefined logic without paying a model call to route. Their sub-agents can still be LLM agents and call tools.",
+      "missCount": 1,
+      "practicedRightCount": 1,
+      "lastMissed": "10/13/2026",
+      "lastPracticed": "10/14/2026"
+    },
+    {
+      "id": 405,
+      "topic": "ADK Fundamentals",
+      "q": "In an ADK 2.0 graph, what is the difference between setting data on an Event's 'state' field versus using 'output'?",
+      "options": [
+        "Setting an Event's 'state' field lets any downstream node read it, whereas 'output' passes data only to the immediate next node",
+        "'output' is readable by all downstream nodes, whereas 'state' only reaches the immediate next node",
+        "Both 'state' and 'output' pass data only to the immediate next node",
+        "Neither 'state' nor 'output' can pass data between graph nodes"
+      ],
+      "answer": 0,
+      "yours": "'output' is readable by all downstream nodes, whereas 'state' only reaches the immediate next node",
+      "correct": "Setting an Event's 'state' field lets any downstream node read it, whereas 'output' passes data only to the immediate next node",
+      "why": "Nodes set shared state through an Event's 'state' field so any downstream node can read it. In contrast, 'output' passes data only to the immediate next node.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/14/2026"
+    },
+    {
+      "id": 406,
+      "topic": "ADK Fundamentals",
+      "q": "Which of the following is NOT a real ADK SessionService implementation (a classic exam distractor)?",
+      "options": [
+        "TextEmbeddingService",
+        "InMemorySessionService",
+        "DatabaseSessionService",
+        "VertexAiSessionService"
+      ],
+      "answer": 0,
+      "yours": "VertexAiSessionService",
+      "correct": "TextEmbeddingService",
+      "why": "The three real SessionService implementations are InMemorySessionService, DatabaseSessionService, and VertexAiSessionService. 'TextEmbeddingService' is a made-up distractor to watch out for.",
+      "missCount": 1,
+      "practicedRightCount": 1,
+      "lastMissed": "10/13/2026",
+      "lastPracticed": "10/14/2026"
+    },
+    {
+      "id": 409,
+      "topic": "ADK Fundamentals",
+      "q": "In ADK's before_tool_callback, what happens when the callback returns None versus returning a dict?",
+      "options": [
+        "Returning None allows normal tool execution; returning a dict blocks/short-circuits the tool and returns that dict to the LLM",
+        "Returning None blocks the tool call; returning a dict allows normal execution",
+        "Returning a dict deletes the current session state",
+        "Both None and dict skip the tool call and terminate the agent"
+      ],
+      "answer": 0,
+      "yours": "Returning None blocks the tool call; returning a dict allows normal execution",
+      "correct": "Returning None allows normal tool execution; returning a dict blocks/short-circuits the tool and returns that dict to the LLM",
+      "why": "In before_tool_callback, returning None allows the tool to execute normally, whereas returning a dict blocks/short-circuits the tool execution and returns that dict directly to the LLM.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/14/2026"
+    },
+    {
+      "id": 100,
+      "topic": "Agent Registry",
+      "q": "[Q-M2-23] A CE is building an inventory of a customer's agentic components. Which one will NOT show up in the Agent Registry unless someone manually creates a Service resource for it?",
+      "options": [
+        "An ADK A2A agent deployed to Cloud Run",
+        "An agent deployed on Agent Runtime (Gemini Enterprise Agent Platform)",
+        "A GKE deployment that carries the Agent Registry annotations",
+        "An official Google Cloud remote MCP server"
+      ],
+      "answer": 0,
+      "yours": "An official Google Cloud remote MCP server",
+      "correct": "An ADK A2A agent deployed to Cloud Run",
+      "why": "Auto-registration covers: (1) Agent Runtime (GEAP), (2) Google Workspace built-in agents/extensions, (3) Gemini Enterprise (Discovery Engine), (4) GKE deployments with Agent Registry annotations, and (5) official Google/Google Cloud remote MCP servers. Cloud Run deployments are NOT auto-discovered; they require manual registration via the writable Service resource (gcloud agent-registry services create).",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 102,
+      "topic": "Agent Registry",
+      "q": "A team deploys agents across Google Cloud. Which deployment requires MANUAL registration in Agent Registry?",
+      "options": [
+        "An agent deployed on Cloud Run",
+        "An agent deployed on Agent Runtime (Gemini Enterprise Agent Platform)",
+        "A GKE deployment with Agent Registry annotations",
+        "An official Google Cloud remote MCP server"
+      ],
+      "answer": 0,
+      "yours": "An official Google Cloud remote MCP server",
+      "correct": "An agent deployed on Cloud Run",
+      "why": "Agent Runtime, annotated GKE, Gemini Enterprise, Workspace agents, and official Google MCP servers auto-register once the API is enabled. Cloud Run is NOT auto-discovered and must be registered manually.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 103,
+      "topic": "Agent Registry",
+      "q": "[Q-M2-26] Which statement about Agent Registry concepts is NOT accurate?",
+      "options": [
+        "Endpoints are deterministic functions served by MCP servers. Registering them is how you govern which tools an agent can invoke.",
+        "A Binding is a connection between a source agent and a target resource: an agent, an MCP server, or an endpoint.",
+        "A Skill Revision is an immutable, versioned snapshot, so you can update a skill's instructions or code without changing the parent skill's identifier.",
+        "An A2A Skill is declarative capability metadata inside an Agent Card. A standalone Skill is an executable package registered as a top-level resource."
+      ],
+      "answer": 0,
+      "yours": "A Skill Revision is an immutable, versioned snapshot, so you can update a skill's instructions or code without changing the parent skill's identifier.",
+      "correct": "Endpoints are deterministic functions served by MCP servers. Registering them is how you govern which tools an agent can invoke.",
+      "why": "Tools (not Endpoints) are the deterministic functions served by MCP servers. Endpoints represent target URLs (typically legacy REST APIs); registering them is how you centrally govern and audit which external APIs your agents are allowed to communicate with.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 104,
+      "topic": "Agent Registry",
+      "q": "A security engineer wants to grant an agent IAM permission to query BigQuery. Should they use the Agent Identifier or the Agent Principal?",
+      "options": [
+        "Agent Principal (principal://...), because Agent Identifier (urn:agent:...) is only for catalog lookup and never used in IAM",
+        "Agent Identifier (urn:agent:...), because it is the primary IAM identity for all agents",
+        "Either one, because Identifier and Principal are interchangeable in IAM bindings",
+        "Neither, because agents can never hold an IAM identity for Google Cloud resources"
+      ],
+      "answer": 0,
+      "yours": "Neither, because agents can never hold an IAM identity for Google Cloud resources",
+      "correct": "Agent Principal (principal://...), because Agent Identifier (urn:agent:...) is only for catalog lookup and never used in IAM",
+      "why": "Identifier (urn:agent:...) is a logical catalog name used only for inventory and lookup—never in IAM. Principal (principal://...) is the SPIFFE/service-account IAM identity used for permissions and auditing.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 106,
+      "topic": "Agent Registry",
+      "q": "[Section 1.4 • Identifier vs. Principal] A security architect tries to grant BigQuery read permissions in an IAM policy binding using an agent's 'urn:agent:...' string from Agent Registry, and the binding is rejected. Why?",
+      "options": [
+        "'urn:agent:...' is the logical Agent Identifier used only for catalog inventory and lookup (not used in IAM bindings); IAM permissions and auditing require the Agent Principal ('principal://...', backed by SPIFFE/service account).",
+        "'urn:agent:...' only works in IAM Deny policies, whereas IAM Allow policies require an OAuth 2.0 client ID.",
+        "The Agent Identifier must first be registered in Discovery Engine before IAM can evaluate it.",
+        "Agents cannot use IAM principals for Google Cloud resources and must always use 3-legged user-delegated OAuth."
+      ],
+      "answer": 0,
+      "yours": "Agents cannot use IAM principals for Google Cloud resources and must always use 3-legged user-delegated OAuth.",
+      "correct": "'urn:agent:...' is the logical Agent Identifier used only for catalog inventory and lookup (not used in IAM bindings); IAM permissions and auditing require the Agent Principal ('principal://...', backed by SPIFFE/service account).",
+      "why": "Per Core Guide §1.4: 'Identifier' (urn:agent:...) is a logical catalog identifier used for inventory and lookup—it is NEVER used in IAM bindings. 'Principal' (principal://...) is the SPIFFE/service-account-backed IAM identity used for permissions and auditing.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 107,
+      "topic": "Agent Registry",
+      "q": "What is the correct four-stage operating sequence in Agent Registry?",
+      "options": [
+        "Register → Discover → Govern → Orchestrate",
+        "Discover → Register → Orchestrate → Govern",
+        "Govern → Register → Discover → Orchestrate",
+        "Register → Orchestrate → Discover → Govern"
+      ],
+      "answer": 0,
+      "yours": "Discover → Register → Orchestrate → Govern",
+      "correct": "Register → Discover → Govern → Orchestrate",
+      "why": "The four stages are Register → Discover → Govern → Orchestrate. You Govern (configure access and bindings) right before ADK Orchestrates the resolved endpoints and tools.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 108,
+      "topic": "Agent Registry",
+      "q": "In Agent Registry, what is the difference between a Tool and an Endpoint?",
+      "options": [
+        "Tools are deterministic functions served by MCP servers; Endpoints are target URLs (like legacy REST APIs) governed in the registry",
+        "Endpoints are deterministic functions on MCP servers; Tools are legacy REST URLs",
+        "Tools and Endpoints are two names for the exact same MCP resource",
+        "Endpoints are only for Gemini Enterprise, while Tools are only for Cloud Run"
+      ],
+      "answer": 0,
+      "yours": "Endpoints are deterministic functions on MCP servers; Tools are legacy REST URLs",
+      "correct": "Tools are deterministic functions served by MCP servers; Endpoints are target URLs (like legacy REST APIs) governed in the registry",
+      "why": "Watch out for the swapped-definition trap: Tools are deterministic functions served by MCP servers, whereas Endpoints represent target URLs (typically REST APIs) registered for governance.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 203,
+      "topic": "Agent Skills",
+      "q": "A developer wants a custom skill to be available globally across all projects in Antigravity, the IDE, and the CLI. Where should they place it?",
+      "options": [
+        "~/.gemini/config/skills/",
+        "<project-root>/.agents/skills/",
+        "~/.config/gcloud/skills/",
+        "/usr/local/share/adk/skills/"
+      ],
+      "answer": 0,
+      "yours": "~/.config/gcloud/skills/",
+      "correct": "~/.gemini/config/skills/",
+      "why": "Global skills live in ~/.gemini/config/skills/ and work across Antigravity, the IDE, and the CLI.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    },
+    {
+      "id": 204,
+      "topic": "Agent Skills",
+      "q": "In a skill's required SKILL.md YAML frontmatter, which field is REQUIRED and which is OPTIONAL?",
+      "options": [
+        "description is required; name is optional",
+        "name is required; description is optional",
+        "Both name and version are required; description is optional",
+        "No YAML frontmatter is used in SKILL.md"
+      ],
+      "answer": 0,
+      "yours": "name is required; description is optional",
+      "correct": "description is required; name is optional",
+      "why": "In SKILL.md's YAML frontmatter, 'description' is required (because the agent uses it to decide when the skill is relevant), while 'name' is optional.",
+      "missCount": 1,
+      "practicedRightCount": 0,
+      "lastMissed": "10/13/2026"
+    }
+  ]
+}

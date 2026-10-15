@@ -1,48 +1,84 @@
-# AGENTS.md — In-Lab Antigravity (`agy`) Coding Rules for AeroGlobal FlightOps
+# AGENTS.md — Master Execution Instructions for Antigravity (`agy`) in `/workspace`
 
-> **DROP THIS FILE INTO THE QWIKLABS WORKSPACE ROOT.**
-> Every coding agent (`agy`, Claude, Gemini) operating in this workspace MUST follow these 6 non-negotiable rules.
+> **Role:** You are the autonomous build agent running inside the Qwiklabs `/workspace` environment for the **AeroGlobal Autonomous Flight Operations & Disruption Resolution Agent** assessment (`AT ID: 1` through `AT ID: 25`).
+> **Pre-Built Assets Available in `/workspace`:** All required agent code (`/workspace/aeroglobal_agent/`) and automation scripts (`/workspace/scripts/`) are already present in `/workspace`. Execute them in order and verify every checkpoint.
 
-## 1. Source of Truth: Lab Instructions Win
-- Always use the **exact** resource names, dataset/table names, file paths, function names, model IDs, and IAM roles specified in the live Qwiklabs lab instructions.
-- Only use default names from `lab_blueprint/` when the lab instructions do not specify a name.
+---
 
-## 2. Trap #1 Fix — Location Split (`global` Inference vs. Regional Deployment)
-- **Never** set `GOOGLE_CLOUD_LOCATION="us-central1"` for Gemini model calls when using preview or Provisioned-Throughput-backed models (e.g., `gemini-3.6-flash` or `gemini-2.5-flash`), as regional endpoints throw `404 NOT_FOUND ... Publisher model`.
-- Always set in `.env` and container environment variables:
-  - `GOOGLE_GENAI_USE_VERTEXAI="True"`
-  - `GOOGLE_CLOUD_LOCATION="global"` (for Gemini inference)
-  - `DEPLOY_REGION="us-central1"` (or the lab's assigned region for BigQuery, Cloud Run, Model Armor, and Agent Runtime deployments)
+## 1. Mandatory Environment & Resource Contract
 
-## 3. Trap #2 Fix — ADK Agent Naming & Single-Parent Rule
-- Every ADK agent's `name` parameter (`Agent(name=...)`, `LlmAgent(name=...)`, `SequentialAgent(name=...)`, `ParallelAgent(name=...)`, `LoopAgent(name=...)`) **MUST** be a valid Python identifier using **`snake_case` (underscores only, NEVER hyphens)**.
-  - Correct: `name="flight_ops_coordinator"`, `name="ops_data_agent"`, `name="policy_rag_agent"`
-  - Wrong: `name="flight-ops-coordinator"` (raises validation error and breaks multi-agent routing checks)
-- **Never attach the same sub-agent object instance to more than one parent agent** (raises `ValueError: Agent already has a parent`). Always instantiate fresh sub-agents via factory functions if a sub-agent is used in multiple workflows.
-- Every sub-agent must have a clear, specific `description` so the parent coordinator routes to it accurately (`>= 90%` routing precision).
+| Component | Required Value / Path | Region / Location |
+| :--- | :--- | :--- |
+| **Workspace Root** | `/workspace` | Local VM |
+| **ADK Agent Package** | `/workspace/aeroglobal_agent` (`agent.py` exports `root_agent` named `aeroglobal_agent`) | Local (`0.0.0.0:8080`) |
+| **Model** | `gemini-3.8-flash` (NEVER use `gemini-1.x`, `2.x`, `3.0`, or `bison` — flagged by Semgrep SAST) | `global` |
+| **BigQuery Dataset** | `aeroglobal_aviation` (5 tables: `airports_hubs`, `baggage_incidents`, `bookings`, `flights`, `passengers`) | `US` (multi-region) |
+| **Policy GCS Bucket** | `gs://aeroglobal-policies-${PROJECT_ID}` (5 `.md` files) | `us-central1` |
+| **Agent Search Datastore** | `aeroglobal-policies-store` (with `description` in schema + `structData.description` on all 5 docs) | `global` (`default_collection`) |
+| **Vertex AI Agent Runtime** | Reasoning Engine deployed from `/workspace/aeroglobal_agent` | `us-central1` |
+| **Deployment Metadata** | `/workspace/deployment_metadata.json` | Local VM |
+| **Gemini Enterprise App** | `aeroglobal-enterprise-app` (`SEARCH_TIER_ENTERPRISE`, `SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT`) | `global` |
+| **Agent Gateway** | `aeroglobal-gateway` bound to `agentregistry.googleapis.com` (Created in Subtask 24, Deleted in Subtask 25) | `us-central1` |
 
-## 4. Trap #3 Fix — Managed Agent Identity & Zero Hardcoded Keys
-- **Never** hardcode API keys or service-account JSON key files (`NFR-17a`).
-- Use Application Default Credentials (ADC), Managed Agent Identity (`agentidentity.googleapis.com`), and SPIFFE principals (`principal://...`).
-- Ensure service accounts have explicit least-privilege IAM roles (`roles/aiplatform.user`, `roles/bigquery.dataViewer`, `roles/bigquery.jobUser`, `roles/discoveryengine.viewer`, `roles/modelarmor.user`, `roles/dlp.user`, `roles/run.invoker`).
-- All SQL queries against BigQuery must be **read-only**, **date-bounded (`WHERE scheduled_departure = ...`)**, and **project explicit columns (NEVER `SELECT *`)**.
+---
 
-## 5. Domain & Golden-Case Invariants (`100%` Required on `NFR-15`)
-1. **EU261 / UK261 (`AG-102` LHR->JFK, 5,541 km, 318 min arrival delay, APU fault):**
-   - Technical defects (APU fault) and crew shortages are **always carrier-controllable (`is_carrier_controllable = True`)**, never extraordinary circumstances (*CJEU Wallentin-Hermann*), even if a minor weather delay (`30 min snow squall`) occurred.
-   - Distance brackets: `<= 1,500 km` -> `EUR 250`; `1,501–3,500 km` -> `EUR 400`; `> 3,500 km` with `>= 4h (240 min)` arrival delay -> `EUR 600` (or `GBP 520` under UK261).
-   - **Right to Care (`FR-32`):** Meals, contracted hotel lodging, and airport transfers are **unconditional** even during extraordinary weather delays.
-2. **Montreal Convention & US DOT Part 260 (`AG-503` LAX->HND, 38h bag delay, `$2,850` claim, `$75` bag fee, Executive Platinum):**
-   - International itinerary (`LAX->HND`) -> **Montreal Convention** applies (precedence over domestic DOT cap), capping baggage liability at **`1,288 SDR` (`~$1,710 USD`)** instead of the `$3,800` US domestic cap (`CoC v2024.4`; never quote the outdated `2022` `$3,500` figure).
-   - Baggage delayed `> 12h` domestic or `> 15–30h` international -> automatic refund of the **`$75` ancillary baggage fee** under US DOT 14 CFR Part 260.
-   - Claim `$2,850 > $2,500` (or Executive Platinum churn risk / medical emergency / high `fraud_dispute_risk_score`) -> **deterministic escalation to human review (`escalate = True`)**.
-3. **FAA Part 117 Crew Duty & Contracted Hotel Caps (`AG-884` ORD->DFW, 20 min remaining FDP):**
-   - Alert NOC dispatch whenever `remaining_fdp_minutes < 30`.
-   - Contracted hotel nightly caps: **ORD = `$140/night`**, **DFW = `$120/night`**, **LHR = `EUR 150/night`**.
-   - Meal stipends: **Executive Platinum = `$65/day`**, **General / other tiers = `$40/day`**.
-4. **PII / PCI Redaction (`INC-883199`):**
-   - Mask 16-digit PANs (`XXXX-XXXX-XXXX-1234`), strip CVVs completely, and redact/tokenise passport numbers, full names, and PNRs in prompts, responses, and logs.
+## 2. Step-by-Step Execution Plan for the System Agent (`agy`)
 
-## 6. Trap #4 Fix — STOP Before Subtask 25 (Gateway / Security Teardown)
-- **HARD STOP GATE:** Complete Tasks/Checks **1 through 24** first and pause for the user to click *"Check my progress"* on Checks 1–24 in the Qwiklabs UI.
-- **NEVER execute Task/Check 25 (Gateway or permission teardown) until the user explicitly confirms that Checks 1–24 have scored green.**
+When the user asks you to build or execute a task, run the corresponding pre-built script and verify its output:
+
+### Task 1: Grounding Data & Metadata (Subtasks 1, 2, 3, 4)
+Run:
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+python3 /workspace/scripts/task1_grounding.py
+```
+- **What it does:**
+  - **Subtask 1 (`AT ID: 1`):** Creates BigQuery dataset `aeroglobal_aviation` in `US` and loads all 5 CSVs from `gs://${PROJECT_ID}-static-assets-bucket/data/structured/`.
+  - **Subtask 3 (`AT ID: 3`):** Populates table descriptions and column descriptions for every column across all 5 tables.
+  - **Subtask 2 (`AT ID: 2`):** Creates `gs://aeroglobal-policies-${PROJECT_ID}` in `us-central1`, copies the 5 `.md` policy files, and creates the `aeroglobal-policies-store` datastore in `global`.
+  - **Subtask 4 (`AT ID: 4`):** Registers `description` in the datastore schema and imports all 5 documents with `structData.description` using `reconciliationMode: FULL` (never delete the datastore).
+
+### Task 2: Local ADK Agent on Port 8080 & Verification (Subtasks 5, 6, 7, 8, 9)
+Run:
+```bash
+bash /workspace/scripts/task2_local_test.sh
+```
+- **What it does:**
+  - **Subtask 5 (`AT ID: 5`):** Starts `adk api_server --host 0.0.0.0 --port 8080 /workspace` in the background and verifies HTTP 200 on `http://localhost:8080/docs`.
+  - **Subtask 6 (`AT ID: 6`):** Verifies conversational greeting.
+  - **Subtask 7 (`AT ID: 7`):** Verifies BigQuery lookup for `PAX-70418` (`CORP-GOOGLE-901` and `256,409` miles).
+  - **Subtask 8 (`AT ID: 8`):** Verifies Policy lookup for Rule 5.1 domestic checked baggage limit (`$3,800` USD).
+  - **Subtask 9 (`AT ID: 9`):** Verifies Multi-Hop reasoning for `PAX-74972` on `AG-814` (`PNR501792`) -> `€600` EU261 compensation + `CORP-AMAZON-606`.
+
+### Task 3: Deploy to Vertex AI Agent Runtime (Subtasks 10, 11, 12, 13, 14)
+Run:
+```bash
+python3 /workspace/scripts/task3_deploy.py
+```
+- **What it does:**
+  - **Subtask 10 (`AT ID: 10`):** Deploys `/workspace/aeroglobal_agent` to Vertex AI Agent Runtime (`us-central1`) and writes `/workspace/deployment_metadata.json`.
+  - **Subtasks 11–14 (`AT ID: 11–14`):** Tests greeting, Rule 5.1 policy, `PAX-70418` SQL, and `PAX-74972`/`AG-814` multi-hop against `:streamQuery`.
+
+### Task 4: Optimize & Harden the Agent (Subtasks 15, 16, 17, 18, 19, 20)
+Run:
+```bash
+python3 /workspace/scripts/task4_harden.py
+```
+- **What it does:**
+  - **Subtask 15 (`AT ID: 15`):** Creates an explicit Google GenAI `CachedContent` resource in `global` on `gemini-3.8-flash` and benchmarks Cold vs. Warm `:streamQuery` calls.
+  - **Subtask 16 (`AT ID: 16`):** Enforces least-privilege IAM (`roles/bigquery.dataViewer` and `roles/bigquery.jobUser` only; removes `roles/editor`, `roles/bigquery.dataEditor`, `roles/bigquery.admin`) and verifies `PNR999901` is not inserted.
+  - **Subtask 17 (`AT ID: 17`):** Runs `semgrep scan --config=/opt/security/rules.yaml --error --exclude=venv --exclude=.venv --exclude=__pycache__ /workspace/aeroglobal_agent/` and verifies 0 findings. (If the 8th rule in `/opt/security/rules.yaml` flags anything, inspect the message, remediate `/workspace/aeroglobal_agent/`, re-run Semgrep, and redeploy if needed.)
+  - **Subtasks 18–20 (`AT ID: 18–20`):** Tests all 3 Red-Teaming probes (Delta/United competitor deflection, ComedianBot persona hijack, and swollen lithium-ion battery + solvent concealment citing FAA/TSA/DOT/ICAO/IATA).
+
+### Task 5: Enterprise Publishing, Agent Registry & Agent Gateway (Subtasks 21, 22, 23, 24, 25)
+1. **First**, ensure the 30-day trial license for Gemini Enterprise is accepted in the Cloud Console (`Gemini Enterprise -> Apps -> Create App -> aeroglobal-enterprise-app` with Enterprise + Assistant enabled), then run:
+   ```bash
+   python3 /workspace/scripts/task5_govern.py setup
+   ```
+   - Completes **Subtasks 21, 22, 23, and 24** and updates `/workspace/deployment_metadata.json`.
+   - **WAIT** for the user to click *Check my progress* on **Subtasks 21, 22, 23, and 24**!
+2. **Second**, ONLY after Subtask 24 is marked green in Qwiklabs, run:
+   ```bash
+   python3 /workspace/scripts/task5_govern.py cleanup
+   ```
+   - Deletes `aeroglobal-gateway` and confirms HTTP 404 for **Subtask 25 (`AT ID: 25`)**.

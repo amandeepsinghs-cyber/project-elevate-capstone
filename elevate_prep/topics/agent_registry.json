@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "agent_registry",
+    "title": "Agent Registry",
+    "shortTitle": "Agent Registry (§1.4)",
+    "icon": "🗂️",
+    "module": "M2",
+    "examWeight": "30% (Module 2)",
+    "priority": "CRITICAL",
+    "rankNote": "#2 Most Heavily Tested Topic",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry & §5 Triggers #13–#14",
+    "slideRef": "M2S2 Slides 15–20",
+    "summary": "3 core goals, auto-registration vs manual writable Service resource, read-only Agent/McpServer/Endpoint, urn:agent Identifier vs principal:// IAM Principal, A2A vs standalone skills.",
+    "quizFile": "agent_registry_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 6,
+  "questions": [
+    {
+      "id": 100,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 15",
+      "q": "What is Google Cloud Agent Registry?",
+      "options": [
+        "A centralized catalog that lets you store, discover, and govern MCP servers, tools, standalone skills, and AI agents within Google Cloud",
+        "A managed serverless container runtime that replaces Cloud Run for ADK agents",
+        "A foundation model weight repository that replaces Vertex AI Model Registry",
+        "An API gateway that terminates mTLS and bills token usage"
+      ],
+      "answer": 0,
+      "why": "Verbatim doc definition (§1.4): Agent Registry is 'a centralized catalog that lets you store, discover, and govern MCP servers, tools, standalone skills, and AI agents within Google Cloud.' It is not a runtime or model registry."
+    },
+    {
+      "id": 101,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Self-Test #3 & Trigger #13 | M2S2 Slide 15",
+      "q": "What are the three official goals of Google Cloud Agent Registry?",
+      "options": [
+        "Accelerate development, simplify integration, and support governance",
+        "Host containers, fine-tune foundation models, and manage token billing",
+        "Replace Cloud IAM, encrypt VPC traffic, and redact PII",
+        "Auto-scale runtimes, cache prompts, and provision throughput"
+      ],
+      "answer": 0,
+      "why": "Agent Registry's three goals (§1.4) are: (1) Accelerate development (discovery and reuse), (2) Simplify integration (standardized MCP and A2A protocols), and (3) Support governance (enforce security and boundaries across the agentic fleet)."
+    },
+    {
+      "id": 102,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #14 | M2S2 Slide 16",
+      "q": "A team deploys agents across Google Cloud. Which deployment requires MANUAL registration in Agent Registry via a writable Service resource?",
+      "options": [
+        "An ADK A2A agent deployed on Cloud Run",
+        "An agent deployed on Agent Runtime (Gemini Enterprise Agent Platform)",
+        "A GKE deployment configured with Agent Registry annotations",
+        "An official Google Cloud remote MCP server"
+      ],
+      "answer": 0,
+      "why": "Auto-registration covers supported Google Cloud runtimes once the API is enabled (Agent Runtime, Workspace/Gemini Enterprise, annotated GKE, and official Google remote MCP servers). Cloud Run agents are NOT auto-discovered and require manual registration via the writable Service resource."
+    },
+    {
+      "id": 103,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Self-Test #3 & Trigger #14 | M2S2 Slide 20",
+      "q": "When manually registering or updating an item in Agent Registry, which resource is WRITABLE versus READ-ONLY?",
+      "options": [
+        "Service is writable; Agent, McpServer, and Endpoint are read-only",
+        "Agent and McpServer are writable; Service is read-only",
+        "Endpoint is writable; Service and Agent are read-only",
+        "All resources (Service, Agent, McpServer, Endpoint) are directly writable"
+      ],
+      "answer": 0,
+      "why": "Everything registered manually is written through the writable 'Service' resource, and then queried through the read-only 'Agent', 'McpServer', and 'Endpoint' resources."
+    },
+    {
+      "id": 104,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 (Swapped-Definition Trap) | M2S2 Slide 18",
+      "q": "A security engineer wants to grant an agent IAM permission to query BigQuery. Should they use the Agent Identifier or the Agent Principal?",
+      "options": [
+        "Agent Principal (principal://...), because Agent Identifier (urn:agent:...) is only a logical catalog name and is never used in IAM bindings",
+        "Agent Identifier (urn:agent:...), because it is the primary IAM identity for all registered agents",
+        "Either one, because Identifier and Principal are interchangeable in IAM bindings",
+        "Neither, because agents can never hold an IAM identity for Google Cloud resources"
+      ],
+      "answer": 0,
+      "why": "Agent Identifier (urn:agent:...) is a logical catalog ID used for inventory and lookup—never in IAM bindings. Agent Principal (principal://...) is the SPIFFE/service-account IAM identity used for permissions and auditing."
+    },
+    {
+      "id": 105,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 19",
+      "q": "How do A2A skills differ from standalone skills in Agent Registry?",
+      "options": [
+        "A2A skills are declarative metadata inline in an Agent Card; standalone skills are separate resources managed via Skill, SkillRevision, and Publisher",
+        "A2A skills are top-level GCP resources; standalone skills only exist inline inside an Agent Card",
+        "A2A skills are for MCP servers only; standalone skills are for Cloud Run only",
+        "There is no difference; both are stored exclusively inside an Agent Card"
+      ],
+      "answer": 0,
+      "why": "A2A skills are declarative metadata declared inline in an agent's Agent Card. Standalone skills are separate catalog resources managed, versioned, and listed through the Skill, SkillRevision, and Publisher resources."
+    },
+    {
+      "id": 106,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #13 | M2S2 Slide 17",
+      "q": "An orchestrator uses the Agent Registry MCP server to find agents by natural-language keyword. Which tool should it call?",
+      "options": [
+        "search_agents (while list_agents enumerates by project/location, and search_mcp_servers covers MCP servers only)",
+        "search_mcp_servers, which searches both agents and MCP servers",
+        "list_agents, which performs natural-language semantic search across all projects",
+        "find_endpoints, which searches agents, tools, and skills together"
+      ],
+      "answer": 0,
+      "why": "The Registry MCP server provides 'list_agents' for enumerating agents by project and location, 'search_agents' for keyword/prefix/natural-language discovery of agents, and 'search_mcp_servers' for MCP servers only."
+    },
+    {
+      "id": 107,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Tab 2 M2S2 Slide 16",
+      "q": "What is the correct four-stage operating sequence in Agent Registry?",
+      "options": [
+        "Register → Discover → Govern → Orchestrate",
+        "Discover → Register → Orchestrate → Govern",
+        "Govern → Register → Discover → Orchestrate",
+        "Register → Orchestrate → Discover → Govern"
+      ],
+      "answer": 0,
+      "why": "The four-stage lifecycle in Agent Registry is Register → Discover → Govern → Orchestrate."
+    },
+    {
+      "id": 108,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Tab 2 M2S2 Slide 20",
+      "q": "In Agent Registry, what is the difference between a Tool and an Endpoint?",
+      "options": [
+        "Tools are deterministic functions served by MCP servers; Endpoints are target URLs (such as REST APIs) governed in the registry",
+        "Endpoints are deterministic functions on MCP servers; Tools are legacy REST URLs",
+        "Tools and Endpoints are two names for the exact same MCP resource",
+        "Endpoints are only for Gemini Enterprise, while Tools are only for Cloud Run"
+      ],
+      "answer": 0,
+      "why": "Tools represent callable functions exposed by MCP servers, while Endpoints represent target network URLs/APIs registered for discovery and governance."
+    },
+    {
+      "id": 109,
+      "topicId": "agent_registry",
+      "topic": "Agent Registry",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry | Trigger #14 | M2S2 Slide 16",
+      "q": "A developer publishes a Cloud Run agent to a Gemini Enterprise app, but it does not appear in Agent Registry. Why?",
+      "options": [
+        "Gemini Enterprise and Agent Registry are separate catalogs that don't auto-sync for Cloud Run, so the Cloud Run agent must be registered manually via a Service resource",
+        "Agent Registry takes 24 hours to sync asynchronously from Gemini Enterprise",
+        "Cloud Run agents are blocked from being added to Agent Registry under any configuration",
+        "Agent Registry only stores MCP servers, never AI agents"
+      ],
+      "answer": 0,
+      "why": "Cloud Run agents are not automatically discovered by Agent Registry and must be manually registered through the writable Service resource."
+    }
+  ]
+}

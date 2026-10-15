@@ -1,0 +1,191 @@
+{
+  "topic": {
+    "id": "agent_identity",
+    "title": "Agent Identity & Agent Gateway",
+    "shortTitle": "Identity & Gateway (§1.5)",
+    "icon": "🔐",
+    "module": "M2",
+    "examWeight": "30% (Module 2)",
+    "priority": "HIGH_VALUE",
+    "rankNote": "Classic Dual-Auth Exam Scenario",
+    "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway & §5 Trigger #15",
+    "slideRef": "M2S2 Slides 24–29",
+    "summary": "SPIFFE X.509 certificate identity, GCP IAM (BigQuery) vs user-delegated 3-legged OAuth (3P SaaS via auth manager), Agent Gateway ingress/egress governance + Model Armor with zero code changes.",
+    "quizFile": "agent_identity_quiz.html"
+  },
+  "sourceDocument": "Elevate Capstone Prep (Oct 7-8).md",
+  "questionCount": 10,
+  "criticalCount": 6,
+  "questions": [
+    {
+      "id": 300,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 24",
+      "q": "What type of cryptographic identity does Google Cloud Agent Identity assign to each agent?",
+      "options": [
+        "A dedicated SPIFFE-based identity with an X.509 certificate that is not shared and cannot be impersonated",
+        "A shared default Compute Engine service account JSON key",
+        "A static API key stored in an environment variable",
+        "A browser session cookie shared across all agents in the project"
+      ],
+      "answer": 0,
+      "why": "Each agent gets its own SPIFFE-based identity with an X.509 certificate assigned by Google Cloud. It is not shared and cannot be impersonated."
+    },
+    {
+      "id": 301,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Self-Test #4 & Trigger #15 | M2S2 Slide 25",
+      "q": "When an agent queries a Google Cloud resource like BigQuery, which identity does it use?",
+      "options": [
+        "The agent's own SPIFFE identity, governed by Google Cloud IAM",
+        "A 3-legged OAuth token issued by an external SaaS server",
+        "Its logical Agent Registry Identifier (urn:agent:...)",
+        "Agents never hold their own credential and must use an anonymous key"
+      ],
+      "answer": 0,
+      "why": "For Google Cloud resources (like BigQuery), the agent uses its own SPIFFE identity governed by IAM. Watch out for the wrong option claiming 'an agent never holds its own credential.'"
+    },
+    {
+      "id": 302,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Self-Test #4 & Trigger #15 | M2S2 Slide 26",
+      "q": "An agent needs to create a Jira ticket in a third-party SaaS app on the user's behalf. How does it authenticate?",
+      "options": [
+        "User-delegated 3-legged OAuth through the Agent Identity auth manager",
+        "The agent's own Google Cloud IAM service account",
+        "Hardcoding the user's credentials in the system prompt",
+        "Using an IAM deny policy on the BigQuery API"
+      ],
+      "answer": 0,
+      "why": "When calling a third-party SaaS app on the user's behalf, the agent uses user-delegated 3-legged OAuth through the Agent Identity auth manager."
+    },
+    {
+      "id": 303,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 26",
+      "q": "When an agent uses 3-legged OAuth via the Agent Identity auth manager to call a third-party SaaS API, who issues the access token?",
+      "options": [
+        "The third-party SaaS OAuth server",
+        "Google Cloud IAM",
+        "Model Armor",
+        "BigQuery"
+      ],
+      "answer": 0,
+      "why": "In user-delegated 3-legged OAuth for a third-party SaaS app, the token is issued by the SaaS OAuth server and managed by the Agent Identity auth manager."
+    },
+    {
+      "id": 304,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Self-Test #4 & Trigger #15 | M2S2 Slides 25–26",
+      "q": "In one workflow, an agent reads data from BigQuery and then updates a ticket in ServiceNow on the user's behalf. Which credentials does it use?",
+      "options": [
+        "Its own SPIFFE identity (IAM) for BigQuery, and user-delegated 3-legged OAuth for ServiceNow",
+        "One combined credential that authenticates to both BigQuery and ServiceNow",
+        "User-delegated 3-legged OAuth for both BigQuery and ServiceNow",
+        "Its SPIFFE identity for ServiceNow, and 3-legged OAuth for BigQuery"
+      ],
+      "answer": 0,
+      "why": "Classic §1.5 scenario: the agent uses its own SPIFFE identity (governed by IAM) for GCP resources like BigQuery, and user-delegated 3-legged OAuth for third-party SaaS apps."
+    },
+    {
+      "id": 305,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 28",
+      "q": "Which traffic directions does Google Cloud Agent Gateway govern?",
+      "options": [
+        "Both ingress (inbound to the agent) and egress (outbound from the agent to tools and other agents)",
+        "Egress traffic only",
+        "Ingress traffic only",
+        "Neither; Agent Gateway only handles token billing"
+      ],
+      "answer": 0,
+      "why": "Agent Gateway governs both ingress and egress traffic and enforces access policies. Watch out for traps saying it 'only handles egress' or 'only billing.'"
+    },
+    {
+      "id": 306,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "CRITICAL",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slide 28",
+      "q": "A security team configures Agent Gateway with Model Armor to inspect an agent's tool calls and responses. What application code changes are required?",
+      "options": [
+        "No application code changes are needed",
+        "Every tool function must be rewritten to call the Model Armor REST API manually",
+        "The agent must be migrated from Python to Go",
+        "Every prompt must be manually encrypted inside the agent code"
+      ],
+      "answer": 0,
+      "why": "Agent Gateway is a fully managed component that governs ingress/egress traffic, enforces access policies, and integrates with Model Armor to inspect tool calls and responses with no app code changes needed."
+    },
+    {
+      "id": 307,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway | Trigger #15 | M2S2 Slides 24–29",
+      "q": "Which statement accurately describes the relationship between Agent Gateway and Agent Identity?",
+      "options": [
+        "Agent Gateway works alongside and requires Agent Identity; it does not replace Agent Identity",
+        "Agent Gateway replaces Agent Identity so agents no longer need SPIFFE certificates",
+        "Agent Gateway and Agent Identity cannot be used together",
+        "Agent Gateway is a container runtime that replaces Cloud Run and GKE"
+      ],
+      "answer": 0,
+      "why": "Watch out for the trap 'Gateway replaces Agent Identity.' Agent Gateway is a managed ingress/egress control point that works alongside Agent Identity."
+    },
+    {
+      "id": 308,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 & Tab 2 M2S2 Slide 25",
+      "q": "When deploying an agent to Agent Runtime, when can Agent Identity (--agent-identity) be enabled?",
+      "options": [
+        "Only when the agent is created",
+        "Only after the agent is deleted",
+        "Automatically whenever a file over 4 MB is uploaded",
+        "Only on third-party on-premises servers"
+      ],
+      "answer": 0,
+      "why": "On Agent Runtime, Agent Identity (--agent-identity) is immutable after creation and can only be enabled when the agent is first created."
+    },
+    {
+      "id": 309,
+      "topicId": "agent_identity",
+      "topic": "Agent Identity & Agent Gateway",
+      "module": "M2",
+      "priority": "HIGH_VALUE",
+      "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.5 & Tab 2 M2S2 Slide 29",
+      "q": "Why must a container image trust AGENT_GATEWAY_ROOT_CERTIFICATES when bound to an egress Agent Gateway?",
+      "options": [
+        "Because an egress Agent Gateway performs TLS decryption and inspection on outbound agent traffic",
+        "Because BigQuery requires client-side TLS certificates for SQL syntax parsing",
+        "Because Agent Registry stores skill files inside X.509 certificates",
+        "Because OAuth tokens are compiled into the Dockerfile at build time"
+      ],
+      "answer": 0,
+      "why": "An egress Agent Gateway performs TLS inspection (with Model Armor) on outbound communications, so the container image must trust the gateway's root CA."
+    }
+  ]
+}

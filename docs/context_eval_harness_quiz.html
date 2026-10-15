@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Context, Grounding, Eval & Harness Eng Quiz (10 Questions) — Project Elevate Capstone</title>
+<style>
+  body { font-family: 'Inter', Arial, sans-serif; background:#f8fafc; margin:0; padding:24px; color:#0f172a; }
+  .card { max-width:840px; margin:auto; background:#fff; border-radius:12px; padding:28px; box-shadow:0 2px 10px rgba(15,23,42,.08); border:1px solid #e2e8f0; }
+  .topic-nav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; padding-bottom:12px; border-bottom:2px solid #e2e8f0; align-items:center; }
+  .topic-link { text-decoration:none; font-size:12px; font-weight:600; padding:5px 10px; border-radius:14px; background:#f1f5f9; color:#475569; border:1px solid transparent; transition:all .15s; }
+  .topic-link:hover { background:#e8f0fe; color:#1a73e8; }
+  .topic-link.active { background:#1a73e8; color:#fff; }
+  .topic-link.hub { background:#0f172a; color:#fff; }
+  .header-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px; }
+  h1 { font-size:20px; color:#0f172a; margin:0; }
+  .badge { font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:6px; display:inline-block; }
+  .badge-critical { background:#fef2f2; color:#dc2626; border:1px solid #fecaca; }
+  .badge-high { background:#fffbeb; color:#d97706; border:1px solid #fde68a; }
+  .badge-mod { background:#f1f5f9; color:#475569; border:1px solid #e2e8f0; }
+  .doc-ref { background:#f1f5f9; border-radius:8px; padding:8px 12px; font-size:12px; color:#475569; margin-bottom:14px; font-family:monospace; }
+  .bar { height:6px; background:#e2e8f0; border-radius:3px; margin:14px 0 18px; overflow:hidden; }
+  .fill { height:6px; background:#1a73e8; border-radius:3px; width:0; transition:width .3s; }
+  .q { font-size:17px; margin-bottom:16px; line-height:1.45; font-weight:600; }
+  .opt { display:block; width:100%; text-align:left; padding:12px 14px; margin:8px 0; border:1.5px solid #cbd5e1; border-radius:8px; background:#fff; font-size:15px; cursor:pointer; transition:all .15s; }
+  .opt:hover:not(:disabled) { background:#e8f0fe; border-color:#1a73e8; }
+  .opt.correct { background:#dcfce7; border-color:#22c55e; color:#14532d; font-weight:bold; }
+  .opt.wrong { background:#fef2f2; border-color:#ef4444; color:#7f1d1d; }
+  .explain { margin-top:16px; padding:12px 14px; background:#f8fafc; border-left:4px solid #1a73e8; font-size:14px; display:none; line-height:1.5; border-radius:0 6px 6px 0; }
+  .btn { margin-top:14px; padding:9px 16px; background:#1a73e8; color:#fff; border:none; border-radius:6px; font-size:13.5px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-block; }
+  .btn.secondary { background:#fff; color:#1a73e8; border:1px solid #1a73e8; }
+  .btn.critical { background:#dc2626; color:#fff; }
+</style>
+</head>
+<body>
+<div class="card" id="app"></div>
+<script>
+const TOPIC_META = {"id": "context_eval_harness", "title": "Context, Grounding, Eval & Harness Eng", "shortTitle": "Context, Eval & Harness (§1.3)", "icon": "📐", "module": "M3", "examWeight": "35% (Module 3) / 20% (M1)", "priority": "HIGH_VALUE", "rankNote": "Failure Diagnosis & Trajectory Eval", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.3, §6.3, §6.5 & §5 Triggers #8, #18, #19", "slideRef": "M1L2 Slides 6, 13; M3L2 Slides 15–25; M3L3 Slides 2–12", "summary": "RAG grounding for company definitions, observation flooding vs context collapse, trajectory vs final-response eval, 7 coding eval dimensions, Agent = Model + Harness (+13.7 pts Terminal Bench 2.0).", "quizFile": "context_eval_harness_quiz.html"};
+const ALL_TOPICS = [{"id": "model_armor", "title": "Model Armor", "shortTitle": "Model Armor (§1.7)", "icon": "🛡️", "module": "M2", "examWeight": "30% (Module 2)", "priority": "CRITICAL", "rankNote": "#1 Most Heavily Tested Topic", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.7 Model Armor & §5 Trigger #12", "slideRef": "M2S2 Slides 38–51", "summary": "Floor settings, HIGH vs LOW_AND_ABOVE confidence, Inspect-only rollout, Basic vs Advanced SDP, 4 MB skip/no-bill limit, CSAM always-on, 40-URL limit, and OCR image screening.", "quizFile": "model_armor_quiz.html"}, {"id": "agent_registry", "title": "Agent Registry", "shortTitle": "Agent Registry (§1.4)", "icon": "🗂️", "module": "M2", "examWeight": "30% (Module 2)", "priority": "CRITICAL", "rankNote": "#2 Most Heavily Tested Topic", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.4 Agent Registry & §5 Triggers #13–#14", "slideRef": "M2S2 Slides 15–20", "summary": "3 core goals, auto-registration vs manual writable Service resource, read-only Agent/McpServer/Endpoint, urn:agent Identifier vs principal:// IAM Principal, A2A vs standalone skills.", "quizFile": "agent_registry_quiz.html"}, {"id": "agent_skills", "title": "Agent Skills Standard", "shortTitle": "Agent Skills (§1.1)", "icon": "🧩", "module": "M1", "examWeight": "20% (Module 1)", "priority": "CRITICAL", "rankNote": "#3 Priority — Start Here After Registry", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.1 Agent Skills & §5 Trigger #8", "slideRef": "M1L1 Slides 7–11", "summary": "Progressive disclosure (name + description only at startup), solving tool bloat, SKILL.md YAML frontmatter (description required, name optional), .agents/skills/ vs ~/.gemini/config/skills/.", "quizFile": "agent_skills_quiz.html"}, {"id": "adk_fundamentals", "title": "ADK 2.0 Fundamentals & Graphs", "shortTitle": "ADK Fundamentals (§1.2)", "icon": "⚙️", "module": "M3", "examWeight": "35% (Module 3) / 15% (M0)", "priority": "CRITICAL", "rankNote": "#4 Priority — Core Agent Engineering", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.2 ADK Fundamentals & §5 Triggers #1–#3, #17", "slideRef": "M0L6 Slides 6–7; M0L7 Slides 10–25; M3L1 Slides 9–19", "summary": "Deterministic workflow agents (Sequential/Parallel/Loop) vs LLM coordinator, function tool schema generation, ADK 2.0 graph nodes & Event.state vs output, SessionService, before_tool_callback.", "quizFile": "adk_fundamentals_quiz.html"}, {"id": "adk_exam_scenarios", "title": "ADK Architecture & Runtimes", "shortTitle": "ADK Scenarios & Runtimes", "icon": "🚀", "module": "M0", "examWeight": "15% (Module 0) / 35% (M3)", "priority": "CRITICAL", "rankNote": "High-Frequency Architecture Scenarios", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.2, §5 Triggers #4–#7, #17", "slideRef": "M0L5 Slides 6–8; M0L9 Slides 6–15; M3L1 Slides 10–19", "summary": "State prefixes (user:, app:, temp:), Sequential/Parallel output_key, LoopAgent escalate=True, AgentTool vs sub_agents, output_schema trade-offs, Cloud Run ($0 idle) vs Agent Runtime vs GKE.", "quizFile": "adk_exam_scenarios_quiz.html"}, {"id": "agent_identity", "title": "Agent Identity & Agent Gateway", "shortTitle": "Identity & Gateway (§1.5)", "icon": "🔐", "module": "M2", "examWeight": "30% (Module 2)", "priority": "HIGH_VALUE", "rankNote": "Classic Dual-Auth Exam Scenario", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.5 Agent Identity & Gateway & §5 Trigger #15", "slideRef": "M2S2 Slides 24–29", "summary": "SPIFFE X.509 certificate identity, GCP IAM (BigQuery) vs user-delegated 3-legged OAuth (3P SaaS via auth manager), Agent Gateway ingress/egress governance + Model Armor with zero code changes.", "quizFile": "agent_identity_quiz.html"}, {"id": "protocols_mcp_a2a_otel", "title": "Protocols: MCP, A2A & OpenTelemetry", "shortTitle": "MCP, A2A & OTel (§1.6)", "icon": "🌐", "module": "M3", "examWeight": "35% (Module 3)", "priority": "HIGH_VALUE", "rankNote": "Swapped-Definition & URI Traps", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.6, §6.1 & §5 Triggers #16, #20, #21", "slideRef": "M3L1 Slides 31–32; M3L4 Slide 20; M3L5 Slides 8–10", "summary": "MCP (agent ↔ tools/data) vs A2A (agent ↔ agent), HTTP + JSON-RPC 2.0 + SSE, RFC 8615 /.well-known/agent-card.json, MCP Toolbox for DBs (<10 LoC), OTel gen_ai.* & SPAN < TRACE < SESSION < TASK.", "quizFile": "protocols_mcp_a2a_otel_quiz.html"}, {"id": "context_eval_harness", "title": "Context, Grounding, Eval & Harness Eng", "shortTitle": "Context, Eval & Harness (§1.3)", "icon": "📐", "module": "M3", "examWeight": "35% (Module 3) / 20% (M1)", "priority": "HIGH_VALUE", "rankNote": "Failure Diagnosis & Trajectory Eval", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.3, §6.3, §6.5 & §5 Triggers #8, #18, #19", "slideRef": "M1L2 Slides 6, 13; M3L2 Slides 15–25; M3L3 Slides 2–12", "summary": "RAG grounding for company definitions, observation flooding vs context collapse, trajectory vs final-response eval, 7 coding eval dimensions, Agent = Model + Harness (+13.7 pts Terminal Bench 2.0).", "quizFile": "context_eval_harness_quiz.html"}, {"id": "codemender_threat_defense", "title": "CodeMender & AI Threat Defense", "shortTitle": "CodeMender & Threats (§1.8)", "icon": "🛠️", "module": "M2", "examWeight": "30% (Module 2)", "priority": "HIGH_VALUE", "rankNote": "SAST Integration & 4-Stage Framework", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.8, §6.4 & §5 Trigger #11", "slideRef": "M2S1 Slides 18, 41–53, 60–62; M2S2 Slide 5", "summary": "4 AI Threat Defense stages (CodeMender in Remediate), importing external SAST findings (cm report import -> cm verify -> cm fix), 7 languages, Gemini Flash (--model), Indirect PI vs Tool Poisoning.", "quizFile": "codemender_threat_defense_quiz.html"}, {"id": "gemini_finops_enterprise", "title": "Gemini FinOps, Caching, GE & ObjectRef", "shortTitle": "FinOps, Caching & GE (§1.9–1.10)", "icon": "💎", "module": "M3", "examWeight": "35% (Module 3) / 20% (M1)", "priority": "HIGH_VALUE", "rankNote": "Caching Billing, PT Limits & SharePoint ACLs", "docSection": "Elevate Capstone Prep (Oct 7-8).md — §1.9, §1.10, §6.2, §6.6 & §5 Triggers #9, #10, #20, #22", "slideRef": "M1L5 Slides 3, 17–26; M1L6 Slides 6–16; M3L4 Slide 14; M3L5 Slides 14–19", "summary": "Standard input price for cache creation, Explicit TTL storage vs free Implicit storage, 2,048 vs 4,096 min tokens, PT exclusions, Semantic Routing, GE Federated 2nd sign-in, BigQuery ObjectRef, AWS migration.", "quizFile": "gemini_finops_enterprise_quiz.html"}];
+const questions = [{"id": 700, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13", "q": "A customer's internal support agent gives a confident, fluent, but generic industry answer instead of using the company's own policy definition. What is the correct fix?", "options": ["Retrieval-Augmented Generation (grounding): retrieve the company's enterprise content at query time and supply it as context", "Lower the model temperature to 0.0 without changing the context", "Fine-tune a new foundation model checkpoint for every individual user question", "Add 50 more unrelated tools to the agent's prompt"], "answer": 0, "why": "Per §1.3 & Trigger #8: When an agent gives a confident but generic answer about company-specific facts, the fix is grounding (RAG)—fetching enterprise content at query time and providing it in context."}, {"id": 701, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13", "q": "During a debugging task, an agent calls a tool that dumps 80,000 tokens of raw log files and stack traces into the conversation history, degrading reasoning quality. What is this failure mode called?", "options": ["Observation flooding (context bloat from massive raw tool outputs)", "Context collapse (aggressive summarization dropping a needed fact)", "Tool poisoning (compromised MCP server returning malicious instructions)", "Semantic routing"], "answer": 0, "why": "Per §1.3 & Trigger #8: 'Observation flooding' occurs when the context window fills with massive tool outputs (logs, file dumps, stack traces) rather than high-signal reasoning."}, {"id": 702, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M1", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 Agent Quality | Trigger #8 | M1L2 Slide 13", "q": "To save tokens in a long session, a developer adds an aggressive history summarizer. Later in the session, the agent fails because the summarizer deleted a specific port number read 10 turns earlier. What is this called?", "options": ["Context collapse (aggressive compression deleting a specific fact needed later)", "Observation flooding", "Tool bloat", "Indirect prompt injection"], "answer": 0, "why": "Per §1.3 & Trigger #8: 'Context collapse' happens when aggressive summarization or compression drops a specific detail (like a config value or port number) that the task needs in a later step."}, {"id": 703, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M3", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §1.3 & §6.5 Evaluation | Trigger #18 | M3L2 Slides 15–16, 23", "q": "Why is final-response evaluation (or passing unit tests) insufficient on its own for evaluating an autonomous agent, and what complements it?", "options": ["Final-response evaluation misses 'right answer, wrong process'; Trajectory evaluation complements it by grading the reasoning path and sequence of tool calls (e.g., reading a file before editing it)", "Final-response evaluation is too slow; only human review can check final answers", "Trajectory evaluation only checks spelling, while final-response checks latency", "Passing unit tests is always 100% sufficient proof of agent safety and quality"], "answer": 0, "why": "Per §1.3 & Trigger #18: Final-response evaluation only checks the end output and misses 'right answer, wrong process.' Trajectory evaluation grades the path (reasoning and sequence of tool calls)."}, {"id": 704, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M3", "priority": "CRITICAL", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | Trigger #19 | M3L3 Slides 2–5", "q": "What is the core formula of Harness Engineering, and what did LangChain prove on Terminal Bench 2.0 in March 2026?", "options": ["Agent = Model + Harness; by changing ONLY the harness (self-verification loops and context injection) with the exact same model, rank jumped from #30 (52.8%) to #5 (66.5%) (+13.7 points)", "Agent = Prompt + Temperature; fine-tuning the model weights improved accuracy by 50%", "Agent = GPU + Bandwidth; doubling batch size reduced latency by 90%", "Agent = Database + UI; replacing Python with Rust increased score by 2 points"], "answer": 0, "why": "Per §6.3 & Trigger #19 (M3L3 Slides 2–5): The formula is 'Agent = Model + Harness' (Vivek Trivedy / Mitchell Hashimoto). On Terminal Bench 2.0, changing ONLY the harness jumped the same model from #30 (52.8%) to #5 (66.5%) (+13.7 pts)."}, {"id": 705, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M3", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.5 Coding Agent Evaluation | Trigger #18 | M3L2 Slide 15", "q": "In the 7 Coding Agent Evaluation Dimensions (M3L2 Slide 15), how are the dimensions grouped, and what are Dimension 1 and Dimension 7?", "options": ["Grouped into User-Facing (Outside: 1–4) and Internal (Inside: 5–7) plus transversal Safety; Dim 1 is Intent Satisfaction and Dim 7 is Self-Repair Behaviour", "Grouped by cloud provider; Dim 1 is Billing Cost and Dim 7 is Network Throughput", "Grouped into SQL and NoSQL; Dim 1 is Schema Mapping and Dim 7 is Cache TTL", "There are only 2 dimensions: Speed and Price"], "answer": 0, "why": "Per §6.5 & Trigger #18: User-Facing (Outside): 1. Intent Satisfaction, 2. Functional Correctness, 3. Visual/Behavioural, 4. Cost & Efficiency. Internal (Inside): 5. Code Quality & Conventions, 6. Trajectory Quality, 7. Self-Repair Behaviour (+ transversal Safety & RAI)."}, {"id": 706, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M1", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.6 Context Window Budget | M1L2 Slide 6", "q": "What are the 4 Context Window Budget segments defined in Module 1 (M1L2 Slide 6)?", "options": ["1. System Prompt + 2. Tools & Retrieved Context + 3. Conversation History + 4. Free / Working Budget", "1. CPU Cache + 2. RAM + 3. SSD Swap + 4. Network Buffer", "1. Input Tokens + 2. Output Tokens + 3. Cached Tokens + 4. Billed Tokens", "1. HTML + 2. CSS + 3. JavaScript + 4. Images"], "answer": 0, "why": "Per §6.6 (M1L2 Slide 6), the 4 Context Window Budget segments are: 1. System Prompt, 2. Tools & Retrieved Context, 3. Conversation History, and 4. Free / Working Budget."}, {"id": 707, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M3", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.5 Evaluation Prerequisite | M3L2 Slide 25", "q": "According to Module 3 (M3L2 Slide 25), what is the mandatory foundational prerequisite before you can perform effective agent evaluation (such as trajectory inspection or online eval)?", "options": ["Observability (structured tracing and logging of turns, tool calls, and reasoning steps)", "Deploying the agent on bare-metal servers", "Disabling all third-party MCP tools", "Purchasing Provisioned Throughput"], "answer": 0, "why": "Per §6.5 (M3L2 Slide 25): Observability is the prerequisite for all agent evaluation—you cannot grade trajectories or diagnose failures without capturing structured traces and spans."}, {"id": 708, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M3", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | M3L3 Slides 3, 5", "q": "Google Antigravity is described in M3L3 as 'One harness, four surfaces.' What are the four surfaces?", "options": ["1. IDE, 2. CLI (agy), 3. SDK, and 4. Agent Manager", "1. Chrome, 2. Android, 3. iOS, and 4. WearOS", "1. BigQuery, 2. Spanner, 3. Cloud SQL, and 4. Firestore", "1. Compute Engine, 2. GKE, 3. Cloud Run, and 4. App Engine"], "answer": 0, "why": "Per §6.3 (M3L3 Slides 3, 5): Google Antigravity provides 'One harness, four surfaces': 1. IDE, 2. CLI (agy), 3. SDK, and 4. Agent Manager."}, {"id": 709, "topicId": "context_eval_harness", "topic": "Context, Grounding, Eval & Harness Eng", "module": "M3", "priority": "HIGH_VALUE", "docRef": "Elevate Capstone Prep (Oct 7-8).md — §6.3 Harness Engineering | M3L3 Slides 3, 12", "q": "In the Google ADK Kotlin Port case study (M3L3 Slides 3 & 12), what did 4 engineers accomplish in 2 months using harness engineering, and what share of the codebase was tests?", "options": ["Generated 57,000+ lines of code (125,000+ lines changed) in 2 months, with ~35% of the codebase consisting of tests", "Wrote 500 lines of code manually with 0% automated tests", "Ported the codebase in 5 years using 200 contractors", "Deleted all unit tests to speed up CI/CD builds"], "answer": 0, "why": "Per §6.3 (M3L3 Slides 3, 12): 4 engineers (3 EPE + 1 Cloud) generated 57,000+ LoC in 2 months with ~35% test coverage / ~35% of the codebase as tests."}];
+const STORAGE_KEY = "project_elevate_unified_mistakes_v1";
+const LOCAL_API_URL = "http://127.0.0.1:8765/api/mistakes";
+
+let activePool = [];
+let current = 0;
+let score = 0;
+let criticalFirst = true;
+let sessionMistakes = [];
+let mistakesMap = {};
+
+function loadMistakes() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) mistakesMap = JSON.parse(raw);
+  } catch (e) {}
+}
+function saveMistakes(item, wrongChoice) {
+  loadMistakes();
+  const ex = mistakesMap[item.id];
+  mistakesMap[item.id] = {
+    ...item,
+    yours: wrongChoice,
+    correct: item.options[item.answer],
+    missCount: ex ? (ex.missCount || 1) + 1 : 1,
+    lastMissed: new Date().toLocaleDateString()
+  };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(mistakesMap)); } catch (e) {}
+  fetch(LOCAL_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ updatedAt: new Date().toISOString(), questions: Object.values(mistakesMap) })
+  }).catch(() => {});
+}
+function shuffle(a) {
+  const c = [...a];
+  for (let i = c.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [c[i], c[j]] = [c[j], c[i]];
+  }
+  return c;
+}
+function renderNav() {
+  return `<div class="topic-nav">
+    <a class="topic-link hub" href="index.html">🏠 Hub & Mock Exams</a>
+    ${ALL_TOPICS.map(t => `<a class="topic-link ${t.id === TOPIC_META.id ? 'active' : ''}" href="${t.quizFile}">${t.icon} ${t.shortTitle}</a>`).join("")}
+  </div>`;
+}
+function start(orderCrit = true) {
+  criticalFirst = orderCrit;
+  const crit = shuffle(questions.filter(q => q.priority === "CRITICAL"));
+  const high = shuffle(questions.filter(q => q.priority !== "CRITICAL"));
+  activePool = criticalFirst ? [...crit, ...high] : shuffle(questions);
+  current = 0; score = 0; sessionMistakes = [];
+  show();
+}
+function show() {
+  const item = activePool[current];
+  const opts = shuffle(item.options.map((t, i) => ({ t, right: i === item.answer })));
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    ${renderNav()}
+    <div class="header-row">
+      <h1>${TOPIC_META.icon} ${TOPIC_META.title} (10 Questions)</h1>
+      <div>
+        ${TOPIC_META.priority === 'CRITICAL' ? '<span class="badge badge-critical">🔥 CRITICAL TOPIC</span>' : '<span class="badge badge-high">⚡ HIGH VALUE TOPIC</span>'}
+        <span class="badge badge-mod">${TOPIC_META.examWeight}</span>
+      </div>
+    </div>
+    <div class="doc-ref">📖 <b>Doc Reference:</b> ${item.docRef}</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:#475569;">
+      <span>Question <b>${current + 1} of ${activePool.length}</b> &nbsp;|&nbsp; Score: <b>${score}</b></span>
+      <div>
+        ${item.priority === 'CRITICAL' ? '<span class="badge badge-critical">🔥 CRITICAL — Practice First</span>' : '<span class="badge badge-high">⚡ HIGH VALUE</span>'}
+        <button class="btn secondary" style="margin:0 0 0 8px;padding:4px 10px;font-size:12px;" onclick="start(${!criticalFirst})">
+          ${criticalFirst ? "🔀 Shuffle All" : "🔥 Order Critical First"}
+        </button>
+      </div>
+    </div>
+    <div class="bar"><div class="fill" style="width:${((current + 1) / activePool.length) * 100}%"></div></div>
+    <div class="q">${item.q}</div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div id="next"></div>
+  `;
+  const box = document.getElementById("opts");
+  opts.forEach(o => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.textContent = o.t;
+    b.onclick = () => pick(b, o, opts, item);
+    box.appendChild(b);
+  });
+}
+function pick(btn, chosen, opts, item) {
+  document.querySelectorAll(".opt").forEach((b, i) => {
+    b.disabled = true;
+    if (opts[i].right) b.classList.add("correct");
+  });
+  if (chosen.right) {
+    score++;
+  } else {
+    btn.classList.add("wrong");
+    sessionMistakes.push({ item, yours: chosen.t, correct: item.options[item.answer] });
+    saveMistakes(item, chosen.t);
+  }
+  const ex = document.getElementById("explain");
+  ex.style.display = "block";
+  ex.innerHTML = (chosen.right ? "<b>✅ Correct!</b> " : "<b>❌ Incorrect (Saved to Wrong Answers Bank).</b> ") + item.why + `<br><small style="color:#64748b;font-family:monospace;">📌 ${item.docRef}</small>`;
+  const last = current === activePool.length - 1;
+  document.getElementById("next").innerHTML = `<button class="btn" onclick="${last ? 'finish()' : 'nextQ()'}">${last ? 'See Results' : 'Next Question →'}</button>`;
+}
+function nextQ() { current++; show(); }
+function finish() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    ${renderNav()}
+    <h1>${TOPIC_META.icon} ${TOPIC_META.title} — Results: ${score} / ${activePool.length}</h1>
+    <p>${score >= 9 ? "✅ Passed (≥90%)! Ready for the next topic." : "⚠️ Below 9/10 pass bar. Review the missed questions below and retake."}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+      <button class="btn" onclick="start(true)">🔄 Retake (Critical First)</button>
+      <a class="btn secondary" href="index.html">🏠 Back to Full Hub & Mock Exams</a>
+    </div>
+    ${sessionMistakes.map(m => `
+      <div class="explain" style="display:block;border-left-color:#dc2626;margin-bottom:10px;">
+        <b>${m.item.q}</b><br>
+        <span style="color:#dc2626;">Your answer:</span> ${m.yours}<br>
+        <span style="color:#15803d;">Correct:</span> ${m.correct}<br>
+        ${m.item.why}<br>
+        <small style="font-family:monospace;color:#64748b;">📖 ${m.item.docRef}</small>
+      </div>
+    `).join("")}
+  `;
+}
+loadMistakes();
+start(true);
+</script>
+</body>
+</html>
